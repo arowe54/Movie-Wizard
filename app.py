@@ -37,5 +37,11 @@ def after_request(response):
 @login_required
 def index():
     """Home Page"""
-    return apology()
+    return render_template("layout.html")
+
+
+
+
+if __name__== '__main__':
+    app.run()
 
