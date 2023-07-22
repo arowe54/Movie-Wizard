@@ -112,3 +112,11 @@ def register():
 
     else:
         return render_template("register.html")
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        """User searched for a movie"""
+    else:
+        return render_template("search.html")
