@@ -15,13 +15,22 @@
     <table class="table">
         <thead class="table-dark">
             <tr>
-                <th scope="col">Name</td>
+                <th scope="col">Name</th>
+                <th scope="col">Short ID</th>
+                <th scope="col">Long ID</th>
+                <th scope="col">Release Date</th>
+
             </tr>
         </thead>
         <tbody>
+            {for movie in movies %}
             <tr>
-                <td>{{ name }}</td>
+                <td>{{ movie.titleText.text }}</td>
+                <td>{{ movie.id }}</td>
+                <td>{{ movie._id }}</td>
+                <td>{{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

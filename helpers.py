@@ -57,17 +57,9 @@ def lookup(title):
         response = requests.get(url, headers=headers, params=querystring)
 
         # response["results"] is a list of dictionaries, each item is a movie
+        response = response.json()
         results = response["results"]
-        print(results.json())
-        
         return results
-        """
-        return {
-            "name": symbol,
-            "price": price,
-            "symbol": symbol
-        }
-        """
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
 

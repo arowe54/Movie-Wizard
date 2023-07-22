@@ -121,10 +121,10 @@ def search():
         # Lookup movie from title
         title = request.form.get("title")
         movies = lookup(title)
-
         if not movies:
             return apology("That movie is not in the database")
+        
         # Display result
-        return render_template("layout.html")
+        return render_template("search.html", movies=movies)
     else:
         return render_template("search.html")
