@@ -82,22 +82,21 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    # User reached route through a form
     if request.method == "POST":
-        # If username is blank
+        # Check if username is blank
         if not request.form.get("username"):
             return apology("Please Enter a Username and Password")
         # Save username
         username = request.form.get("username")
-        # If username already exists
+        # Check if username already exists
         rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
         if len(rows) > 0:
             return apology("Username already exists")
 
-        # If user didn't input a password
+        # Check if user didn't input a password
         if not request.form.get("password") or not request.form.get("confirmation"):
             return apology("Please enter a password in both password fields")
-        # If passwords do not match
+        # Check if passwords do not match
         if request.form.get("password") != request.form.get("confirmation"):
             return apology("Passwords do not match. Please reenter password")
         # Save password
@@ -106,14 +105,10 @@ def register():
         # Insert new user into users
         hash = generate_password_hash(password)
         db.execute("INSERT INTO users(username, hash) VALUES(?,?);", username, hash)
-
         # Log the user in
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         session["user_id"] = rows[0]["id"]
-
-        # Redirect user to homepage
         return redirect("/")
 
-    # User reached route through clicking a link
     else:
         return render_template("register.html")
