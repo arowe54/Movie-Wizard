@@ -38,7 +38,7 @@ def after_request(response):
 @login_required
 def index():
     """Home Page"""
-    return render_template("layout.html")
+    return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -106,9 +106,6 @@ def register():
         # Insert new user into users
         hash = generate_password_hash(password)
         db.execute("INSERT INTO users(username, hash) VALUES(?,?);", username, hash)
-
-        users = db.execute("SELECT * FROM users;")
-        print(users)
 
         # Log the user in
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
