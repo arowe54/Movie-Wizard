@@ -118,5 +118,13 @@ def register():
 def search():
     if request.method == "POST":
         """User searched for a movie"""
+        # Lookup movie from title
+        title = request.form.get("title")
+        movies = lookup(title)
+
+        if not movies:
+            return apology("That movie is not in the database")
+        # Display result
+        return render_template("layout.html")
     else:
         return render_template("search.html")

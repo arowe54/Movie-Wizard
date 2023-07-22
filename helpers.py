@@ -59,7 +59,7 @@ def lookup(title):
         # response["results"] is a list of dictionaries, each item is a movie
         results = response["results"]
         print(results.json())
-
+        
         return results
         """
         return {
