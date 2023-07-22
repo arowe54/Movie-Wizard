@@ -40,38 +40,34 @@ def login_required(f):
     return decorated_function
 
 
-# Given a stock symbol (ex. NFLX), returns a dict with 3 keys: name (str), price (float), symbol (str, uppercase)(same as name)
-def lookup(symbol):
-    """Look up quote for symbol."""
+def lookup(title):
+    """Look up movies with exact title."""
+    
+    url = "https://moviesdatabase.p.rapidapi.com/titles/search/title/{}".format(title)
 
-    # Prepare API request
-    symbol = symbol.upper()
-    end = datetime.datetime.now(pytz.timezone("US/Eastern"))
-    start = end - datetime.timedelta(days=7)
+    querystring = {"exact":"true","titleType":"movie"}
 
-    # Yahoo Finance API
-    url = (
-        f"https://query1.finance.yahoo.com/v7/finance/download/{urllib.parse.quote_plus(symbol)}"
-        f"?period1={int(start.timestamp())}"
-        f"&period2={int(end.timestamp())}"
-        f"&interval=1d&events=history&includeAdjustedClose=true"
-    )
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
 
     # Query API
     try:
-        response = requests.get(url, cookies={"session": str(uuid.uuid4())}, headers={
-            "User-Agent": "python-requests", "Accept": "*/*"})
-        response.raise_for_status()
+        response = requests.get(url, headers=headers, params=querystring)
 
-        # CSV header: Date,Open,High,Low,Close,Adj Close,Volume
-        quotes = list(csv.DictReader(response.content.decode("utf-8").splitlines()))
-        quotes.reverse()
-        price = round(float(quotes[0]["Adj Close"]), 2)
+        # response["results"] is a list of dictionaries, each item is a movie
+        results = response["results"]
+        print(results.json())
+
+        return results
+        """
         return {
             "name": symbol,
             "price": price,
             "symbol": symbol
         }
+        """
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
 
