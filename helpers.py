@@ -9,6 +9,34 @@ import uuid
 from flask import redirect, render_template, session
 from functools import wraps
 
+def all_of_movie(movie_id):
+    """Get all of the info about a specific movie"""
+    url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+
+    movie = {}
+    # Query for base_info
+    query_string = {"info":"base_info"}
+    base_info = requests.get(url, headers=headers, params=query_string)
+    base_info = base_info.json()
+    base_info = base_info["results"]
+    for key in base_info:
+        # If it has not already been recorded
+        if key not in movie:
+            # Record it
+            movie[key] = base_info[key]
+
+    # Query for image
+    # creators_directors_writers
+    # revenue_budget
+    # extendedCast
+    # rating
+    # awards
+
+    return movie
 
 def apology(message, code=400):
     """Render message as an apology to user."""

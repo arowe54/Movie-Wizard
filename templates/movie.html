@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Movie
+{% endblock %}
+
+{% block main %}
+
+<!-- Print info about movie -->
+{% for key in movie %}
+    <p>{{ key }} : {{ movie[key] }}</p><br>
+{% endfor %}
+
+{% endblock %}

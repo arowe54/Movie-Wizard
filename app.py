@@ -98,6 +98,14 @@ def logout():
     return redirect("/")
 
 
+@app.route("/movie.html")
+def movie():
+    """Get information on a specific movie"""
+    id = request.form.get("movie_id")
+    movie = all_of_movie(id)
+
+    return render_template("movie.html", movie=movie)
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
