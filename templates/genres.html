@@ -5,6 +5,17 @@
 {% endblock %}
 
 {% block main %}
+
+<!--Create Dropdown for genres-->
+<label for="genres">Select A Genre</label>
+
+<select name="genres">
+    {% for genre in genres %}
+        <option value="{{ genre }}">{{ genre }}</option>
+    {% endfor %}
+</select>
+
+<!--
 <table class="table">
     <thead class="table-dark">
         <tr>
@@ -43,4 +54,5 @@
         {% endfor %}
     </tbody>
 </table>
+!-->
 {% endblock %}
