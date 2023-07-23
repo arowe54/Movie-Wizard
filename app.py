@@ -98,7 +98,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/movie")
+@app.route("/movie", methods=["POST"])
 def movie():
     """Get information on a specific movie"""
     id = request.form.get("movie_id")

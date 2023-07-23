@@ -41,11 +41,11 @@
                 </td>
                 <td>
                     <form action="/movie" method="post" id="movie.id" >
-                        <select hidden name="movie_ID">
-                            <option hidden name="movie_id" value="{{ movie.id }}" selected></option>
+                        <select hidden name="movie_id" onchange="this.form.submit()">
+                            <option hidden value="{{ movie.id }}" selected></option>
                         </select>
                         Title: {{ movie.titleText.text }} <br>
-                        <a href="#" onclick="this.form.submit()">Short ID: {{ movie.id }}</a> <br>
+                        <button type="submit">Short ID: {{ movie.id }}</button>  <br>
                         Long ID: {{ movie._id }}
                     </form>
                 </td>
