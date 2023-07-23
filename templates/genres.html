@@ -12,7 +12,11 @@
 <form action="/genres" method="get">
     <select name="genre" required autofocus onchange= "this.form.submit()">
         {% for genre in genres %}
-            <option value="{{ genre }}">{{ genre }}</option>
+            {% if genre == genre_selected %}
+                <option value="{{ genre }}" selected>{{ genre }}</option>
+            {% else %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endif %}
         {% endfor %}
     </select>
 </form>
