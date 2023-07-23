@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, login_required, lookup, random_movies, upcoming usd
+from helpers import apology, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
 
 # Configure application
 app = Flask(__name__)
