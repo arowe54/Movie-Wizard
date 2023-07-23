@@ -49,10 +49,16 @@ def all_of_movie(movie_id):
         if key not in movie:
             movie[key] = rev_budget[key]
 
-
-    # extendedCast
     # rating
+    querystring = {"info":"rating"}
+    ratings = requests.get(url, headers=headers, params=querystring)
+    ratings = ratings.json()
+    ratings = ratings["results"]
+    movie["ratingsSummary"] = ratings["ratingsSummary"]
+
+
     # awards
+    # extendedCast
 
     return movie
 
