@@ -43,6 +43,18 @@ def index():
     return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd)
 
 
+@app.route("/genres")
+def genres():
+    """Get Movies in each genre"""
+    genres = []
+    # Get list of each genre
+    # Iterate through each genre
+    # Find and save movies in that genre
+    # Append to list of genres
+
+    # Send to genres.html
+    return
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
