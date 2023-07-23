@@ -6,6 +6,25 @@
 
 {% block main %}
 
+<div class="container-fluid" >
+
+    <h2>Title: {{ movie.titleText.text }}</h2>
+
+    <figure>
+        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+    </figure>
+
+    <h4>Genres: </h4>
+    <p>
+    {% for genre in movie.genres.genres}
+        genre["text"], 
+    {% endfor %}
+    </p>
+
+</div>
+
+
 
 {% for key in movie %}
     <p>{{ key }} : 
