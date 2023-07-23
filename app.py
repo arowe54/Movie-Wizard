@@ -104,7 +104,7 @@ def movie():
     id = request.form.get("movie_id")
     movie = all_of_movie(id)
 
-    return render_template("movie.html", movie=movie.json())
+    return render_template("movie.html", movie=movie)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
