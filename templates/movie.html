@@ -8,7 +8,15 @@
 
 <!-- Print info about movie -->
 {% for key in movie %}
-    <p>{{ key }} : {{ movie[key] }}</p><br>
+    <p>{{ key }} : 
+        {% if movie[key] != None and movie[key] is mapping %}
+            {% for subkey in movie[key] %}
+                <p>{{ subkey }} : {{ movie[key][subkey] }}</p>
+            {% endfor %}
+        {% else %}
+            {{ movie[key] }}
+        {% endif %}
+    </p><br><br>
 {% endfor %}
 
 {% endblock %}
