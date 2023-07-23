@@ -56,9 +56,10 @@ def all_of_movie(movie_id):
     awards = awards["results"]
     for key in awards:
         if key not in movie:
-            movie[key] = rev_budget[key]
+            movie[key] = awards[key]
     
     # extendedCast
+    
 
     return movie
 
