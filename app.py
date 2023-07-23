@@ -46,7 +46,6 @@ def index():
 @app.route("/genres")
 def genres():
     """Get Movies in each genre"""
-    movies = []
     # Get list of each genre
     genres = get_genres()
     

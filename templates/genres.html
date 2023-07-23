@@ -9,8 +9,8 @@
 <!--Create Dropdown for genres-->
 <label for="genres">Select A Genre</label>
 
-<form action="/genres" method="get" onchange="this.form.submit()">
-    <select name="genre" required autofocus>
+<form action="/genres" method="get">
+    <select name="genre" required autofocus onchange= "this.form.submit()">
         {% for genre in genres %}
             <option value="{{ genre }}">{{ genre }}</option>
         {% endfor %}
