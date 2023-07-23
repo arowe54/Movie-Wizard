@@ -6,7 +6,10 @@
 
 {% block main %}
 
-<!-- Print info about movie -->
+<!--Print JSON of movie-->
+{{ movie }}
+
+<!--
 {% for key in movie %}
     <p>{{ key }} : 
         {% if movie[key] != None and movie[key] is mapping %}
@@ -18,5 +21,7 @@
         {% endif %}
     </p><br><br>
 {% endfor %}
+-->
+
 
 {% endblock %}
