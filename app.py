@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, login_required, lookup, random_movies, usd
+from helpers import apology, login_required, lookup, random_movies, upcoming usd
 
 # Configure application
 app = Flask(__name__)
@@ -38,7 +38,8 @@ def after_request(response):
 @login_required
 def index():
     """Home Page"""
-    return render_template("index.html")
+    upcoming_movies = upcoming()
+    return render_template("index.html", upcoming=upcoming_movies)
 
 
 @app.route("/login", methods=["GET", "POST"])
