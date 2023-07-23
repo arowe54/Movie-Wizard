@@ -52,8 +52,10 @@ def genres():
     # Get genre selected by the user
     genre = request.args.get("genre")
 
-     # Find and save movies in that genre to a list of dictionaries
-    movies_in_genre = get_movies_by_genre(genre)
+    # Find and save movies in that genre to a list of dictionaries
+    movies_in_genre = None
+    if genre != None:
+        movies_in_genre = get_movies_by_genre(genre)
     
     # Send to genres.html
     return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre)

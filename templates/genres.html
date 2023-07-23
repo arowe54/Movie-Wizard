@@ -28,6 +28,7 @@
             </tr>
         </thead>
         <tbody>
+            {% if movies != None %}
             {% for movie in movies %}
             <tr>
                 
@@ -54,6 +55,7 @@
                 </td>
             </tr>
             {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </div>
