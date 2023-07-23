@@ -41,8 +41,8 @@
                 </td>
                 <td>
                     <form action="/movie" method="post" id="movie.id" >
-                        <select hidden>
-                            <option hidden name="movie_id" value="{{ movie.id }}"></option>
+                        <select hidden name="movie_ID">
+                            <option hidden name="movie_id" value="{{ movie.id }}" selected></option>
                         </select>
                         Title: {{ movie.titleText.text }} <br>
                         <a href="#" onclick="this.form.submit()">Short ID: {{ movie.id }}</a> <br>
