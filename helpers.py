@@ -19,8 +19,8 @@ def all_of_movie(movie_id):
 
     movie = {}
     # Query for base_info
-    query_string = {"info":"base_info"}
-    base_info = requests.get(url, headers=headers, params=query_string)
+    querystring = {"info":"base_info"}
+    base_info = requests.get(url, headers=headers, params=querystring)
     base_info = base_info.json()
     base_info = base_info["results"]
     for key in base_info:
@@ -29,8 +29,17 @@ def all_of_movie(movie_id):
             # Record it
             movie[key] = base_info[key]
 
-    # Query for image
+    
     # creators_directors_writers
+    querystring = {"info":"creators_directors_writers"}
+    cdw = requests.get(url, headers=headers, params=querystring)
+    cdw = cdw.json()
+    cdw = cdw["results"]
+    for key in cdw:
+        if key not in movie:
+            movie[key] = cdw[key]
+
+
     # revenue_budget
     # extendedCast
     # rating
