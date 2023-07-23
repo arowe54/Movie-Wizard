@@ -25,6 +25,21 @@ def apology(message, code=400):
     return render_template("apology.html", top=code, bottom=escape(message)), code
 
 
+def get_genres():
+    import requests
+
+    url = "https://moviesdatabase.p.rapidapi.com/titles/utils/genres"
+
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    response = response.json()
+    return response["results"]
+
+
 # Function returns another function
 def login_required(f):
     """
@@ -61,6 +76,7 @@ def lookup(title):
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
+    
 
 def random_movies():
     url = "https://moviesdatabase.p.rapidapi.com/titles/random"
@@ -71,13 +87,11 @@ def random_movies():
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
-    try:
-        response = requests.get(url, headers=headers, params=querystring)
-        response = response.json()
-        # Maybe seed it so you can access previous pages (if possible)
-        return response["results"]
-    except (requests.RequestException, ValueError, KeyError, IndexError):
-        return None
+    response = requests.get(url, headers=headers, params=querystring)
+    response = response.json()
+    # Maybe seed it so you can access previous pages (if possible)
+    return response["results"]
+
 
 # Top 10 movies in box office last weekend
 def top_box_last_weekend():
@@ -89,12 +103,9 @@ def top_box_last_weekend():
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
-    try:
-        response = requests.get(url, headers=headers, params=querystring)
-        response = response.json()
-        return response["results"]
-    except (requests.RequestException, ValueError, KeyError, IndexError):
-        return None
+    response = requests.get(url, headers=headers, params=querystring)
+    response = response.json()
+    return response["results"]
 
 
 # Upcoming movies

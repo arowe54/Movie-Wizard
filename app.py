@@ -46,8 +46,9 @@ def index():
 @app.route("/genres")
 def genres():
     """Get Movies in each genre"""
-    genres = []
+    movies = []
     # Get list of each genre
+    genres = get_genres()
     # Iterate through each genre
     # Find and save movies in that genre
     # Append to list of genres
