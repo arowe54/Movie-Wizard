@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, get_genres, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
+from helpers import all_of_movie, apology, get_genres, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
 
 # Configure application
 app = Flask(__name__)
@@ -98,7 +98,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/movie.html")
+@app.route("/movie")
 def movie():
     """Get information on a specific movie"""
     id = request.form.get("movie_id")
