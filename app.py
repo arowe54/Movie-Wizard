@@ -57,7 +57,7 @@ def genres():
         movies.append(movies_in_genre)
 
     # Send to genres.html
-    return
+    return ("genres.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
