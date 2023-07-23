@@ -17,45 +17,47 @@
     </select>
 </form>
 
+<div class="container-fluid">
+    <h2>{{ genre_selected }}</h2>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Poster</th>
+                <th scope="col">About</th>
+                <th scope="col">Release Date (D/M/Y)</th>
 
-<h2>{{ genre_selected }}</h2>
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th scope="col">Poster</th>
-            <th scope="col">About</th>
-            <th scope="col">Release Date (D/M/Y)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+            <tr>
+                
+                <td>
+                    {% if movie.primaryImage != None %}
+                    <figure>
+                        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+                        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+                    </figure>
+                    {% else %}
+                    <p>Poster Unavailable</p>
+                    {% endif %}
+                </td>
+                <td>
+                    Title: {{ movie.titleText.text }} <br>
+                    Short ID: {{ movie.id }} <br>
+                    Long ID: {{ movie._id }}</td>
+                <td>
+                    {% if movie.releaseDate != None %}
+                        {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                    {% else %}
+                        <p>NA</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-        </tr>
-    </thead>
-    <tbody>
-        {% for movie in movies %}
-        <tr>
-            
-            <td>
-                {% if movie.primaryImage != None %}
-                <figure>
-                    <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                    <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-                </figure>
-                {% else %}
-                <p>Poster Unavailable</p>
-                {% endif %}
-            </td>
-            <td>
-                Title: {{ movie.titleText.text }} <br>
-                Short ID: {{ movie.id }} <br>
-                Long ID: {{ movie._id }}</td>
-            <td>
-                {% if movie.releaseDate != None %}
-                    {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
-                {% else %}
-                    <p>NA</p>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 {% endblock %}
