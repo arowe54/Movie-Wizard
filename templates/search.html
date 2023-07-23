@@ -10,8 +10,12 @@
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Movie Title" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Get Movie</button>
-        <hr>
     </form>
+    <form action="/search" method="post">
+        <input type="hidden" name="Random" value="Random">
+        <button class="btn btn-success" type="submit" name="random">Get Random Movie</button>
+    </form>
+    <hr>
     <table class="table">
         <thead class="table-dark">
             <tr>

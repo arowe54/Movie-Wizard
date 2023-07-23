@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, lookup, random_movies, usd
 
 # Configure application
 app = Flask(__name__)
@@ -118,9 +118,17 @@ def register():
 def search():
     if request.method == "POST":
         """User searched for a movie"""
-        # Lookup movie from title
-        title = request.form.get("title")
-        movies = lookup(title)
+        movies = None
+        # If the user searched for a movie by title
+        if request.form.get("title"):
+            # Lookup movie from title
+            title = request.form.get("title")
+            movies = lookup(title)
+
+        # If user searched for a random movie
+        else:
+            movies = random_movies()    
+        
         if not movies:
             return apology("That movie is not in the database")
         
