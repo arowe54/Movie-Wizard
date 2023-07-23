@@ -50,8 +50,11 @@ def genres():
     # Get list of each genre
     genres = get_genres()
     # Iterate through each genre
-    # Find and save movies in that genre
-    # Append to list of genres
+    for genre in genres:
+        # Find and save movies in that genre to a list of dictionaries
+        movies_in_genre = get_movies_by_genre(genre)
+        # Append to list of all movies to select from
+        movies.append(movies_in_genre)
 
     # Send to genres.html
     return

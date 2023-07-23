@@ -26,8 +26,7 @@ def apology(message, code=400):
 
 
 def get_genres():
-    import requests
-
+    """Get a list of all genres"""
     url = "https://moviesdatabase.p.rapidapi.com/titles/utils/genres"
 
     headers = {
@@ -38,6 +37,27 @@ def get_genres():
     response = requests.get(url, headers=headers, params=querystring)
     response = response.json()
     return response["results"]
+
+
+def get_movies_by_genre(genre):
+    """Get 10 movies in a certain genre"""
+    url = "https://moviesdatabase.p.rapidapi.com/titles"
+
+    querystring = {"genre": genre,"titleType":"movie"}
+
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+
+    # Query API
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
+        # response["results"] is a list of dictionaries, each item is a movie
+        response = response.json()
+        return response["results"]
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        return None
 
 
 # Function returns another function
@@ -70,7 +90,6 @@ def lookup(title):
     # Query API
     try:
         response = requests.get(url, headers=headers, params=querystring)
-
         # response["results"] is a list of dictionaries, each item is a movie
         response = response.json()
         return response["results"]
