@@ -16,6 +16,7 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">Image</th>
                 <th scope="col">Short ID</th>
                 <th scope="col">Long ID</th>
                 <th scope="col">Release Date (D/M/Y)</th>
@@ -26,6 +27,14 @@
             {% for movie in movies %}
             <tr>
                 <td>{{ movie.titleText.text }}</td>
+                <td>
+                    {% if movie.primaryImage != None %}
+                    <figure>
+                        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+                        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+                    </figure>
+                    {% endif %}
+                </td>
                 <td>{{ movie.id }}</td>
                 <td>{{ movie._id }}</td>
                 <td>{{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}</td>
