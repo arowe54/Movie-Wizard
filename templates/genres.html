@@ -9,13 +9,16 @@
 <!--Create Dropdown for genres-->
 <label for="genres">Select A Genre</label>
 
-<select name="genres">
-    {% for genre in genres %}
-        <option value="{{ genre }}">{{ genre }}</option>
-    {% endfor %}
-</select>
+<form action="/genres" method="get" onchange="this.form.submit()">
+    <select name="genre" required autofocus>
+        {% for genre in genres %}
+            <option value="{{ genre }}">{{ genre }}</option>
+        {% endfor %}
+    </select>
+</form>
 
-<!--
+
+<h2>{{ genre_selected }}</h2>
 <table class="table">
     <thead class="table-dark">
         <tr>
@@ -54,5 +57,5 @@
         {% endfor %}
     </tbody>
 </table>
-!-->
+
 {% endblock %}

@@ -34,7 +34,7 @@ def get_genres():
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
 
-    response = requests.get(url, headers=headers, params=querystring)
+    response = requests.get(url, headers=headers)
     response = response.json()
     return response["results"]
 

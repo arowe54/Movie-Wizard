@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
+from helpers import apology, get_genres, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
 
 # Configure application
 app = Flask(__name__)
@@ -49,15 +49,15 @@ def genres():
     movies = []
     # Get list of each genre
     genres = get_genres()
-    # Iterate through each genre
-    for genre in genres:
-        # Find and save movies in that genre to a list of dictionaries
-        movies_in_genre = get_movies_by_genre(genre)
-        # Append to list of all movies to select from
-        movies.append(movies_in_genre)
+    
+    # Get genre selected by the user
+    genre = request.args.get("genre")
 
+     # Find and save movies in that genre to a list of dictionaries
+    movies_in_genre = get_movies_by_genre(genre)
+    
     # Send to genres.html
-    return ("genres.html")
+    return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
