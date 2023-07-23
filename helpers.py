@@ -79,7 +79,23 @@ def random_movies():
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
 
-# Top 10 movies in box office last weekend: list: 3:"top_boxoffice_last_weekend_10"
+# Top 10 movies in box office last weekend
+def top_box_last_weekend():
+    url = "https://moviesdatabase.p.rapidapi.com/titles"
+
+    querystring = {"list":"top_boxoffice_last_weekend_10"}
+
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
+        response = response.json()
+        return response["results"]
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        return None
+
 
 # Upcoming movies
 def upcoming():
@@ -91,15 +107,13 @@ def upcoming():
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
-    
+
     try:
         response = requests.get(url, headers=headers, params=querystring)
         response = response.json()
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
-
-
 
 
 # ex. 1234.56 -> $1,234.56

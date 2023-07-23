@@ -39,7 +39,8 @@ def after_request(response):
 def index():
     """Home Page"""
     upcoming_movies = upcoming()
-    return render_template("index.html", upcoming=upcoming_movies)
+    top_movies_last_wknd = top_box_last_weekend()
+    return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd)
 
 
 @app.route("/login", methods=["GET", "POST"])
