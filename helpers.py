@@ -49,6 +49,10 @@ def all_of_movie(movie_id):
             movie[key] = awards[key]
 
     # filmingLocations
+    querystring = {"info":"filmingLocations"}
+    filming_locations = requests.get(url, headers=headers, params=querystring)
+    filming_locations = filming_locations.json()
+    movie["filming_locations"] = filming_locations["results"]["filmingLocations"]
 
     # Soundtrack
 
