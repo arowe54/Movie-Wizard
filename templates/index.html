@@ -31,9 +31,18 @@
                     {% endif %}
                 </td>
                 <td>
+                    
                     Title: {{ movie.titleText.text }} <br>
                     Short ID: {{ movie.id }} <br>
-                    Long ID: {{ movie._id }}</td>
+                    Long ID: {{ movie._id }}
+                    <!--Click button and it goes to more info about the movie-->
+                    <form action="/movie" method="get" id="movie.id" >
+                        <select hidden name="movie_id" onclick="this.form.submit()">
+                            <option hidden value="{{ movie.id }}" selected></option>
+                        </select>
+                        <button type="submit">More info</button>
+                    </form>
+                </td>
                 <td>
                     {% if movie.releaseDate != None %}
                         {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
@@ -75,7 +84,16 @@
                 <td>
                     Title: {{ movie.titleText.text }} <br>
                     Short ID: {{ movie.id }} <br>
-                    Long ID: {{ movie._id }}</td>
+                    Long ID: {{ movie._id }}
+                    <!--Click button and it goes to more info about the movie-->
+                    <form action="/movie" method="get" id="movie.id" >
+                        <select hidden name="movie_id" onclick="this.form.submit()">
+                            <option hidden value="{{ movie.id }}" selected></option>
+                        </select>
+                        <button type="submit">More info</button>
+                    </form>
+                </td>
+                    
                 <td>
                     {% if movie.releaseDate != None %}
                         {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
