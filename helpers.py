@@ -47,14 +47,6 @@ def all_of_movie(movie_id):
     for key in awards:
         if key not in movie:
             movie[key] = awards[key]
-    
-    # Trailer (videoStrip)
-    querystring = {"info":"videoStrip"}
-    trailer = requests.get(url, headers=headers, params=querystring)
-    trailer = trailer.json()
-    movie["trailer"] = trailer["results"]["videoStrip"]["edges"][0]["node"]
-    
-
 
     # filmingLocations
 
