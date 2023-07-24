@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     <!--Click ID and it goes to more info about the movie-->
-                    <form action="/movie" method="post" id="movie.id" >
+                    <form action="/movie" method="get" id="movie.id" >
                         <select hidden name="movie_id" onchange="this.form.submit()">
                             <option hidden value="{{ movie.id }}" selected></option>
                         </select>
