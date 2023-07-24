@@ -34,6 +34,9 @@
                     <h4>Awards</h4>
                     <p>Nominations: {{ movie.nominations.total }}</p>
                     <p>Wins: {{ movie.wins.total }}</p>
+                    <h6>Oscars:</h6>
+                    <p>Wins: {{ movie.prestigiousAwardSummary.wins }}</p>
+                    <p>Nominations: {{ movie.prestigiousAwardSummary.nominations }}</p>
                 </div>
                 <div class="col">
                     <h4>Revenue and Budget</h4>
@@ -49,6 +52,24 @@
                 <p>
                     {{ movie.plot.plotText.plainText }}
                 </p>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h4>Ratings</h4>
+                    <p>Meter Ranking: {{ movie.meterRanking.currentRank }}</p>
+                    <p>
+                        Change: {{ movie.meterRanking.rankChange.changeDirection }} {{ movie.meterRanking.rankChange.difference }}
+                    </p>
+                </div>
+                <div class="col">
+                    <h4>Runtime</h4>
+                    <p>{{ movie.runtime.seconds }} seconds</p>
+                </div>
+                <div class="col">
+                    <h4>Movie ID: </h4>
+                    <p>{{ movie.id }}</p>
+                </div>
             </div>
             <hr>
         </div>
