@@ -161,12 +161,16 @@
 </div>
 <div class="container-fluid">
     <h3>More like this</h3>
+    {% if movie.moreLikeThisTitles != None %}
     <!--Create a card for each movie-->
+    {% else %}
+    Not available
+    {% endif %}
 </div>
 
 
 
-<!--Print json of the movie-->
+<!--
 {% for key in movie %}
     <p>{{ key }} : 
         {% if movie[key] != None and movie[key] is mapping %}
@@ -178,5 +182,6 @@
         {% endif %}
     </p><br><br>
 {% endfor %}
+-->
 
 {% endblock %}
