@@ -62,8 +62,17 @@ def all_of_movie(movie_id):
 
 
     # countriesOfOrigin (maybe add flag icons)
+    querystring = {"info":"countriesOfOrigin"}
+    countries = requests.get(url, headers=headers, params=querystring)
+    countries = countries.json()
+    movie["countriesOfOrigin"] = countries["results"]["countriesOfOrigin"]["countries"]
+
 
     # Spoken Languages
+    querystring = {"info":"spokenLanguages"}
+    langs = requests.get(url, headers=headers, params=querystring)
+    langs = langs.json()
+    movie["languages"] = langs["results"]["spokenLanguages"]["spokenLanguages"]
 
     # moreLikeThisTitles (just get a list of ids)
 

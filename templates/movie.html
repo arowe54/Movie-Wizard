@@ -130,7 +130,7 @@
         <h6>Total: {{ movie.filming_locations.total }}</h6>
         <h6>Known Locations: </h6>
         {% for location in movie.filming_locations.edges %}
-            <p>Filming Location : {{ location.node.text }}</p>
+            <p>{{ location.node.text }}</p>
         {% endfor %}
     </div>
     <hr>
@@ -142,6 +142,20 @@
                 <p>{{ comment.plaidHtml }}</p>
             {% endfor %}
         {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col">
+            <h4>Countries of Origin</h4>
+            {% for country in movie.countriesOfOrigin %}
+                <p>{{ country.text }}</p>
+            {% endfor %}
+        </div>
+        <div class="col">
+            <h4>Spoken Languages</h4>
+            {% for lang in movie.languages %}
+                <p>{{ lang.text }}</p>
+            {% endfor %}
+        </div>
     </div>
     <hr>
 </div>
