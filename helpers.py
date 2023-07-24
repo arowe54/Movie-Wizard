@@ -55,12 +55,17 @@ def all_of_movie(movie_id):
     movie["filming_locations"] = filming_locations["results"]["filmingLocations"]
 
     # Soundtrack
+    querystring = {"info":"soundtrack"}
+    soundtrack = requests.get(url, headers=headers, params=querystring)
+    soundtrack = soundtrack.json()
+    movie["soundtrack"] = soundtrack["results"]["soundtrack"]["edges"]
+
 
     # countriesOfOrigin (maybe add flag icons)
 
     # Spoken Languages
 
-    # moreLikeThisTitles
+    # moreLikeThisTitles (just get a list of ids)
 
     return movie
 
