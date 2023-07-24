@@ -30,23 +30,27 @@
                 <hr>
             </div>
             <div class="row">
-                <h4>Awards</h4>
-                <p>Nominations: {{ movie.nominations.total }}</p>
-                <p>Wins: {{ movie.wins.total }}</p>
+                <div class="col">
+                    <h4>Awards</h4>
+                    <p>Nominations: {{ movie.nominations.total }}</p>
+                    <p>Wins: {{ movie.wins.total }}</p>
+                </div>
+                <div class="col">
+                    <h4>Revenue and Budget</h4>
+                    <p>Production Budget: {{ movie.productionBudget.budget.amount | usd }}</p>
+                    <p>Opening Weekend: {{ movie.openingWeekendGross.gross.total.amount | usd }}</p>
+                    <p>Lifetime: {{ movie.lifetimeGross.total.amount | usd }}</p>
+                    <p>Worldwide: {{ movie.worldwideGross.total.amount | usd }}</p>
+                </div>
             </div>
+            <hr>
             <div class="row">
                 <h4>Plot</h4>
                 <p>
                     {{ movie.plot.plotText.plainText }}
                 </p>
             </div>
-            <div class="row">
-                <h4>Revenue and Budget</h4>
-                <p>Production Budget: {{ movie.productionBudget.budget.amount | usd }}</p>
-                <p>Opening Weekend: {{ movie.openingWeekendGross.gross.total.amount | usd }}</p>
-                <p>Lifetime: {{ movie.lifetimeGross.total.amount | usd }}</p>
-                <p>Worldwide: {{ movie.worldwideGross.total.amount | usd }}</p>
-            </div>
+            <hr>
         </div>
     </div>
     
