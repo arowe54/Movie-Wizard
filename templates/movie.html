@@ -8,20 +8,45 @@
 
 <div class="container-fluid" >
     <div class="row">
+        <!--One column for poster/title-->
         <div class="col">
             <h2>Title: {{ movie.titleText.text }}</h2>
             <figure>
                 <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
                 <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
             </figure>
+            <hr>
         </div>
+        <!--Info on the right-->
         <div class="col">
-            <h4>Genres: </h4>
-            <p>
-                {% for genre in movie.genres.genres %}
-                    {{ genre["text"] }},
-                {% endfor %}
-            </p>
+            <!-- Rows inside this column-->
+            <div class="row">
+                <h4>Genres: </h4>
+                <p>
+                    {% for genre in movie.genres.genres %}
+                        {{ genre["text"] }},
+                    {% endfor %}
+                </p>
+                <hr>
+            </div>
+            <div class="row">
+                <h4>Awards</h4>
+                <p>Nominations: {{ movie.nominations.total }}</p>
+                <p>Wins: {{ movie.wins.total }}</p>
+            </div>
+            <div class="row">
+                <h4>Plot</h4>
+                <p>
+                    {{ movie.plot.plotText }}
+                </p>
+            </div>
+            <div class="row">
+                <h4>Revenue and Budget</h4>
+                <p>Production Budget: {{ movie.productionBudget }}</p>
+                <p>Opening Weekend: {{ movie.openingWeekendGross }}</p>
+                <p>Lifetime: {{ movie.lifetimeGross }}</p>
+                <p>Worldwide: {{ movie.worldwideGross }}</p>
+            </div>
         </div>
     </div>
     
