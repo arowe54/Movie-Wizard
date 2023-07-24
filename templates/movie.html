@@ -10,11 +10,15 @@
     <div class="row">
         <!--One column for poster/title-->
         <div class="col">
-            <h2>Title: {{ movie.titleText.text }}</h2>
-            <figure>
-                <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-            </figure>
+            <h2>{{ movie.titleText.text }}</h2>
+            {% if movie.primaryImage != None %}
+                    <figure>
+                        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+                        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+                    </figure>
+                    {% else %}
+                    <p>Poster Unavailable</p>
+            {% endif %}
             <hr>
         </div>
         <!--Info on the right-->
@@ -40,31 +44,67 @@
                 </div>
                 <div class="col">
                     <h4>Revenue and Budget</h4>
-                    <p>Production Budget: {{ movie.productionBudget.budget.amount | usd }}</p>
-                    <p>Opening Weekend: {{ movie.openingWeekendGross.gross.total.amount | usd }}</p>
-                    <p>Lifetime: {{ movie.lifetimeGross.total.amount | usd }}</p>
-                    <p>Worldwide: {{ movie.worldwideGross.total.amount | usd }}</p>
+                    <p>Production Budget: 
+                        {% if movie.productionBudget != None %}
+                            {{ movie.productionBudget.budget.amount | usd }}
+                        {% else %}
+                            NA
+                        {% endif %}
+                    </p>
+                    <p>Opening Weekend: 
+                    {% if movie.openingWeekendGross != None %}
+                        {{ movie.openingWeekendGross.gross.total.amount | usd }}
+                    {% else %}
+                        NA
+                    {% endif %}
+                    </p>
+                    <p>Lifetime: 
+                    {% if movie.lifetimeGross != None %}
+                        {{ movie.lifetimeGross.total.amount | usd }}
+                    {% else %}
+                        NA
+                    {% endif %}
+                    </p>
+                    <p>Worldwide: 
+                    {% if movie.worldwideGross != None %}
+                        {{ movie.worldwideGross.total.amount | usd }}
+                    {% else %}
+                        NA
+                    {% endif %}
+                    </p>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <h4>Plot</h4>
                 <p>
-                    {{ movie.plot.plotText.plainText }}
+                    {% if movie.plot != None %}
+                        {{ movie.plot.plotText.plainText }}
+                    {% else %}
+                        Plot Unavailable (mystery movie)
+                    {% endif %}
                 </p>
             </div>
             <hr>
             <div class="row">
                 <div class="col">
                     <h4>Ratings</h4>
-                    <p>Meter Ranking: {{ movie.meterRanking.currentRank }}</p>
-                    <p>
-                        Change: {{ movie.meterRanking.rankChange.changeDirection }} {{ movie.meterRanking.rankChange.difference }}
-                    </p>
+                    {% if movie.meterRanking != None %}
+                        <p>Meter Ranking: {{ movie.meterRanking.currentRank }}</p>
+                        <p>
+                            Change: {{ movie.meterRanking.rankChange.changeDirection }} {{ movie.meterRanking.rankChange.difference }}
+                        </p>
+                    {% else %}
+                        Unavailable
+                    {% endif %}
                 </div>
                 <div class="col">
                     <h4>Runtime</h4>
+                    {% if movie.runtime != None %}
                     <p>{{ movie.runtime.seconds }} seconds</p>
+                    {% else %}
+                        NA
+                    {% endif %}
                 </div>
                 <div class="col">
                     <h4>Movie ID: </h4>
@@ -88,7 +128,6 @@
         <h4>Soundtrack</h4>
         {% for song in movie.soundtrack %}
             <p>Title: {{ song.node.text }}</p>
-            <p>Comments:</p>
             {% for comment in song.node.comments %}
                 <p>{{ comment.plaidHtml }}</p>
             {% endfor %}
