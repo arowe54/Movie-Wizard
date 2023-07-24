@@ -77,8 +77,12 @@
     <hr>
     <div class="row">
         <h4>Filming Locations</h4>
-
+        <h6>Total: {{ movie.filming_locations.total }}</h6>
+        {% for location in movie.filming_locations.edges %}
+            <p>Filming Location : {{ location.node.text }}</p>
+        {% endfor %}
     </div>
+    <hr>
 </div>
 
 
