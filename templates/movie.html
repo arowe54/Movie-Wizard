@@ -42,10 +42,10 @@
             </div>
             <div class="row">
                 <h4>Revenue and Budget</h4>
-                <p>Production Budget: {{ movie.productionBudget }}</p>
-                <p>Opening Weekend: {{ movie.openingWeekendGross }}</p>
-                <p>Lifetime: {{ movie.lifetimeGross }}</p>
-                <p>Worldwide: {{ movie.worldwideGross }}</p>
+                <p>Production Budget: {{ movie.productionBudget.budget.amount | usd }}</p>
+                <p>Opening Weekend: {{ movie.openingWeekendGross.gross.total.amount | usd }}</p>
+                <p>Lifetime: {{ movie.lifetimeGross.total.amount | usd }}</p>
+                <p>Worldwide: {{ movie.worldwideGross.total.amount | usd }}</p>
             </div>
         </div>
     </div>
