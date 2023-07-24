@@ -75,6 +75,11 @@ def all_of_movie(movie_id):
     movie["languages"] = langs["results"]["spokenLanguages"]["spokenLanguages"]
 
     # moreLikeThisTitles (just get a list of ids)
+    querystring = {"info":"moreLikeThisTitles"}
+    similar = requests.get(url, headers=headers, params=querystring)
+    similar = similar.json()
+    movie["moreLikeThisTitles"] = similar["results"]["moreLikeThisTitles"]["edges"]
+
 
     return movie
 
