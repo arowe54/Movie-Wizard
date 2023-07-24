@@ -110,6 +110,16 @@
                     <h4>Movie ID: </h4>
                     <p>{{ movie.id }}</p>
                 </div>
+                <div class="col">
+                    <h4>Release Date: </h4>
+                    <h5>
+                        {% if movie.releaseDate != None %}
+                            {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                        {% elif movie.releaseYear != None %}
+                            {{ movie.releaseYear.year}}
+                        {% endif %}
+                    </h5>
+                </div>
             </div>
             <hr>
         </div>
@@ -138,7 +148,7 @@
 
 
 
-
+<!--Print json of the movie-->
 {% for key in movie %}
     <p>{{ key }} : 
         {% if movie[key] != None and movie[key] is mapping %}
