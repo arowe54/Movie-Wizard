@@ -84,6 +84,17 @@
         {% endfor %}
     </div>
     <hr>
+    <div class="row">
+        <h4>Soundtrack</h4>
+        {% for song in movie.soundtrack %}
+            <p>Title: {{ song.node.text }}</p>
+            <p>Comments:</p>
+            {% for comment in song.node.comments %}
+                <p>{{ comment.plaidHtml }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <hr>
 </div>
 
 
