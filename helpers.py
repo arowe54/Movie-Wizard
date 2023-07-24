@@ -29,16 +29,6 @@ def all_of_movie(movie_id):
             # Record it
             movie[key] = base_info[key]
 
-    
-    # creators_directors_writers
-    querystring = {"info":"creators_directors_writers"}
-    cdw = requests.get(url, headers=headers, params=querystring)
-    cdw = cdw.json()
-    cdw = cdw["results"]
-    for key in cdw:
-        if key not in movie:
-            movie[key] = cdw[key]
-
 
     # revenue_budget
     querystring = {"info":"revenue_budget"}
