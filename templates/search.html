@@ -61,7 +61,7 @@
                         {% if movie.id in movies_in_watchlist %}
                         <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onchange="removeFromWatchlist()" checked>
                         {% else %}
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="addToWatchlist(document.getElementByID('u.id').innerHTML, document.getElementByID('m.id').innerHTML)">
+                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="addToWatchlist()">
                         <!--{{ id|tojson|safe }}, {{ movie.id|tojson|safe }}-->
                         {% endif %}
                     </form>
