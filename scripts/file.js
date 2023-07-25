@@ -3,7 +3,6 @@ const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./db/movies.db');
 
 const movie_id = document.getElementByID('user_id').value;
-
 const user_id = document.getElementByID('movie_id').value;
 
 function addToWatchlist() {
@@ -29,3 +28,10 @@ function removeFromWatchlist() {
 db.close();
 
 // Might need to make the functions update the database and page asynchronously
+
+// use jQuery instead
+
+// select the element
+// change the database when clicked
+
+// Use AJAX

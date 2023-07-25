@@ -52,12 +52,7 @@
                     </form>
 
                     <!--Button that adds movie to watchlist, doesn't get or post (asynchronous?)(javascript updates sql table), checkbox-->
-                    <form action="/watchlist">
-                        <p hidden id="m.id">{{ movie.id }}</p>
-                        <p hidden id="u.id">{{ id }}</p>
-                        <input hidden type="number" name="user_id" id="user_id" value="{{ id }}">
-                        <input hidden type="text" id="movie_id" value="{{ movie.id }}">
-                        <!--movies_in_watchlist is a list of dictionaries, each item has one key ex. movie["movie_id"] == movies_in_watchlist[i]["movie_id"] for all i in len(movies_in_watchlist)-->
+                    <form action="/watchlist">                        
                         {% if movie.id in movies_in_watchlist %}
                         <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onchange="removeFromWatchlist()" checked>
                         {% else %}
