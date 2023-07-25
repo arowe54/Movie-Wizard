@@ -40,7 +40,13 @@ def index():
     """Home Page"""
     upcoming_movies = upcoming()
     top_movies_last_wknd = top_box_last_weekend()
-    movies_in_watchlist = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
+
+    # Get movies in watchlist
+    rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
+    movies_in_watchlist=[]
+    # Update list of 1-key dictionaries to just 1 list of values
+    for movie in rows:
+        movies_in_watchlist.append(movie["movie_id"])
 
     return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd, movies_in_watchlist=movies_in_watchlist)
 
@@ -162,7 +168,12 @@ def search():
             return apology("That movie is not in the database")
         
         # Get movies in watchlist
-        movies_in_watchlist = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
+        rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
+        movies_in_watchlist=[]
+        # Update list of 1-key dictionaries to just 1 list of values
+        for movie in rows:
+            movies_in_watchlist.append(movie["movie_id"])
+        
         # Display result
         return render_template("search.html", movies=movies, movies_in_watchlist=movies_in_watchlist)
     else:
