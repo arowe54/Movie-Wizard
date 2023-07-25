@@ -159,52 +159,50 @@
     <hr>
 </div>
 
-<div class="container-fluid">
-    <h3>More like this</h3>
-    {% if movie.moreLikeThisTitles != None %}
-        <!--Create a card for each movie-->
-        <div class="card-deck d-inline-flex">
-            {% for movie in movie.moreLikeThisTitles %}
-            <div class="card container-fluid">
+<h3>More like this</h3>
+{% if movie.moreLikeThisTitles != None %}
+    <!--Create a card for each movie-->
+    <div class="card-deck d-inline-flex">
+        {% for movie in movie.moreLikeThisTitles %}
+        <div class="card container-fluid">
 
-                {% if movie.primaryImage != None %}
-                    <img class="card-img-top" src="{{ movie.node.primaryImage.url }}" alt="Movie Poster">
+            {% if movie.primaryImage != None %}
+                <img class="card-img-top" src="{{ movie.node.primaryImage.url }}" alt="Movie Poster">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.node.titleText.text }}</h5>
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Release Year: {{ movie.node.releaseYear.year }}</li>
+                {% if movie.node.ratingsSummary != None %}
+                <li class="list-group-item">
+                    Rating: {{ movie.node.ratingsSummary.aggregateRating }}/10, 
+                    Votes: {{ movie.node.ratingsSummary.voteCount }}
+                </li>
                 {% endif %}
+                {% if movie.runtime != None %}
+                <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds }} seconds</li>
+                {% endif %}
+            </ul>
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ movie.node.titleText.text }}</h5>
-                </div>
+            <div class="card-footer">
+                <!--Click button and it goes to more info about the movie-->
+                <form action="/movie" method="get" id="movie.id" >
+                    <select hidden name="movie_id" onchange="this.form.submit()">
+                        <option hidden value="{{ movie.node.id }}" selected></option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">More info</button>
+                </form>
+            </div>
 
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Release Year: {{ movie.node.releaseYear.year }}</li>
-                    {% if movie.node.ratingsSummary != None %}
-                    <li class="list-group-item">
-                        Rating: {{ movie.node.ratingsSummary.aggregateRating }}/10, 
-                        Votes: {{ movie.node.ratingsSummary.voteCount }}
-                    </li>
-                    {% endif %}
-                    {% if movie.runtime != None %}
-                    <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds }}</li>
-                    {% endif %}
-                </ul>
-
-                <div class="card-footer">
-                    <!--Click button and it goes to more info about the movie-->
-                    <form action="/movie" method="get" id="movie.id" >
-                        <select hidden name="movie_id" onchange="this.form.submit()">
-                            <option hidden value="{{ movie.node.id }}" selected></option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">More info</button>
-                    </form>
-                </div>
-
-            </div>     
-            {% endfor %}
-        </div>
-    {% else %}
-        Not available
-    {% endif %}
-</div>
+        </div>     
+        {% endfor %}
+    </div>
+{% else %}
+    Not available
+{% endif %}
 
 
 
