@@ -2,15 +2,25 @@ var user_id = document.getElementByID('user_id').innerHTML;
 
 
 $(document).ready(function(){
+    // Open database connection
+    const sqlite3 = require('sqlite3').verbose();
+    let db = new sqlite3.Database('./movies.db', (err) => {
+        if (err) {
+            console.error(err.message);
+          }
+          console.log('Connected to the movies database.');
+    });
+
+    // Close database connection
+    db.close();
+
     // every time the checkbox is clicked
     $(".form-check-input").click(function() {
         // Save the movie id
         var movie_id = $(this).val();
         
-        // Open database connection
-        const sqlite3 = require('sqlite3').verbose();
-        let db = new sqlite3.Database('./db/movies.db');
-        // Update the database
+        
+          
         // If the checkbox is already checked (being unchecked)
         if (this.checked){
             // Remove movie from watchlist
@@ -32,8 +42,7 @@ $(document).ready(function(){
                 }
             });
         }
-        // Close database connection
-        db.close();
+        
     })
 })
 
