@@ -1,3 +1,19 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const sqlite3 = require('sqlite3').verbose();
 // Open a database connection
 let db = new sqlite3.Database('./db/movies.db');

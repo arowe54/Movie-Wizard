@@ -107,9 +107,12 @@ def get_genres():
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
 
-    response = requests.get(url, headers=headers)
-    response = response.json()
-    return response["results"]
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
+        response = response.json()
+        return response["results"]
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        return None
 
 
 def get_movies_by_genre(genre):
@@ -195,9 +198,12 @@ def top_box_last_weekend():
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
-    response = requests.get(url, headers=headers, params=querystring)
-    response = response.json()
-    return response["results"]
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
+        response = response.json()
+        return response["results"]
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        return None
 
 
 # Upcoming movies

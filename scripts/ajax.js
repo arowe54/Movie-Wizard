@@ -16,11 +16,12 @@ ajax.onreadystatechange = function() {
     if (ajax.readyState == 4 && ajax.status == 200){
         $(document).ready(function(){
             // every time the checkbox is clicked
-            $('.form-check-input').click(function(event) {
+            $('.form-check-input').click(function() {
                 // Save the movie id
                 var movie_id = $(this).val();
                 // Update the database
                 // If the checkbox is being checked
+                if (this.checked){
                     // Add movie to database
                     ids = [user_id, movie_id, user_id];
                     db.run("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?) WHERE user_id = ?", ids, function(err) {
@@ -29,6 +30,7 @@ ajax.onreadystatechange = function() {
                             return console.error(err.message);
                         }
                     });
+                }
                 // If it is being unchecked
                     // Remove movie from database
             })
