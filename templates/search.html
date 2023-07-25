@@ -53,13 +53,38 @@
 
                     <!--Button that adds movie to watchlist, doesn't get or post (asynchronous?)(javascript updates sql table), checkbox-->
                     <form action="/watchlist">
+                        <input hidden type="number" name="user_id" id="user_id" value="{{ id }}">
                         <!--movies_in_watchlist is a list of dictionaries, each item has one key ex. movie["movie_id"] == movies_in_watchlist[i]["movie_id"] for all i in len(movies_in_watchlist)-->
                         {% if movie.id in movies_in_watchlist %}
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="removeFromWatchlist()" checked>
+                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="removeFromWatchlist(document.getElementByID('user_id').value, document.getElementByID('movie_id').value)" checked>
                         {% else %}
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="addToWatchlist()">
+                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="addToWatchlist(document.getElementByID('user_id').value, document.getElementByID('movie_id').value)">
                         {% endif %}
                     </form>
+                    <script>
+                        const sqlite3 = require('sqlite3').verbose();
+
+                        // Open a database connection
+                        let db = new sqlite3.Database('./db/sample.db');
+
+                        function addToWatchlist(user_id, movie_id) {
+                            params = [user_id, movie_id, user_id]
+                            db.run("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?) WHERE user_id = ?;", params, function(err) {
+                                // Print message if couldn't update table
+                                if (err) {
+                                    return console.error(err.message);
+                                }
+                            });
+                        }
+
+                        function removeFromWatchlist() {
+
+                        }
+
+                        // Close database connection
+                        db.close();
+
+                    </script>
                 
                 </td>
                 <td>
