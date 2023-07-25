@@ -40,7 +40,9 @@ def index():
     """Home Page"""
     upcoming_movies = upcoming()
     top_movies_last_wknd = top_box_last_weekend()
-    return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd)
+    movies_in_watchlist = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
+
+    return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd, movies_in_watchlist=movies_in_watchlist)
 
 
 @app.route("/genres")
@@ -159,7 +161,9 @@ def search():
         if not movies:
             return apology("That movie is not in the database")
         
+        # Get movies in watchlist
+        movies_in_watchlist = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", session["user_id"])
         # Display result
-        return render_template("search.html", movies=movies)
+        return render_template("search.html", movies=movies, movies_in_watchlist=movies_in_watchlist)
     else:
         return render_template("search.html")
