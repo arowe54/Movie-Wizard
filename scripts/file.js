@@ -23,3 +23,5 @@ function removeFromWatchlist(user_id, movie_id) {
 
 // Close database connection
 db.close();
+
+// Might need to make the functions update the database and page asynchronously
