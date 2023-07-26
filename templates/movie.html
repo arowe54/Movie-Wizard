@@ -125,16 +125,16 @@
     <hr>
     <div class="row">
         <h4>Filming Locations</h4>
-        <h6>Total: {{ movie.filming_locations.total }}</h6>
+        <h6>Total: {{ movie.filmingLocations.total }}</h6>
         <h6>Known Locations: </h6>
-        {% for location in movie.filming_locations.edges %}
+        {% for location in movie.filmingLocations.edges %}
             <p>{{ location.node.text }}</p>
         {% endfor %}
     </div>
     <hr>
     <div class="row">
         <h4>Soundtrack</h4>
-        {% for song in movie.soundtrack %}
+        {% for song in movie.soundtrack.edges %}
             <p>Title: {{ song.node.text }}</p>
             {% for comment in song.node.comments %}
                 <p>{{ comment.plaidHtml }}</p>
@@ -145,13 +145,13 @@
     <div class="row">
         <div class="col">
             <h4>Countries of Origin</h4>
-            {% for country in movie.countriesOfOrigin %}
+            {% for country in movie.countriesOfOrigin.countries %}
                 <p>{{ country.text }}</p>
             {% endfor %}
         </div>
         <div class="col">
             <h4>Spoken Languages</h4>
-            {% for lang in movie.languages %}
+            {% for lang in movie.spokenLanguages.spokenLanguages %}
                 <p>{{ lang.text }}</p>
             {% endfor %}
         </div>
@@ -163,7 +163,7 @@
 {% if movie.moreLikeThisTitles != None %}
     <!--Create a card for each movie-->
     <div class="card-deck d-inline-flex">
-        {% for movie in movie.moreLikeThisTitles %}
+        {% for movie in movie.moreLikeThisTitles.edges %}
         <div class="card container-fluid">
 
             {% if movie.primaryImage != None %}
