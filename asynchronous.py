@@ -1,4 +1,6 @@
 import time
+import requests
+
 
 # Make parallel requests in python
 import aiohttp
@@ -16,7 +18,7 @@ def get_genres():
     }
 
     try:
-        response = requests.get(url, headers=headers, params=querystring)
+        response = requests.get(url, headers=headers)
         response = response.json()
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):

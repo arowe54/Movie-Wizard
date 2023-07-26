@@ -6,32 +6,18 @@ also
 --- 4.432221174240112 seconds ---
 --- 5.2896435260772705 seconds ---
 
-code for without task group:
-    async def fetch(session, url, headers, querystring):
-        async with session.get(url, headers=headers, params=querystring) as resp:
-            result = await resp.json()
-            result = result["results"]
-            for key in result:
-                if key not in movie:
-                    movie[key] = result[key]
- 
-    async def main():
-        async with aiohttp.ClientSession() as session:
-            url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
-            headers = {
-                "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
-                "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
-            }
-            querystring = {"info":"base_info"}
-            await fetch(session, url, headers, querystring)
-
-            etc...
-
-
 --- 1.0862269401550293 seconds --- with asyncio.TaskGroup() for Iron Man
 also
 --- 0.7807831764221191 seconds ---
 --- 0.7769775390625 seconds ---
 always less than 1 second
+
+
+Without async
+0.7872354984283447 seconds + 0.735297441482544 seconds for Homepage == 1.5225329399108887
+also
+--- 1.2754430770874023 seconds +  0.9045412540435791 seconds == 2.1799843311309814
+1.1314914226531982 + --- 0.9453623294830322 seconds --- == 2.0768537521362305
+roughly 1.5-2 seconds homepage
 
 
