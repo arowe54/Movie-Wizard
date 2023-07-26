@@ -82,3 +82,32 @@ def all_of_movie(movie_id):
 
 
     return movie
+
+
+# Execute all requests in parallel
+def x_all_of_movie(movie_id):
+    url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+
+    movie = {}
+    q1 = {"info": "base_info", "revenue_budget", "awards"}
+    q2 = {"info": "revenue_budget"}
+    ##q3 = {"info": "awards"}
+    ##queries = [q1, q2, q3]
+
+    try:
+        response = requests.get(url, headers=headers, params=q1)
+        response = response.json()
+        print()
+        response = response["results"]
+        print(response)
+        print()
+        for key in response:
+            if key not in movie:
+                movie[key] = response[key]
+        return movie
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        return None
