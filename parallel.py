@@ -2,7 +2,7 @@
 import aiohttp
 import asyncio
 
-def get_all_info(movie_id)
+def get_all_info(movie_id):
     async def main():
         async with aiohttp.ClientSession() as session:
             url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
@@ -14,9 +14,7 @@ def get_all_info(movie_id)
             querystring = {"info":"base_info"}
             async with session.get(url, headers=headers, params=querystring) as resp:
                 # Response to query 1
-                print(resp.status)
-                print(await resp.text())
-                print(await resp.json())
+                info = await resp.json()
             # Get request 2 asynchronously
             
 

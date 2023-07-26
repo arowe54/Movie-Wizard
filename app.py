@@ -10,6 +10,7 @@ from datetime import date
 
 from helpers import apology, get_genres, get_movies_by_list_ids, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
 from complete_movie import all_of_movie
+from parallel import get_all_info
 
 # Configure application
 app = Flask(__name__)
@@ -114,6 +115,8 @@ def movie():
     """Get information on a specific movie"""
     id = request.args.get("movie_id")
     movie = all_of_movie(id)
+
+    get_all_info(id)
 
     return render_template("movie.html", movie=movie)
 

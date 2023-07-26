@@ -84,6 +84,7 @@ def all_of_movie(movie_id):
     return movie
 
 
+"""
 # Execute all requests in parallel
 def x_all_of_movie(movie_id):
     url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
@@ -111,3 +112,5 @@ def x_all_of_movie(movie_id):
         return movie
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
+
+"""
