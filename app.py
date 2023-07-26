@@ -184,3 +184,7 @@ def search():
         return render_template("search.html", movies=movies, movies_in_watchlist=movies_in_watchlist, id=user_id)
     else:
         return render_template("search.html")
+    
+@app.route("/watchlist")
+def watchlist():
+    return render_template("watchlist.html")
