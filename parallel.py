@@ -6,8 +6,8 @@ def get_all_info(movie_id):
     # Get a request from a url with current parameters
     async def fetch(session, url, headers, querystring):
         async with session.get(url, headers=headers, params=querystring) as resp:
-            # Only get the text of the request for now
-            return await resp.text()
+            result = await resp.json()
+            return result["results"]
         
     async def main():
         async with aiohttp.ClientSession() as session:
@@ -17,16 +17,16 @@ def get_all_info(movie_id):
                 "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
             }
             movie = {}
-            
+
             # get request 1
             querystring = {"info":"base_info"}
-            base_info = fetch(session, url, headers, querystring)
+            base_info = await fetch(session, url, headers, querystring)
             print(base_info)
             print()
 
             # Get request 2 asynchronously
             q2 = {"info":"revenue_budget"}
-            rev_budget = fetch(session, url, headers, q2)
+            rev_budget = await fetch(session, url, headers, q2)
             print(rev_budget)
             print()
 
