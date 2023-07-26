@@ -14,8 +14,7 @@ def get_all_info(movie_id):
             for key in result:
                 if key not in movie:
                     movie[key] = result[key]
-
-       
+ 
     async def main():
         async with aiohttp.ClientSession() as session:
             url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
@@ -29,8 +28,27 @@ def get_all_info(movie_id):
             await fetch(session, url, headers, querystring)
 
             # Get request 2 asynchronously
-            q2 = {"info":"revenue_budget"}
-            await fetch(session, url, headers, q2)
+            querystring = {"info":"revenue_budget"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"awards"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"filmingLocations"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"soundtrack"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"countriesOfOrigin"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"spokenLanguages"}
+            await fetch(session, url, headers, querystring)
+
+            querystring = {"info":"moreLikeThisTitles"}
+            await fetch(session, url, headers, querystring)
+
             
     asyncio.run(main())
-    print(movie)
+    return movie
