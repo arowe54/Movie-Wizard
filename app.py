@@ -8,8 +8,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, get_genres, get_movies_by_list_ids, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
-from parallel import get_all_info
+from helpers import apology, login_required, usd
+from asynchronous import get_genres, get_movies_by_list_ids, get_movies_by_genre, lookup, random_movies, top_box_last_weekend, upcoming
+from complete-movie import get_all_info
 
 # Configure application
 app = Flask(__name__)

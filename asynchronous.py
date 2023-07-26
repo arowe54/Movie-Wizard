@@ -4,6 +4,7 @@ import time
 import aiohttp
 import asyncio
 
+# TODO: Convert functions to asynchronous
 
 def get_genres():
     """Get a list of all genres"""
@@ -95,6 +96,7 @@ def random_movies():
 
 # Top 10 movies in box office last weekend
 def top_box_last_weekend():
+    start_time = time.time()
     url = "https://moviesdatabase.p.rapidapi.com/titles"
 
     querystring = {"list":"top_boxoffice_last_weekend_10"}
@@ -106,6 +108,7 @@ def top_box_last_weekend():
     try:
         response = requests.get(url, headers=headers, params=querystring)
         response = response.json()
+        print("--- %s seconds ---" % (time.time() - start_time))
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
@@ -113,6 +116,7 @@ def top_box_last_weekend():
 
 # Upcoming movies
 def upcoming():
+    start_time = time.time()
     url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
 
     querystring = {"titleType":"movie","endYear":"2025","startYear":"2023"}
@@ -125,6 +129,8 @@ def upcoming():
     try:
         response = requests.get(url, headers=headers, params=querystring)
         response = response.json()
+        print("--- %s seconds ---" % (time.time() - start_time))
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
+    
