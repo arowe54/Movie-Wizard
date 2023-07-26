@@ -41,6 +41,20 @@ def get_genres():
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
 
+def get_movies_by_list_ids(movies):
+
+    url = "https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids"
+
+    querystring = {"idsList": movies}
+
+    headers = {
+        "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
+        "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    response = response.json()
+    return response["results"]
 
 def get_movies_by_genre(genre):
     """Get 10 movies in a certain genre"""

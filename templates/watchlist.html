@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Watchlist
+{% endblock %}
+
+{% block main %}
+<h1>Movies to Watch</h1>
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Poster</th>
+            <th scope="col">About</th>
+            <th scope="col">Release Date (D/M/Y)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <!--User id (for ajax checkbox later)-->
+        <p hidden id="user_id">{{ id }}</p>
+        {% for movie in movies %}
+        <tr>
+            
+            <td>
+                {% if movie.primaryImage != None %}
+                <figure>
+                    <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+                    <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+                </figure>
+                {% else %}
+                <p>Poster Unavailable</p>
+                {% endif %}
+            </td>
+            <td>
+                Title: {{ movie.titleText.text }} <br>
+                Short ID: {{ movie.id }}  <br>
+                Long ID: {{ movie._id }}
+                <!--Click button and it goes to more info about the movie-->
+                <form action="/movie" method="get" >
+                    <select hidden name="movie_id" onchange="this.form.submit()">
+                        <option hidden value="{{ movie.id }}" selected></option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">More info</button>
+                </form>
+
+                <!--Button that adds movie to watchlist, doesn't get or post (asynchronous?)(javascript updates sql table), checkbox-->
+                {% if movie.id in movies_in_watchlist %}
+                <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                {% else %}
+                <form>
+                    <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                </form>
+                {% endif %}
+                
+            
+            </td>
+            <td>
+                {% if movie.releaseDate != None %}
+                    {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                {% else %}
+                    <p>NA</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -8,7 +8,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from datetime import date
 
-from helpers import apology, get_genres, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
+from helpers import apology, get_genres, get_movies_by_list_ids, get_movies_by_genre, login_required, lookup, random_movies, top_box_last_weekend, upcoming, usd
 from complete_movie import all_of_movie
 
 # Configure application
@@ -187,4 +187,13 @@ def search():
     
 @app.route("/watchlist")
 def watchlist():
-    return render_template("watchlist.html")
+    rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id=?;", session["user_id"])
+    movies_to_watch = []
+    for movie in rows:
+        movies_to_watch.append(movie["movie_id"])
+    
+    # movies_to_watch is a list of ids
+    # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
+    movies = get_movies_by_list_ids(movies_to_watch)
+
+    return render_template("watchlist.html", movies=movies)
