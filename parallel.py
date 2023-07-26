@@ -31,6 +31,7 @@ def get_all_info(movie_id):
             querystring = {"info":"revenue_budget"}
             await fetch(session, url, headers, querystring)
 
+            # etc...
             querystring = {"info":"awards"}
             await fetch(session, url, headers, querystring)
 
