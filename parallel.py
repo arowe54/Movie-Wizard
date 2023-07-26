@@ -16,7 +16,7 @@ def get_all_info(movie_id):
                     movie[key] = result[key]
  
     async def main():
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(), asyncio.TaskGroup() as session, group:
             url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)
             headers = {
                 "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
@@ -25,30 +25,30 @@ def get_all_info(movie_id):
 
             # get request 1
             querystring = {"info":"base_info"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             # Get request 2 asynchronously
             querystring = {"info":"revenue_budget"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             # etc...
             querystring = {"info":"awards"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             querystring = {"info":"filmingLocations"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             querystring = {"info":"soundtrack"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             querystring = {"info":"countriesOfOrigin"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             querystring = {"info":"spokenLanguages"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             querystring = {"info":"moreLikeThisTitles"}
-            await fetch(session, url, headers, querystring)
+            group.create_task(await fetch(session, url, headers, querystring))
 
             
     asyncio.run(main())
