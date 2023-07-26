@@ -1,5 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./db/movies.db');
+let db = new sqlite3.Database('./movies.db', sqlite3.OPEN_READWRITE, err => {
+    if (err) {
+        console.error(err.message);
+      }
+      console.log('Connected to the movies database.');
+});
 
 
 const user_id = document.getElementByID('user_id').innerHTML;
@@ -14,29 +19,21 @@ var ajax = new XMLHttpRequest();
 // When page is loaded
 ajax.onreadystatechange = function() {
     if (ajax.readyState == 4 && ajax.status == 200){
-        $(document).ready(function(){
-            // every time the checkbox is clicked
-            $('.form-check-input').click(function() {
-                // Save the movie id
-                var movie_id = $(this).val();
-                // Update the database
-                // If the checkbox is being checked
-                if (this.checked){
-                    // Add movie to database
-                    ids = [user_id, movie_id, user_id];
-                    db.run("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?) WHERE user_id = ?", ids, function(err) {
-                        // Print message if couldn't update table
-                        if (err) {
-                            return console.error(err.message);
-                        }
-                    });
-                }
-                // If it is being unchecked
-                    // Remove movie from database
-            })
-        })
-        // Update database
-        
+        document.getElementsByClassName("form-check-input").onclick(function(event) {
+            var triggerObject = event.srcElement();
+            var movie_id = triggerObject.value();
+            if (triggerObject.checked){
+                ids = [user_id, movie_id];
+                db.run("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?)", ids, function(err) {
+                    // Print message if couldn't update table
+                    if (err) {
+                        return console.error(err.message);
+                    }
+                });
+            }
+        })    
     }
 }
+
+db.close();
 
