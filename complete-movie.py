@@ -1,6 +1,4 @@
 import time
-
-
 # Make parallel requests in python
 import aiohttp
 import asyncio
