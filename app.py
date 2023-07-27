@@ -151,34 +151,30 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search")
 def search():
-    if request.method == "POST":
-        """User searched for a movie"""
-        movies = None
-        # If the user searched for a movie by title
-        if request.form.get("title"):
-            # Lookup movie from title
-            title = request.form.get("title")
-            movies = lookup(title)
+    """User searched for a movie"""
+    movies = None
+    # If the user searched for a movie by title
+    if request.args.get("title"):
+        # Lookup movie from title
+        title = request.args.get("title")
+        movies = lookup(title)
 
-        # If user searched for a random movie
-        else:
-            movies = random_movies()    
-        
-        if not movies:
-            return apology("That movie is not in the database")
-        
-        user_id = session["user_id"]
-
-        # Get movies in watchlist
-        watchlist = get_watchlist(user_id)
-        
-
-        # Display result
-        return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
+    # If user searched for a random movie
     else:
-        return render_template("search.html")
+        movies = random_movies()    
+    
+    if not movies:
+        return apology("That movie is not in the database")
+    
+    user_id = session["user_id"]
+
+    # Get movies in watchlist
+    watchlist = get_watchlist(user_id)
+    
+    # Display result
+    return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
     
 @app.route("/watchlist")
 @login_required
