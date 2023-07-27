@@ -1,11 +1,8 @@
 import time
 import requests
-
-from cs50 import SQL
-
-# Make parallel requests in python
 import aiohttp
 import asyncio
+from cs50 import SQL
 
 # TODO: Convert functions to asynchronous
 
