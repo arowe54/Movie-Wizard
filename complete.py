@@ -15,12 +15,12 @@ def get_all_info(movie_id):
         }
         async with session.get(url, headers=headers, params=querystring) as resp:
             result = await resp.json()
-            result = result["results"]
-            # Copy each key:value pair to the movie dict
-            for key in result:
-                if key not in movie:
-                    movie[key] = result[key]
-            # Must return a coroutine for it to be used as a task (currently not returning anything)
+            if result != None:
+                result = result["results"]
+                # Copy each key:value pair to the movie dict
+                for key in result:
+                    if key not in movie:
+                        movie[key] = result[key]
  
     async def main():
         async with aiohttp.ClientSession() as session:
