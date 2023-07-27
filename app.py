@@ -40,10 +40,7 @@ def after_request(response):
 def index():
     """Home Page"""
     home_movies = index_queries()
-
     user_id = session["user_id"]
-
-    # Get movies in watchlist
     watchlist = get_watchlist(user_id)
 
     return render_template("index.html", upcoming=home_movies["upcoming"], box_10=home_movies["top_box"], movies_in_watchlist=watchlist, id=user_id)
@@ -54,18 +51,15 @@ def genres():
     """Get Movies in each genre"""
     # Get list of each genre
     genres = get_genres()
-    
     # Get genre selected by the user
     genre = request.args.get("genre")
-
     # Find and save movies in that genre to a list of dictionaries
     movies_in_genre = None
     if genre != None:
         movies_in_genre = get_movies_by_genre(genre)
     
     # Get movies in watchlist
-    id = session["user_id"]
-    watchlist = get_watchlist(id)
+    watchlist = get_watchlist(session["user_id"])
     
     # Send to genres.html
     return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre, watchlist=watchlist)
@@ -183,7 +177,6 @@ def search():
 def watchlist():
     user_id = session["user_id"]
     if request.method == "POST":
-        # Update Database
         movie_id = request.form.get("movie_id")
         action = request.form.get("action")
 
