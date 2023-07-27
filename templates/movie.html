@@ -33,18 +33,19 @@
                     </p>
                 </div>
                 <div class="col">
+                    <!--Not submitting form values when submitting?-->
                     {% if movie.id in movies_in_watchlist %}
                     <form action="/watchlist" method="post">
                         <button type="button" class="container-fluid">
                             <h2>Watchlist?</h2>
-                            <input class="form-check-input" type="checkbox" value="/movie.html" data-value="{{ movie.id }}" data-value2="remove" onclick=this.form.submit() checked>
+                            <input class="form-check-input" type="checkbox" data-value="{{ movie.id }}" value="remove" onclick=this.form.submit() checked>
                         </button>
                     </form>
                     {% else %}
                     <form action="/watchlist" method="post">
                         <button type="button" class="container-fluid">
                             <h2>Watchlist?</h2>
-                            <input class="form-check-input" type="checkbox" value="/movie.html" data-value="{{ movie.id }}" data-value2="add" onclick="this.form.submit()">
+                            <input class="form-check-input" type="checkbox" data-value="{{ movie.id }}" value="add" onclick="this.form.submit()">
                         </button>
                     </form>
                     {% endif %}
