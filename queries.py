@@ -78,6 +78,7 @@ def get_watchlist(id):
 
 
 def index_queries():
+    # Searches for upcoming movies and top boxoffice movies last weekend asynchronously
     start_time = time.time()
     lists = []
 
