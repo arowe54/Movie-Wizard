@@ -181,11 +181,29 @@ def search():
 @app.route("/watchlist")
 @login_required
 def watchlist():
-    id = session["user_id"]
-    watchlist = get_watchlist(id)
-    
-    # movies_to_watch is a list of ids
-    # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
-    movies = get_movies_by_list_ids(watchlist)
+    user_id = session["user_id"]
+    if request.method == "POST":
+        value = request.form.get('value')
+        # Save Original page url or name
+        origin = value[0]
+        # Update Database
+        movie_id = value[1]
+        # If checking the box
+        if value[2] == 'add':
+            # Add movie id to watchlist
+            db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?)", user_id, movie_id)
+        # If unchecking the box
+        else:
+            # Remove movie id from watchlist
+            db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?", user_id, movie_id)
 
-    return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist)
+        # Return back to the page where you clicked the checkbox to update the watchlist
+        return redirect(url_for(origin)))
+    else:
+        watchlist = get_watchlist(user_id)
+        
+        # movies_to_watch is a list of ids
+        # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
+        movies = get_movies_by_list_ids(watchlist)
+
+        return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist)

@@ -34,17 +34,17 @@
                 </div>
                 <div class="col">
                     {% if movie.id in movies_in_watchlist %}
-                    <form>
+                    <form method="post">
                         <button type="button" class="container-fluid">
                             <h2>Watchlist?</h2>
-                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick=this.form.submit() checked>
                         </button>
                     </form>
                     {% else %}
-                    <form>
+                    <form method="post">
                         <button type="button" class="container-fluid">
                             <h2>Watchlist?</h2>
-                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                            <input class="form-check-input" type="checkbox" value="[movie, {{ movie.id }}, add]" onclick="this.form.submit()">
                         </button>
                     </form>
                     {% endif %}
