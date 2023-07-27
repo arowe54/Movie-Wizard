@@ -191,11 +191,11 @@ def watchlist():
         # If checking the box
         if action == 'add':
             # Add movie id to watchlist
-            db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?)", user_id, movie_id)
+            db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?);", user_id, movie_id)
         # If unchecking the box
         elif action == 'remove':
             # Remove movie id from watchlist
-            db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?", user_id, movie_id)
+            db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?;", user_id, movie_id)
 
         # Return back to the page you submitted the form
         return redirect(request.url)

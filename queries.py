@@ -26,7 +26,31 @@ def get_movies_by_list_ids(movies):
     start_time = time.time()
     url = "https://moviesdatabase.p.rapidapi.com/titles/x/titles-by-ids"
 
-    querystring = {"idsList": movies}
+    # Take note of where the commas are according to the length of each id
+    id_lengths = []
+    # Iterate through each movie id in the list
+    for id in movies:
+        # Keep track of the length of the id
+        id_lengths.append(len(id))
+    # Convert the list to a combined string
+    new = ''.join(movies)
+    # Add the commas back at the end of each id
+    num_commas = 0
+    # Iterate through each character/position (starts at 0)
+    i = 0
+    # Get the length of each id
+    for length in id_lengths:
+        # Move the position to the end of this string
+        if num_commas == 0:
+            i += length
+        else:
+            i += length + 2
+        
+        if i < len(new):
+            new = new[:i] + ', ' + new[i:]
+            num_commas +=1
+
+    querystring = {"idsList": new}
 
     headers = {
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
