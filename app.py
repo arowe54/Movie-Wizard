@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 
 from helpers import apology, login_required, usd
-from asynchronous import get_genres, get_movies_by_list_ids, get_movies_by_genre, lookup, random_movies, top_box_last_weekend, upcoming
+from asynchronous import get_genres, get_movies_by_list_ids, get_movies_by_genre, lookup, random_movies, index_queries
 from complete import get_all_info
 
 # Configure application
@@ -40,19 +40,18 @@ def after_request(response):
 @login_required
 def index():
     """Home Page"""
-    upcoming_movies = upcoming()
-    top_movies_last_wknd = top_box_last_weekend()
+    home = index_queries()
 
     user_id = session["user_id"]
 
     # Get movies in watchlist
     rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", user_id)
-    movies_in_watchlist=[]
+    watchlist = []
     # Update list of 1-key dictionaries to just 1 list of values
     for movie in rows:
-        movies_in_watchlist.append(movie["movie_id"])
+        watchlist.append(movie["movie_id"])
 
-    return render_template("index.html", upcoming=upcoming_movies, box_10=top_movies_last_wknd, movies_in_watchlist=movies_in_watchlist, id=user_id)
+    return render_template("index.html", upcoming=home[0], box_10=home[1], movies_in_watchlist=watchlist, id=user_id)
 
 
 @app.route("/genres")

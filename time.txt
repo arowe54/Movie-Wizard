@@ -18,6 +18,13 @@ Without async
 also
 --- 1.2754430770874023 seconds +  0.9045412540435791 seconds == 2.1799843311309814
 1.1314914226531982 + --- 0.9453623294830322 seconds --- == 2.0768537521362305
+--- 0.7093939781188965 seconds --- + --- 0.6686530113220215 seconds ---
 roughly 1.5-2 seconds homepage
+might not need .TaskGroup, but could probably use asyncio to make it faster
 
 
+Every single request takes roughly 0.7-0.8 seconds each time
+
+- Best to run requests asynchronously when there is more than one request to load a page
+    - Guess: Should shorten every page loading time to 0.7 seconds
+- Usually homepage is longer to load bc it is the first to boot up (better to run asynchronously)
