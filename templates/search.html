@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/search" method="post">
+    <form action="/search" method="get">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="title" name="title" placeholder="Movie Title" type="text">
         </div>
@@ -13,7 +13,7 @@
     </form>
     <form action="/search" method="get" autocomplete="on">
         <input type="hidden" name="Random" value="Random">
-        <button class="btn btn-success" type="submit" name="random">Get Random Movie</button>
+        <button class="btn btn-success" type="submit" name="random">Get Random Movie (Recommended)</button>
     </form>
     <hr>
     <table class="table">
