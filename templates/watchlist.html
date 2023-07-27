@@ -16,6 +16,7 @@
         </tr>
     </thead>
     <tbody>
+        {% if movies != None %}
         {% for movie in movies %}
         <tr>
             
@@ -71,6 +72,7 @@
             <!--Or could use ajax and js in movie.html where a person clicks a button for spoilers and it reveals a dropdown of synopsis, crazy credits, goofs, etc...-->
         </tr>
         {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 

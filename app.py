@@ -205,8 +205,6 @@ def watchlist():
         return redirect(request.url)
     else:
         watchlist = get_watchlist(user_id)
-        
-        # movies_to_watch is a list of ids
         # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
         movies = get_movies_by_list_ids(watchlist)
 
