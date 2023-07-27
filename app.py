@@ -79,14 +79,17 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        username = request.form.get("username")
+        password = request.form.get("password")
+        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
             return apology("invalid username and/or password", 403)
 
-        # Remember which user has logged in
+        # Remember user info
         session["user_id"] = rows[0]["id"]
-
+        session["username"] = username
+        session["password"] = password
         # Redirect user to home page
         return redirect("/")
 
@@ -111,6 +114,13 @@ def movie():
     watchlist = get_watchlist(session["user_id"])
 
     return render_template("movie.html", movie=movie, movies_in_watchlist=watchlist)
+
+@app.route("/profile")
+@login_required
+def profile():
+    """Get profile information"""
+    print(session)
+    return render_template("profile.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -138,9 +148,12 @@ def register():
         # Insert new user into users
         hash = generate_password_hash(password)
         db.execute("INSERT INTO users(username, hash) VALUES(?,?);", username, hash)
+        
         # Log the user in
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         session["user_id"] = rows[0]["id"]
+        session["username"] = username
+        session["password"] = password
         return redirect("/")
 
     else:
