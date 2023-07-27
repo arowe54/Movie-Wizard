@@ -57,6 +57,14 @@
                         </select>
                         <button type="submit">More info</button>
                     </form>
+                    <!--Button that adds movie to watchlist (not complete yet)!-->
+                    {% if movie.id in movies_in_watchlist %}
+                    <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                    {% else %}
+                    <form>
+                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                    </form>
+                    {% endif %}
                 </td>
                 <td>
                     {% if movie.releaseDate != None %}

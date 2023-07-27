@@ -64,8 +64,12 @@ def genres():
     if genre != None:
         movies_in_genre = get_movies_by_genre(genre)
     
+    # Get movies in watchlist
+    id = session["user_id"]
+    watchlist = get_watchlist(id)
+    
     # Send to genres.html
-    return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre)
+    return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre, watchlist=watchlist)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
