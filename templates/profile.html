@@ -7,8 +7,14 @@
 {% block main %}
 
 <!--TODO: Show username-->
-
+<button>
+    <p>Username: {{ session["username"] }}</p>
+</button>
 <!--TODO: Show password (password protected / hidden)(click an eye icon to show, like normally)-->
+<button>
+    <p>Password: <span style="-webkit-text-security: disc">{{ session["password"] }}</span></p>
+    <!--TODO: Insert an icon an JavaScript so password is shown (-webkit-text-security: none) when the icon is clicked (only when it is held, keydown?/holdclick?)-->
+</button>
 
 <!--TODO: Update password-->
 
