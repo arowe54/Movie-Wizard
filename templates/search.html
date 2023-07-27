@@ -51,22 +51,23 @@
                         <button type="submit" class="btn btn-primary">More info</button>
                     </form>
 
-                    <!--Button that adds movie to watchlist (not complete yet)!-->
-                    {% if movie.id in movies_in_watchlist %}
-                    <form>
-                        <button type="button">
-                            Add to Watchlist
-                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
-                        </button>
-                    </form>
-                    {% else %}
-                    <form>
-                        <button type="button">
-                            Add To Watchlist
-                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
-                        </button>
-                    </form>
-                    {% endif %}
+                    <!--Checkbox to add move to watchlist-->
+                    <button class="container-fluid">
+                        <h5>Add to Watchlist:</h5>
+                        {% if movie.id in movies_in_watchlist %}
+                            <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="remove">
+                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
+                            </form>
+                        {% else %}
+                            <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="add">
+                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
+                            </form>
+                        {% endif %}
+                    </button>
                     
                 
                 </td>

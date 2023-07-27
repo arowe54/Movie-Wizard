@@ -33,20 +33,22 @@
                     </p>
                 </div>
                 <div class="col">
-                    <h2>Watchlist?</h2>
-                    {% if movie.id in movies_in_watchlist %}
-                        <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                            <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                            <input type="hidden" name="action" id="action" value="remove">
-                            <input class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
-                        </form>
-                    {% else %}
-                        <form name="addWatch" id="addWatch" action="/watchlist" method="post">
-                            <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                            <input type="hidden" name="action" id="action" value="add">
-                            <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
-                        </form>
-                    {% endif %}
+                    <button class="container-fluid">
+                        <h2>Watchlist?</h2>
+                        {% if movie.id in movies_in_watchlist %}
+                            <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="remove">
+                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
+                            </form>
+                        {% else %}
+                            <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="add">
+                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
+                            </form>
+                        {% endif %}
+                    </button>
                 </div>
                 
                 <hr>
