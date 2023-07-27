@@ -39,14 +39,14 @@ def after_request(response):
 @app.route("/")
 def index():
     """Home Page"""
-    home = index_queries()
+    home_movies = index_queries()
 
     user_id = session["user_id"]
 
     # Get movies in watchlist
     watchlist = get_watchlist(user_id)
 
-    return render_template("index.html", upcoming=home[0], box_10=home[1], movies_in_watchlist=watchlist, id=user_id)
+    return render_template("index.html", upcoming=home_movies["upcoming"], box_10=home_movies["top_box"], movies_in_watchlist=watchlist, id=user_id)
 
 
 @app.route("/genres")
@@ -186,7 +186,7 @@ def watchlist():
         # Update Database
         movie_id = request.form.get("movie_id")
         action = request.form.get("action")
-        
+
         # If checking the box
         if action == 'add':
             # Add movie id to watchlist

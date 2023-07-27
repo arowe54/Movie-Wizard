@@ -99,17 +99,16 @@ def get_watchlist(id):
 def index_queries():
     # Searches for upcoming movies and top boxoffice movies last weekend asynchronously
     start_time = time.time()
-    lists = []
+    movies = {}
 
-    async def fetch(session, url, querystring):
+    async def fetch(session, url, querystring, key):
         headers = {
             "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
             "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
         }
         async with session.get(url, headers=headers, params=querystring) as resp:
             result = await resp.json()
-            lists.append(result["results"])    
-
+            movies[key] = result["results"]    
 
     async def main():
         async with aiohttp.ClientSession() as session:
@@ -117,16 +116,16 @@ def index_queries():
                 # Upcoming movies
                 url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
                 querystring = {"titleType":"movie","endYear":"2025","startYear":"2023"}
-                group.create_task(fetch(session, url, querystring))
+                group.create_task(fetch(session, url, querystring, "upcoming"))
 
                 # Top boxoffice movies last weekend
                 url = "https://moviesdatabase.p.rapidapi.com/titles"
                 querystring = {"list":"top_boxoffice_last_weekend_10"}
-                group.create_task(fetch(session, url, querystring))
+                group.create_task(fetch(session, url, querystring, "top_box"))
 
     asyncio.run(main())
     print("--- %s seconds ---" % (time.time() - start_time))
-    return lists
+    return movies
 
 
 def lookup(title):
