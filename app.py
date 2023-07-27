@@ -1,7 +1,7 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -183,9 +183,10 @@ def search():
 def watchlist():
     user_id = session["user_id"]
     if request.method == "POST":
-        value = request.form.get('value')
         # Save Original page url or name
         origin = request.form.get('value')
+        origin = str(origin)
+        print(origin)
         # Update Database
         movie_id = request.form.get('data-value')
         movie_id = str(movie_id)
@@ -201,7 +202,7 @@ def watchlist():
             db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?", user_id, movie_id)
 
         # Return back to the page where you clicked the checkbox to update the watchlist
-        return redirect(url_for(origin))
+        return redirect("/watchlist.html")
     else:
         watchlist = get_watchlist(user_id)
         
