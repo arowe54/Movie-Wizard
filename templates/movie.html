@@ -34,16 +34,20 @@
                 </div>
                 <div class="col">
                     <!--Not submitting form values when submitting?-->
-                    <form action="/watchlist" method="post">
-                        <button type="button" class="container-fluid">
+                    <button type="button" class="container-fluid">
+                        <form action="/watchlist" method="post">
                             <h2>Watchlist?</h2>
                             {% if movie.id in movies_in_watchlist %}
-                            <input class="form-check-input" type="checkbox" value="remove" data-value="{{ movie.id }}" onchange="this.form.submit()" checked>
+                            <input class="form-check-input" type="checkbox" value="remove" data-value="{{ movie.id }}" onchange="this.form.submit()" checked selected>
                             {% else %}
-                            <input class="form-check-input" type="checkbox" value="add" data-value="{{ movie.id }}" onchange="this.form.submit()">
+                            <select hidden>
+                                <option type="hidden" value="add" selected></option>
+                            </select>
+                            <input class="form-check-input" type="checkbox" value="add" onchange="this.form.submit()" selected>
+                            <input type="submit" value="add" hidden>
                             {% endif %}
-                        </button>
-                    </form>
+                        </form>
+                    </button>
                 </div>
                 
                 <hr>

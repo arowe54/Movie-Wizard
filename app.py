@@ -188,6 +188,7 @@ def watchlist():
         movie_id = str(movie_id)
 
         action = request.form.get('value')
+        action = str(action)
         # If checking the box
         if action == 'add':
             # Add movie id to watchlist
