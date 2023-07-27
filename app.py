@@ -113,7 +113,6 @@ def logout():
 def movie():
     """Get information on a specific movie"""
     id = request.args.get("movie_id")
-
     movie = get_all_info(id)
 
     return render_template("movie.html", movie=movie)
