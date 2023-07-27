@@ -9,7 +9,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
 
 from helpers import apology, login_required, usd
-from asynchronous import get_genres, get_movies_by_list_ids, get_movies_by_genre, lookup, random_movies, index_queries
+from asynchronous import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
 from complete import get_all_info
 
 # Configure application
@@ -45,11 +45,7 @@ def index():
     user_id = session["user_id"]
 
     # Get movies in watchlist
-    rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", user_id)
-    watchlist = []
-    # Update list of 1-key dictionaries to just 1 list of values
-    for movie in rows:
-        watchlist.append(movie["movie_id"])
+    watchlist = get_watchlist(user_id)
 
     return render_template("index.html", upcoming=home[0], box_10=home[1], movies_in_watchlist=watchlist, id=user_id)
 
@@ -173,27 +169,21 @@ def search():
         user_id = session["user_id"]
 
         # Get movies in watchlist
-        rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id = ?;", user_id)
-        movies_in_watchlist=[]
-        # Update list of 1-key dictionaries to just 1 list of values
-        for movie in rows:
-            movies_in_watchlist.append(movie["movie_id"])
+        watchlist = get_watchlist(user_id)
         
 
         # Display result
-        return render_template("search.html", movies=movies, movies_in_watchlist=movies_in_watchlist, id=user_id)
+        return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
     else:
         return render_template("search.html")
     
 @app.route("/watchlist")
 def watchlist():
-    rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id=?;", session["user_id"])
-    movies_to_watch = []
-    for movie in rows:
-        movies_to_watch.append(movie["movie_id"])
+    id = session["user_id"]
+    watchlist = get_watchlist(id)
     
     # movies_to_watch is a list of ids
     # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
-    movies = get_movies_by_list_ids(movies_to_watch)
+    movies = get_movies_by_list_ids(watchlist)
 
-    return render_template("watchlist.html", movies=movies, movies_in_watchlist=movies_to_watch)
+    return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist)

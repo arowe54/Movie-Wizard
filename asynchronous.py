@@ -1,6 +1,7 @@
 import time
 import requests
 
+from cs50 import SQL
 
 # Make parallel requests in python
 import aiohttp
@@ -62,6 +63,18 @@ def get_movies_by_genre(genre):
         return response["results"]
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
+
+
+def get_watchlist(id):
+    # Configure CS50 Library to use SQLite database
+    db = SQL("sqlite:///movies.db")
+    # Get movies in watchlist
+    watchlist = []
+    rows = db.execute("SELECT movie_id FROM watchlist WHERE user_id=?;", id)
+    for movie in rows:
+        watchlist.append(movie["movie_id"])
+    
+    return watchlist
 
 
 def index_queries():
