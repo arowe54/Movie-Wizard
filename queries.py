@@ -4,8 +4,6 @@ import aiohttp
 import asyncio
 from cs50 import SQL
 
-# TODO: Convert functions to asynchronous
-
 def get_genres():
     """Get a list of all genres"""
     start_time = time.time()
