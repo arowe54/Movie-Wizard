@@ -184,8 +184,8 @@ def watchlist():
     user_id = session["user_id"]
     if request.method == "POST":
         # Update Database
-        movie_id = request.form.get('data-value')
-        movie_id = str(movie_id)
+        # movie_id = request.form.get('data-value')
+        # movie_id = str(movie_id)
 
         action = request.form.get('value')
         action = str(action)

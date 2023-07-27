@@ -34,20 +34,34 @@
                 </div>
                 <div class="col">
                     <!--Not submitting form values when submitting?-->
-                    <button type="button" class="container-fluid">
-                        <form action="/watchlist" method="post">
-                            <h2>Watchlist?</h2>
-                            {% if movie.id in movies_in_watchlist %}
-                            <input class="form-check-input" type="checkbox" value="remove" data-value="{{ movie.id }}" onchange="this.form.submit()" checked selected>
-                            {% else %}
-                            <select hidden>
-                                <option type="hidden" value="add" selected></option>
-                            </select>
-                            <input class="form-check-input" type="checkbox" value="add" onchange="this.form.submit()" selected>
-                            <input type="submit" value="add" hidden>
-                            {% endif %}
-                        </form>
-                    </button>
+                    <!-- 
+                    <form name="updateWatch" id="addWatch1" action="/watchlist" method="post">
+                        <h2>Watchlist?</h2>
+                        <select hidden>
+                            <option hidden value="{{ movie.id }}" id="movie_id" type="text" selected>{{ movie.id }}</option>
+                        </select>
+                        <input type="checkbox" {{ "checked" if movie.id in movies_in_watchlist}}>
+                    </form>
+                -->
+                    <form name="updatewatch2" id="watch2" action="/watchlist" method="post">
+                        <h2>Watchlist?</h2>
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button class="form-check-input" type="checkbox" name="checkbox"></button>
+                    </form>
+                    <script>
+                        $(document).ready(function(){
+                            $("#watch2").on("change", "button:checkbox", function(){
+                                // movie_id = document.getElementbyID('movie_id').innerHTML
+                                $("#watch2").submit();
+                            });
+                        });
+                    </script>
+                    <!-- This works
+                    <form action="/search" method="get" autocomplete="on">
+                        <input type="hidden" name="Random" value="Random">
+                        <button class="btn btn-success" type="submit" name="random">Get Random Movie (Recommended)</button>
+                    </form>
+                    -->
                 </div>
                 
                 <hr>
