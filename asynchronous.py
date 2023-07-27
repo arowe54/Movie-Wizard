@@ -155,27 +155,22 @@ def index_queries():
         }
         async with session.get(url, headers=headers, params=querystring) as resp:
             result = await resp.json()
-            result = result["results"]
-            movie = {}
-            # Copy each key:value pair to the movie dict
-            for key in result:
-                movie[key] = result[key]
-            return movie
+            lists.append(result["results"])    
 
 
     async def main():
         async with aiohttp.ClientSession() as session:
-            # Upcoming
-            url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
-            querystring = {"titleType":"movie","endYear":"2025","startYear":"2023"}
-            upcoming = await fetch(session, url, querystring)
-            lists.append(upcoming)
+            async with asyncio.TaskGroup() as group:
+                # Upcoming
+                url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
+                querystring = {"titleType":"movie","endYear":"2025","startYear":"2023"}
+                group.create_task(fetch(session, url, querystring))
 
-            # Top boxoffice movies last weekend
-            url = "https://moviesdatabase.p.rapidapi.com/titles"
-            querystring = {"list":"top_boxoffice_last_weekend_10"}
-            top_box = await fetch(session, url, querystring)
-            lists.append(top_box)
+                # Top boxoffice movies last weekend
+                url = "https://moviesdatabase.p.rapidapi.com/titles"
+                querystring = {"list":"top_boxoffice_last_weekend_10"}
+                group.create_task(fetch(session, url, querystring))
 
+    asyncio.run(main())
     print("--- %s seconds ---" % (time.time() - start_time))
     return lists

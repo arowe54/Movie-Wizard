@@ -22,6 +22,10 @@ also
 roughly 1.5-2 seconds homepage
 might not need .TaskGroup, but could probably use asyncio to make it faster
 
+Homepage takes longer to load with async (without taskgroup)
+Homepage takes roughly 0.7-1 second (expected) with TaskGroup
+That means it is about 0.3-0.7 seconds faster (half)
+
 
 Every single request takes roughly 0.7-0.8 seconds each time
 
