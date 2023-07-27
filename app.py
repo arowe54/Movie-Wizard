@@ -114,7 +114,9 @@ def movie():
     id = request.args.get("movie_id")
     movie = get_all_info(id)
 
-    return render_template("movie.html", movie=movie)
+    watchlist = get_watchlist(session["user_id"])
+
+    return render_template("movie.html", movie=movie, movies_in_watchlist=watchlist)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
