@@ -15,13 +15,11 @@ def get_all_info(movie_id):
         }
         async with session.get(url, headers=headers, params=querystring) as resp:
             result = await resp.json()
-            if result != None:
-                result = result["results"]
-                # Copy each key:value pair to the movie dict
-                for key in result:
-                    if key not in movie:
-                        movie[key] = result[key]
- 
+            result = result["results"]
+            # Copy each key:value pair to the movie dict
+            for key in result:
+                if key not in movie:
+                    movie[key] = result[key]
     async def main():
         async with aiohttp.ClientSession() as session:
             url = "https://moviesdatabase.p.rapidapi.com/titles/{}".format(movie_id)

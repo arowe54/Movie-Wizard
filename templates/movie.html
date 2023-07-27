@@ -44,25 +44,27 @@
                     </form>
                 -->
                     <h2>Watchlist?</h2>
+                    <!--Form is submitting to movie instead of watchlist?-->
                     <form name="updatewatch" id="addWatch" action="/watchlist" method="post">
-                        <input type="hidden" name="movie_id" id="movie_id" value="{{ movie.id }}">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
                         <input type="hidden" name="action" id="action" value="add">
+                        <input type="submit" hidden>
                     </form>
                     <form name="updatewatch2" id="removeWatch" action="/watchlist" method="post">
-                        <input type="hidden" name="movie_id" id="movie_id" value="{{ movie.id }}">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
                         <input type="hidden" name="action" id="action" value="remove">
+                        <input type="submit" hidden>  
                     </form>
-                    <form>
-                        <button class="form-check-input" type="checkbox" name="checkbox" id="check" value="add" {{ "checked" if movie.id in movies_in_watchlist}}></button>
-                    </form>
+                    <button class="form-check-input" type="checkbox" name="checkbox" id="check" value="add" {{ "checked" if movie.id in movies_in_watchlist}}></button>
+                    
                     <script>
                         $(document).ready(function(){
-                            $("#watch2").on("change", "button:checkbox", function(){
+                            $("#check").on("change", "button:checkbox", function(){
                                 if ($("#check").checked) {
                                     $("#addWatch").submit();
                                 }
                                 else {
-                                    $("#removeWatch").submit():
+                                    $("#removeWatch").submit();
                                 }
                             });
                         });
@@ -229,7 +231,7 @@
 
             <div class="card-footer">
                 <!--Click button and it goes to more info about the movie-->
-                <form action="/movie" method="get" id="movie.id" >
+                <form action="/movie" method="get">
                     <select hidden name="movie_id" onchange="this.form.submit()">
                         <option hidden value="{{ movie.node.id }}" selected></option>
                     </select>
