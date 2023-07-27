@@ -53,12 +53,20 @@
                         <button type="submit" class="btn btn-primary">More info</button>
                     </form>
 
-                    <!--Button that adds movie to watchlist, doesn't get or post (asynchronous?)(javascript updates sql table), checkbox-->
+                    <!--Button that adds movie to watchlist (not complete yet)!-->
                     {% if movie.id in movies_in_watchlist %}
-                    <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                    <form>
+                        <button type="button">
+                            Add to Watchlist
+                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                        </button>
+                    </form>
                     {% else %}
                     <form>
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                        <button type="button">
+                            Add To Watchlist
+                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                        </button>
                     </form>
                     {% endif %}
                     

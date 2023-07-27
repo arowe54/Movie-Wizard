@@ -44,19 +44,22 @@
                             More info
                         </button>
                     </form>
-                    <!--Button that adds movie to watchlist, doesn't get or post (asynchronous?)(javascript updates sql table), checkbox-->
-                    <form action="/watchlist">
-                        <!--Hidden input to use for JavaScript-->
-                        <input hidden type="number" name="user_id" id="user_id" value="{{ id }}">
-                        <!--movies_in_watchlist is a list of dictionaries, each item has one key ex. movie["movie_id"] == movies_in_watchlist[i]["movie_id"] for all i in len(movies_in_watchlist)-->
-                        <!--Already in watchlist (doesn't work yet)-->
-                        {% if movie.id in movies_in_watchlist["movie_id"] %}
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="removeFromWatchlist(document.getElementByID('user_id').value, document.getElementByID('movie_id').value)" checked>
-                        <!--Not in watchlist yet-->
-                        {% else %}
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" onclick="addToWatchlist(document.getElementByID('user_id').value, document.getElementByID('movie_id').value)">
-                        {% endif %}
+                    <!--Button that adds movie to watchlist (not complete yet)!-->
+                    {% if movie.id in movies_in_watchlist %}
+                    <form>
+                        <button type="button">
+                            Add to Watchlist
+                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
+                        </button>
                     </form>
+                    {% else %}
+                    <form>
+                        <button type="button">
+                            Add To Watchlist
+                            <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
+                        </button>
+                    </form>
+                    {% endif %}
                     
                 </td>
                 <td>
