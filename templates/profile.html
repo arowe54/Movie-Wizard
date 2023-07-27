@@ -17,6 +17,8 @@
     <button name="show_password" id="show_password">Show Password</button>
 </button>
 
+
+<!--Show/hide password-->
 <script>
     $(document).ready(function() {
         // When user clicks show password button
@@ -38,11 +40,17 @@
     })
 </script>
 
-<!--TODO: Change username-->
-<button type="text" name="update_username" id="update_username">Change Username</button>
+<div class="row">
+    <div class="col">
+        <!--TODO: Change username-->
+        <button type="text" name="update_username" id="update_username">Change Username</button>
+    </div>
 
-<!--TODO: Update password-->
-<button type="text" name="update_password" id="update_password">Change Password</button>
+    <div class="col">
+        <!--TODO: Update password-->
+        <button type="text" name="update_password" id="update_password">Change Password</button>
+    </div>
+</div>
 
 
 <!--TODO: Add preferences (ex. isAdult == false, fav genre, idk)(maybe not bc of time)(do last)-->
