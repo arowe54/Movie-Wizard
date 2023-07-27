@@ -185,15 +185,18 @@ def watchlist():
     if request.method == "POST":
         value = request.form.get('value')
         # Save Original page url or name
-        origin = value[0]
+        origin = request.form.get('value')
         # Update Database
-        movie_id = str(value[1])
+        movie_id = request.form.get('data-value')
+        movie_id = str(movie_id)
+
+        action = request.form.get('data-value2')
         # If checking the box
-        if value[2] == 'add':
+        if action == 'add':
             # Add movie id to watchlist
             db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?)", user_id, movie_id)
         # If unchecking the box
-        elif value[2] == 'remove':
+        elif action == 'remove':
             # Remove movie id from watchlist
             db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?", user_id, movie_id)
 
