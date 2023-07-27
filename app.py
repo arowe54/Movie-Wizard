@@ -201,8 +201,8 @@ def watchlist():
             # Remove movie id from watchlist
             db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?", user_id, movie_id)
 
-        # Return back to the page where you clicked the checkbox to update the watchlist
-        return redirect(url_for("watchlist"))
+        # Return back to the page you submitted the form
+        return redirect(request.url)
     else:
         watchlist = get_watchlist(user_id)
         
