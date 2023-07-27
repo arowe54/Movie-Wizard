@@ -42,22 +42,15 @@
                     <button type="submit" class="btn btn-primary">More info</button>
                 </form>
 
-                <!--Button that adds movie to watchlist (not complete yet)!-->
-                {% if movie.id in movies_in_watchlist %}
-                <form>
-                    <button type="button">
-                        Add to Watchlist
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}" checked>
-                    </button>
-                </form>
-                {% else %}
-                <form>
-                    <button type="button">
-                        Add To Watchlist
-                        <input class="form-check-input" type="checkbox" value="{{ movie.id }}">
-                    </button>
-                </form>
-                {% endif %}
+                <!--Checkbox to remove from watchlist-->
+                <button class="container-fluid">
+                    <h5>Remove from Watchlist:</h5>
+                    <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <input type="hidden" name="action" id="action" value="remove">
+                        <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
+                    </form>
+                </button>
                 
             
             </td>
