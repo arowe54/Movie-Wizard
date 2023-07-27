@@ -198,7 +198,7 @@ def watchlist():
             db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?;", user_id, movie_id)
 
         # Return back to the page you submitted the form
-        return redirect(request.url)
+        return redirect(request.referrer)
     else:
         watchlist = get_watchlist(user_id)
         # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
