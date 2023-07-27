@@ -185,21 +185,16 @@ def watchlist():
     if request.method == "POST":
         # Update Database
         movie_id = request.form.get("movie_id")
-
         action = request.form.get("action")
-
-        # Check if user already has movie in watchlist
-        # If they already have movie in watchlist, delete it
-        # If they don't have it in watchlist, add it to it
-
+        
         # If checking the box
         if action == 'add':
             # Add movie id to watchlist
-            db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?);", user_id, movie)
+            db.execute("INSERT INTO watchlist(user_id, movie_id) VALUES (?, ?);", user_id, movie_id)
         # If unchecking the box
         elif action == 'remove':
             # Remove movie id from watchlist
-            db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?;", user_id, movie)
+            db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?;", user_id, movie_id)
 
         # Return back to the page you submitted the form
         return redirect(request.referrer)

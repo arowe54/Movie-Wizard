@@ -33,18 +33,7 @@
                     </p>
                 </div>
                 <div class="col">
-                    <!--Not submitting form values when submitting?-->
-                    <!-- 
-                    <form name="updateWatch" id="addWatch1" action="/watchlist" method="post">
-                        <h2>Watchlist?</h2>
-                        <select hidden>
-                            <option hidden value="{{ movie.id }}" id="movie_id" type="text" selected>{{ movie.id }}</option>
-                        </select>
-                        <input type="checkbox" {{ "checked" if movie.id in movies_in_watchlist}}>
-                    </form>
-                -->
                     <h2>Watchlist?</h2>
-                    <!--Form is submitting to movie instead of watchlist?-->
                     {% if movie.id in movies_in_watchlist %}
                         <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
                             <input type="hidden" name="movie_id" value="{{ movie.id }}">
@@ -55,7 +44,7 @@
                         <form name="addWatch" id="addWatch" action="/watchlist" method="post">
                             <input type="hidden" name="movie_id" value="{{ movie.id }}">
                             <input type="hidden" name="action" id="action" value="add">
-                            <button type="checkbox" onclick="this.form.submit">
+                            <button class="form-check-input" type="checkbox" onclick="this.form.submit">
                         </form>
                     {% endif %}
                 </div>
