@@ -37,7 +37,6 @@ def after_request(response):
 
 
 @app.route("/")
-@login_required
 def index():
     """Home Page"""
     home = index_queries()
@@ -182,6 +181,7 @@ def search():
         return render_template("search.html")
     
 @app.route("/watchlist")
+@login_required
 def watchlist():
     id = session["user_id"]
     watchlist = get_watchlist(id)
