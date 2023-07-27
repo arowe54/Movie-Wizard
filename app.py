@@ -131,7 +131,6 @@ def movie():
 @login_required
 def profile():
     """Get profile information"""
-    print(session)
     return render_template("profile.html")
 
 @app.route("/register", methods=["GET", "POST"])
