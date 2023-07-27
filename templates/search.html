@@ -51,6 +51,7 @@
                         <button type="submit" class="btn btn-primary">More info</button>
                     </form>
 
+                    {% if session["user_id"] %}
                     <!--Checkbox to add move to watchlist-->
                     <button class="container-fluid">
                         <h5>Add to Watchlist:</h5>
@@ -68,8 +69,7 @@
                             </form>
                         {% endif %}
                     </button>
-                    
-                
+                    {% endif %}
                 </td>
                 <td>
                     {% if movie.releaseDate != None %}

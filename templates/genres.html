@@ -57,6 +57,7 @@
                         </select>
                         <button type="submit">More info</button>
                     </form>
+                    {% if session["user_id"] %}
                     <!--Checkbox to Update Watchlist-->
                     <button class="container-fluid">
                         <h2>Add to Watchlist</h2>
@@ -74,6 +75,7 @@
                             </form>
                         {% endif %}
                     </button>
+                    {% endif %}
                 </td>
                 <td>
                     {% if movie.releaseDate != None %}

@@ -37,12 +37,17 @@ def after_request(response):
 
 
 @app.route("/")
+@login_required
 def index():
     """Home Page"""
     home_movies = index_queries()
-    user_id = session["user_id"]
-    watchlist = get_watchlist(user_id)
-
+    try:
+        user_id = session["user_id"]
+        watchlist = get_watchlist(user_id)
+    except (KeyError):
+        user_id = None
+        watchlist = None
+ 
     return render_template("index.html", upcoming=home_movies["upcoming"], box_10=home_movies["top_box"], movies_in_watchlist=watchlist, id=user_id)
 
 
@@ -59,7 +64,10 @@ def genres():
         movies_in_genre = get_movies_by_genre(genre)
     
     # Get movies in watchlist
-    watchlist = get_watchlist(session["user_id"])
+    try:
+        watchlist = get_watchlist(session["user_id"])
+    except (KeyError):
+        watchlist = None
     
     # Send to genres.html
     return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre, watchlist=watchlist)
@@ -111,7 +119,11 @@ def movie():
     id = request.args.get("movie_id")
     movie = get_all_info(id)
 
-    watchlist = get_watchlist(session["user_id"])
+    try:
+        user_id = session["user_id"]
+        watchlist = get_watchlist(user_id)
+    except (KeyError):
+        watchlist = None
 
     return render_template("movie.html", movie=movie, movies_in_watchlist=watchlist)
 
@@ -148,7 +160,7 @@ def register():
         # Insert new user into users
         hash = generate_password_hash(password)
         db.execute("INSERT INTO users(username, hash) VALUES(?,?);", username, hash)
-        
+
         # Log the user in
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         session["user_id"] = rows[0]["id"]
@@ -177,10 +189,12 @@ def search():
     if not movies:
         return apology("That movie is not in the database")
     
-    user_id = session["user_id"]
-
-    # Get movies in watchlist
-    watchlist = get_watchlist(user_id)
+    try:
+        user_id = session["user_id"]
+        watchlist = get_watchlist(user_id)
+    except (KeyError):
+        user_id = None
+        watchlist = None
     
     # Display result
     return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
