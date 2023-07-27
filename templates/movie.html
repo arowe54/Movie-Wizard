@@ -43,25 +43,30 @@
                         <input type="checkbox" {{ "checked" if movie.id in movies_in_watchlist}}>
                     </form>
                 -->
-                    <form name="updatewatch2" id="watch2" action="/watchlist" method="post">
-                        <h2>Watchlist?</h2>
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <button class="form-check-input" type="checkbox" name="checkbox"></button>
+                    <h2>Watchlist?</h2>
+                    <form name="updatewatch" id="addWatch" action="/watchlist" method="post">
+                        <input type="hidden" name="movie_id" id="movie_id" value="{{ movie.id }}">
+                        <input type="hidden" name="action" id="action" value="add">
+                    </form>
+                    <form name="updatewatch2" id="removeWatch" action="/watchlist" method="post">
+                        <input type="hidden" name="movie_id" id="movie_id" value="{{ movie.id }}">
+                        <input type="hidden" name="action" id="action" value="remove">
+                    </form>
+                    <form>
+                        <button class="form-check-input" type="checkbox" name="checkbox" id="check" value="add" {{ "checked" if movie.id in movies_in_watchlist}}></button>
                     </form>
                     <script>
                         $(document).ready(function(){
                             $("#watch2").on("change", "button:checkbox", function(){
-                                // movie_id = document.getElementbyID('movie_id').innerHTML
-                                $("#watch2").submit();
+                                if ($("#check").checked) {
+                                    $("#addWatch").submit();
+                                }
+                                else {
+                                    $("#removeWatch").submit():
+                                }
                             });
                         });
                     </script>
-                    <!-- This works
-                    <form action="/search" method="get" autocomplete="on">
-                        <input type="hidden" name="Random" value="Random">
-                        <button class="btn btn-success" type="submit" name="random">Get Random Movie (Recommended)</button>
-                    </form>
-                    -->
                 </div>
                 
                 <hr>
