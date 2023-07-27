@@ -38,13 +38,13 @@
                         <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
                             <input type="hidden" name="movie_id" value="{{ movie.id }}">
                             <input type="hidden" name="action" id="action" value="remove">
-                            <button class="form-check-input" type="checkbox" onclick="this.form.submit">  
+                            <button class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
                         </form>
                     {% else %}
                         <form name="addWatch" id="addWatch" action="/watchlist" method="post">
                             <input type="hidden" name="movie_id" value="{{ movie.id }}">
                             <input type="hidden" name="action" id="action" value="add">
-                            <button class="form-check-input" type="checkbox" onclick="this.form.submit">
+                            <button class="form-check-input" type="checkbox" onclick="this.form.submit()">
                         </form>
                     {% endif %}
                 </div>
