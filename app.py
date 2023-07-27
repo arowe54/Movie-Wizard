@@ -183,10 +183,6 @@ def search():
 def watchlist():
     user_id = session["user_id"]
     if request.method == "POST":
-        # Save Original page url or name
-        origin = request.form.get('value')
-        origin = str(origin)
-        print(origin)
         # Update Database
         movie_id = request.form.get('data-value')
         movie_id = str(movie_id)
