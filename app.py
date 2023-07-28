@@ -6,11 +6,10 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from datetime import date
 
-from helpers import apology, login_required, usd
-from queries import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
-from complete import get_all_info
+from helpers.helpers import apology, login_required, usd
+from helpers.complete import get_all_info
+from helpers.queries import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
 
 # Configure application
 app = Flask(__name__)
