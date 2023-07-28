@@ -13,7 +13,7 @@
 <button>
     <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ session["password"] }}</span></p>
     <!--TODO: Change from click to show when clicked and held, also change button to icon -->
-    <button name="show_password" id="show_password" onclick="showPassword('original_pwd')">Show Password</button>
+    <button name="show_pwd" id="show_pwd">Show Password</button>
 </button>
 
 
@@ -36,9 +36,9 @@
         <!--Change password-->
         <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
         <div id="update_pwd_form">
-            <p> Current Password: <span style="-webkit-text-security: disc" id="show_pwd2">{{ session["password"] }}</span> </p>
+            <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ session["password"] }}</span> </p>
             <!--Make button show password-->
-            <button onclick="showPassword('show_pwd2')">Show password</button>
+            <button id="show_pwd2">Show password</button>
             <form name="change_pwd" action="/update_user" method="post">
                 <p> New Password:
                     <input type="password" name="new_pwd" id="new_pwd">
@@ -56,34 +56,26 @@
     // Maybe copy each script in each html file to their own js files for references and just don't link to them (bc not possible)
     $(document).ready(function() {
         // Function doesn't work, but jquery below does?
-        // When user clicks show password button
-        function showPassword(id) {
-            style = document.getElementById(id).getAttribute('style');
-            if (style == '-webkit-text-security: disc'){
+        // Show password when user clicks show password button
+        function togglePassword(id) {
+            style = $(id).attr('style');
+            if (style == '-webkit-text-security: disc') {
                 // Show password
-                document.getElementById(id).setAttribute('style', '-webkit-text-security: none')
+                $(id).attr('style', '-webkit-text-security: none')
             }
             else {
                 // Encrypt password
-                document.getElementById(id).setAttribute('style', '-webkit-text-security: disc');
+                $(id).attr('style', '-webkit-text-security: disc')
             }
         }
-        /*
-        $('#show_password').click(function() {
-            // Save original style
-            style = $('#original_pwd').attr('style');
 
-            // If its already hidden
-            if (style == '-webkit-text-security: disc'){
-                // Show password
-                $('#original_pwd').attr('style', '-webkit-text-security: none');
-            }
-            else {
-                // Encrypt password
-                $('#original_pwd').attr('style', '-webkit-text-security: disc');
-            }
+        // Run showPassword on the two buttons
+        $('#show_pwd').click(function() {
+            togglePassword('#original_pwd')
         })
-        */
+        $('#show_pwd2').click(function() {
+            togglePassword('#original_pwd2')
+        })
 
         // Hide both divs before they can be clicked
         $("#update_username_form").hide()
