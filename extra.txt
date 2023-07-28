@@ -1,0 +1,41 @@
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 14926  100 14926    0     0  78398      0 --:--:-- --:--:-- --:--:-- 78557
+=> Downloading nvm from git to '/home/arowe54/.nvm'
+=> Cloning into '/home/arowe54/.nvm'...
+remote: Enumerating objects: 360, done.
+remote: Counting objects: 100% (360/360), done.
+remote: Compressing objects: 100% (306/306), done.
+remote: Total 360 (delta 40), reused 166 (delta 28), pack-reused 0
+Receiving objects: 100% (360/360), 220.04 KiB | 1.38 MiB/s, done.
+Resolving deltas: 100% (40/40), done.
+* (HEAD detached at FETCH_HEAD)
+  master
+=> Compressing and cleaning up git repository
+
+=> Appending nvm source string to /home/arowe54/.bashrc
+=> Appending bash_completion source string to /home/arowe54/.bashrc
+=> You currently have modules installed globally with `npm`. These will no
+=> longer be linked to the active version of Node when you install a new node
+=> with `nvm`; and they may (depending on how you construct your `$PATH`)
+=> override the binaries of modules installed with `nvm`:
+
+C:\Users\rowea\AppData\Roaming\npm
+`-- yarn@1.22.19
+=> If you wish to uninstall them at a later point (or re-install them under your
+=> `nvm` Nodes), you can remove them from the system Node as follows:
+
+     $ nvm use system
+     $ npm uninstall -g a_module
+
+=> Close and reopen your terminal to start using nvm or run the following to use it now:
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion 
+ 
+ 
+ 
+     $ nvm use system
+     $ npm uninstall -g a_module
