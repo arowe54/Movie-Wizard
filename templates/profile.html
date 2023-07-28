@@ -9,11 +9,11 @@
 <button>
     <p>Username: {{ username }}</p>
 </button>
-<!--TODO: Show password (password protected / hidden)(click an eye icon to show, like normally)-->
+<!--Show password-->
 <button>
     <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ session["password"] }}</span></p>
-    <!--TODO: Change from click to show when clicked and held -->
-    <button name="show_password" id="show_password">Show Password</button>
+    <!--TODO: Change from click to show when clicked and held, also change button to icon -->
+    <button name="show_password" id="show_password" onclick="showPassword('original_pwd')">Show Password</button>
 </button>
 
 
@@ -33,11 +33,12 @@
     </div>
 
     <div class="col">
-        <!--Update password-->
+        <!--Change password-->
         <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
         <div id="update_pwd_form">
-            <p> Current Password: <span class="-webkit-text-security: disc" id="show_pwd2">{{ session["password"] }}</span> </p>
-            <button>Show password</button>
+            <p> Current Password: <span style="-webkit-text-security: disc" id="show_pwd2">{{ session["password"] }}</span> </p>
+            <!--Make button show password-->
+            <button onclick="showPassword('show_pwd2')">Show password</button>
             <form name="change_pwd" action="/update_user" method="post">
                 <p> New Password:
                     <input type="password" name="new_pwd" id="new_pwd">
@@ -52,9 +53,21 @@
 <!--TODO: Add preferences (ex. isAdult == false, fav genre, idk)(maybe not bc of time)(do last)-->
 
 <script>
-    $(document).ready(function( $ ) {
-        // Maybe creating a "show" function would be more adaptable
+    $(document).ready(function() {
+        // Function doesn't work, but jquery below does?
         // When user clicks show password button
+        function showPassword(id) {
+            style = document.getElementById(id).getAttribute('style');
+            if (style == '-webkit-text-security: disc'){
+                // Show password
+                document.getElementById(id).setAttribute('style', '-webkit-text-security: none')
+            }
+            else {
+                // Encrypt password
+                document.getElementById(id).setAttribute('style', '-webkit-text-security: disc');
+            }
+        }
+        /*
         $('#show_password').click(function() {
             // Save original style
             style = $('#original_pwd').attr('style');
@@ -69,6 +82,7 @@
                 $('#original_pwd').attr('style', '-webkit-text-security: disc');
             }
         })
+        */
 
         // Hide both divs before they can be clicked
         $("#update_username_form").hide()
