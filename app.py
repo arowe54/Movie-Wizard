@@ -197,6 +197,24 @@ def search():
     
     # Display result
     return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
+
+@app.route("/update_user", methods=["POST"])
+def update_username():
+    id = session["user_id"]
+    if request.form.get("new_username"):
+        # Save new username
+        new_username = request.form.get("new_username")
+        # Update saved username to new username
+        db.execute("UPDATE users SET username = ? WHERE id = ?;", str(new_username), id)
+    if request.form.get("new_password"):
+        # Save new password
+        new_password = request.form.get("new_password")
+        new_hash = generate_password_hash(new_password)
+        # Update hash to new password hash
+        db.execute("UPDATE users SET hash = ? WHERE user_id = ?;", new_hash, id)
+    
+    # Redirect back to the sender page
+    return redirect(request.referrer)
     
 @app.route("/watchlist", methods=["GET", "POST"])
 @login_required
