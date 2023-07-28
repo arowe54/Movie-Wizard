@@ -6,7 +6,7 @@
 
 {% block main %}
 
-<!--TODO: Show username-->
+<!--Show username-->
 <button>
     <p>Username: {{ session["username"] }}</p>
 </button>
@@ -21,6 +21,7 @@
 <!--Show/hide password-->
 <script>
     $(document).ready(function() {
+        // Maybe creating a "show" function would be more adaptable
         // When user clicks show password button
         $('#show_password').click(function() {
             // Save original style
@@ -42,9 +43,9 @@
 
 <div class="row">
     <div class="col">
-        <!--TODO: Change username-->
+        <!--Change username-->
         <button type="text" name="update_username" id="update_username">Change Username</button>
-        <div id="update_username_form"></div>
+        <div id="update_username_form" class="container"></div>
     </div>
 
     <script>
@@ -52,21 +53,45 @@
             // When user clicks update username
             $('#update_username').click(function() {
                 // Append a form just below the change username button
-                $('#update_username_form').append(
-                        // Show the current username                                    (ex.     Username: Lebron   \n)
-                        // Input field for the user to update password                  (ex. New Username: [      ] \n) 
-                        // Submit button, submits form to a route to change username    (ex.                Submit )(end node)
+                $('#update_username_form').html(`
+                    <p> Username: {{ session["username"]}} </p>
+                    <form name="change_username" method="post">
+                        <p> New Username:
+                            <input type="text" name="new_username" id="new_username" autocomplete="off">
+                            <button type="submit">Submit</button>
+                        </p>
+                    </form>
+                    `
                     );
-                
-                // Maybe use AJAX instead?
             })
         })
     </script>
 
     <div class="col">
-        <!--TODO: Update password-->
-        <button type="text" name="update_password" id="update_password">Change Password</button>
+        <!--Update password-->
+        <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
+        <div id="update_pwd_form"></div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // When user clicks update password
+            $('#update_pwd').click(function() {
+                // Append a form just below the change username button
+                $('#update_pwd_form').html(`
+                    <p> Password: <span class="-webkit-text-security: disc" id="show_pwd2">{{ session["password"] }}</span> </p>
+                    <button>Show password</button>
+                    <form name="change_pwd" method="get">
+                        <p> New Password:
+                            <input type="password" name="new_pwd" id="new_pwd">
+                            <button type="submit">Submit</button>
+                        </p>
+                    </form>
+                    `
+                    );
+            })
+        })
+    </script>
 </div>
 
 
