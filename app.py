@@ -131,7 +131,9 @@ def movie():
 @login_required
 def profile():
     """Get profile information"""
-    return render_template("profile.html")
+    rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
+    username = rows[0]["username"]
+    return render_template("profile.html", username=username)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -163,7 +165,6 @@ def register():
         # Log the user in
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         session["user_id"] = rows[0]["id"]
-        session["username"] = username
         session["password"] = password
         return redirect("/")
 
@@ -199,7 +200,7 @@ def search():
     return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
 
 @app.route("/update_user", methods=["POST"])
-def update_username():
+def update_credentials():
     id = session["user_id"]
     if request.form.get("new_username"):
         # Save new username
@@ -209,9 +210,10 @@ def update_username():
     if request.form.get("new_password"):
         # Save new password
         new_password = request.form.get("new_password")
+        session["password"] = new_password
         new_hash = generate_password_hash(new_password)
         # Update hash to new password hash
-        db.execute("UPDATE users SET hash = ? WHERE user_id = ?;", new_hash, id)
+        db.execute("UPDATE users SET hash = ? WHERE id = ?;", new_hash, id)
     
     # Redirect back to the sender page
     return redirect(request.referrer)

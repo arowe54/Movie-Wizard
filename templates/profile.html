@@ -8,7 +8,7 @@
 
 <!--Show username-->
 <button>
-    <p>Username: {{ session["username"] }}</p>
+    <p>Username: {{ username }}</p>
 </button>
 <!--TODO: Show password (password protected / hidden)(click an eye icon to show, like normally)-->
 <button>
@@ -54,7 +54,7 @@
             $('#update_username').click(function() {
                 // Append a form just below the change username button
                 $('#update_username_form').html(`
-                    <p> Username: {{ session["username"]}} </p>
+                    <p> Username: {{ username }} </p>
                     <form name="change_username" action="/update_user" method="post">
                         <p> New Username:
                             <input type="text" name="new_username" id="new_username" autocomplete="off">
@@ -81,7 +81,7 @@
                 $('#update_pwd_form').html(`
                     <p> Password: <span class="-webkit-text-security: disc" id="show_pwd2">{{ session["password"] }}</span> </p>
                     <button>Show password</button>
-                    <form name="change_pwd" action="/update_user" method="get">
+                    <form name="change_pwd" action="/update_user" method="post">
                         <p> New Password:
                             <input type="password" name="new_pwd" id="new_pwd">
                             <button type="submit">Submit</button>
