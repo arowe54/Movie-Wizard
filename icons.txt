@@ -1,0 +1,154 @@
+Bootstrap Icons of interest:
+    watchlist:
+        bookmark/bookmark-fill, bookmark-star/bookmark-star-fill, bookmarks-fill
+        clock/clock-history, flag/flag-fill, 
+        handbag/handbag-fill, 
+        pin/pin-fill, pin-angle/pin-angle-fill
+        stack/stack-overflow (for header)
+        ticket/ticket-fill, ticket-perforated/ticket-perforated-fill
+    logo:
+        bullseye (for lookup a movie?, index/logo)
+        kanban/kanban-fill (logo)
+    palette/palette-fill (preferences header in profile)
+    for preference, liked movies? :
+        emoji-neutral/emoji-neutral-fill, emoji-heart-eyes/emoji-heart-eyes-fill, emoji-frown/emoji-frown-fill  
+        hand-thumbs-up/hand-thumbs-up-fill, hand-thumbs-down, hand-thumbs-down-fill
+        heart, heart-fill, heartbreak-fill (show heartbreak-fill for 1 second after a person takes away the heart symbol)(probably better for a "liked movies" section)
+        patch-check/patch-check-fill
+        sticky/sticky-fill/stickies/stickies-fill (for header)
+    (could probably update skin colour so they can choose fill/not filled emojis)
+    for personal info:
+        person-vcard/person-vcard-fill
+    for watched movies:
+        eye/eye-fill (watched?) or  (blacklist/don't want to see)
+        hourglass-top, hourglass-bottom, hourglass-split (maybe not)
+        
+    for blacklist/movies you don't want to see:
+        eye-slash/eye-slash-fill
+        sign-do-not-enter/sign-do-not-enter-fill
+        sign-stop/sign-stop-fill
+        trash/trash-fill (trash2, and 3 as well)
+        explicit-fill (show when the movie isAdult==true)
+    
+    content that you can only use if you have been logged in (ex. add to watchlist)
+        lock, lock-fill
+        person-lock/person-fill-lock
+        shield-lock/shield-lock-fill
+        file-lock/file-lock-fill (also file-lock2 and fill)
+        house-lock/house-lock-fill
+
+    file-image/file-image-fill/images (show instead of image NA)
+    soundtrack:
+        file-music/file-music-fill
+        music-note/music-note-beamed/music-note-list, music-player/music-player-fill
+        volume-up/volume-up-fill
+    
+    preferences, website:
+        filter-circle/filter-circle-fill
+        fonts (maybe user can change the fonts of the site in preferences, ex. all bold, bionic reading API, all italic, etc.., just for fun)
+        wrench-adjustable/wrench-adjustable-circle/wrench-adjustable-circle-fill
+    gem (favourite movie)
+    globe/globe-2, globe-americas/globe-asia-australia/globe-central-south-asia/globe-europe-africa, map/map-fill(for filmingLocations, spokenLanguages)
+    translate (for spokenLanguages)
+    graph-down/graph-down-arrow, graph-up/graph-up-arrow (for rating change)
+    people/people-fill (cast)
+    person/person-circle (profile icon)
+    quote (quotes from movie)
+
+    runtime:
+        reception (1, 2, 3, 4)(for runtime?)
+        stopwatch/stopwatch-fill
+        watch
+
+    toggle showPassword:
+        toggle-off, toggle-on
+        toggle2-off, toggle2-on
+
+
+    might be useful later:
+        rocket
+        robot
+
+
+Usage:
+    Bootstrap Icons are SVGs
+    can include them into your HTML in a few ways depending on how your project is setup
+    recommend using a width: 1em (and optionally height: 1em) for easy resizing via font-size.
+
+Embedded:
+    Embed your icons within the HTML of your page (as opposed to an external image file)
+    Here we’ve used a custom width and height.
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/>
+    </svg>
+
+    looks long
+
+External Image:
+    Copy the Bootstrap Icons SVGs to your directory of choice and reference them like normal images with the <img> element.
+    
+    <img src="/assets/icons/bootstrap.svg" alt="Bootstrap" width="32" height="32">
+
+Icon Font:
+    Icon fonts with classes for every icon are also included for Bootstrap Icons. 
+    Include the icon web fonts in your page via CSS, then reference the class names as needed in your HTML 
+
+    <i class="bi-alarm"></i>
+
+    Use font-size and color to change the icon appearance.
+    <i class="bi-alarm" style="font-size: 2rem; color: cornflowerblue;"></i>
+
+
+Color can be changed by setting a .text-* class or custom CSS:
+ex. <svg class="text-success">
+        ...
+    </svg>
+    Changes colour to the success colour (same as buttons)
+
+Sprite:
+    Use the SVG sprite to insert any icon through the <use> element.
+    Use the icon’s filename as the fragment identifier (e.g., toggles is #toggles). 
+    SVG sprites allow you to reference an external file similar to an <img> element, but with the power of currentColor for easy theming.
+
+    Known Issues:
+        ! issue with Chrome where <use> doesn’t work across domains.
+        ! External SVG sprites may not function correctly in Internet Explorer. Use the svg4everybody polyfill as needed.
+        ! SVGs receive focus by default in Internet Explorer and Edge Legacy. 
+            When embedding your SVGs, add focusable="false" to the <svg> element.
+        ! When using SVGs with <img> elements, screen readers may not announce them as images, or skip the image completely. 
+            Include an additional role="img" on the <img> element to avoid any issues.
+
+    <svg class="bi" width="32" height="32" fill="currentColor">
+        <use xlink:href="bootstrap-icons.svg#heart-fill"/>
+    </svg>
+
+
+Accessibility:
+    For purely decorative icons, add aria-hidden="true". 
+    Otherwise, provide an appropriate text alternative. 
+    Depending on which method you’re using to add the icons, and where you’re using them 
+    (e.g. as standalone images, or as the only content of a button or similar control), 
+    there are various possible approaches. 
+    ex.
+
+    <!-- alt="..." on <img> element -->
+    <img src="/assets/icons/bootstrap.svg" alt="Bootstrap" ...>
+
+    <svg class="bi" ... role="img" aria-label="Tools">
+        <use xlink:href="bootstrap-icons.svg#tools"/>
+    </svg>
+
+    <!-- aria-label="..." on the control -->
+    <button ... aria-label="Mute">
+    <svg class="bi bi-volume-mute-fill" aria-hidden="true" ...>
+    ...
+    </svg>
+    </button>
+
+
+
+
+
+
