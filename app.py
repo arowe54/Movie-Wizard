@@ -187,7 +187,7 @@ def search():
         movies = random_movies()    
     
     if not movies:
-        return apology("That movie is not in the database")
+        return apology("That exact movie title cannot be found in the database")
     
     try:
         user_id = session["user_id"]

@@ -39,9 +39,15 @@
                     <!--If the user has logged in-->
                     {% if session["user_id"] %}
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/search">Lookup a Movie</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/search">Get a Movie</a></li>
                             <li class="nav-item"><a class="nav-link" href="/genres">Genres</a></li>
                             <li class="nav-item"><a class="nav-link" href="/watchlist">Watchlist</a></li>
+                            <li class="nav-item">
+                                <form class="d-flex" action="/search" method="get" autocomplete="on" role="search">
+                                    <input class="form-control me-2" type="search" id="title" name="title" placeholder="Search a Title" aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+                            </li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
                             <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
