@@ -74,6 +74,7 @@ def get_movies_by_genre(genre):
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
 
+    # Get up to 50 pages
     # Query API
     try:
         response = requests.get(url, headers=headers, params=querystring)
