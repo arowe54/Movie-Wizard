@@ -100,6 +100,7 @@ def index_queries():
     # Searches for upcoming movies and top boxoffice movies last weekend asynchronously
     start_time = time.time()
     movies = {}
+    adult_movies = {}
 
     async def fetch(session, url, querystring, key):
         headers = {
@@ -115,13 +116,20 @@ def index_queries():
             async with asyncio.TaskGroup() as group:
                 # Upcoming movies
                 url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
-                querystring = {"titleType":"movie","endYear":"2025","startYear":"2023"}
+                querystring = {"titleType":"movie","endYear":"2025","startYear":"2023", "sort":"year.incr"}
                 group.create_task(fetch(session, url, querystring, "upcoming"))
 
                 # Top boxoffice movies last weekend
                 url = "https://moviesdatabase.p.rapidapi.com/titles"
                 querystring = {"list":"top_boxoffice_last_weekend_10"}
                 group.create_task(fetch(session, url, querystring, "top_box"))
+
+                # Query the same movies, but only the isAdult: true films
+
+                # iterate through each movie in movies
+                    # if it is not an adult film
+                        # Add it to a new dictionary of films
+                # Return the new dictionary   
 
     asyncio.run(main())
     print("--- %s seconds ---" % (time.time() - start_time))
