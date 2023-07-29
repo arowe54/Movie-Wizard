@@ -65,7 +65,7 @@ def get_movies_by_list_ids(movies):
 def get_movies_by_genre(genre):
     """Get 10 movies in a certain genre"""
     start_time = time.time()
-    url = "https://moviesdatabase.p.rapidapi.com/random"
+    url = "https://moviesdatabase.p.rapidapi.com/titles/random"
 
     querystring = {"genre": genre,"titleType":"movie","list":"most_pop_movies"}
 
