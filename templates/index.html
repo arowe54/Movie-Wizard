@@ -9,7 +9,7 @@
     <div class="jumbotron">
         <div class="container">
             <h1 class="midnight"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
-            <p class=".col-">
+            <p>
                 Have you ever not been able to find a movie?
                 This website gives you the inspiration to find what you want to watch just from the click of a few buttons
             </p>
@@ -19,16 +19,67 @@
         </div>
     </div>
 
-    <!--Upcoming Movies-->
-    <div class="grid text-center">
-        <!--3 columns/movies per row?-->
-        <div class="g-col-4">
+    <!--Change shading so it is slightly darker than the top container-->
+    <div class="container-fluid">
+        <!--Upcoming Movies-->
+        <h2>Upcoming Movies</h2>
+        <div class="row row-cols-sm-5 row-cols-2">
+            {% for movie in upcoming %}
+            <!--3 columns/movies per row?-->
+            <div class="col">
+                <!--Make a card for the movie-->
+                <div class="card">
+                    {% if movie.primaryImage != None %}
+                        <img src="{{ movie.primaryImage.url }}" class="card-img-top" alt="{{ movie.primaryImage.caption.plainText }}">
+                    {% else %}
+                        <i class="bi bi-file-image"></i>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.titleText.text }}</h5>
+
+                        <p class="card-text"><small class="text-body-secondary">
+                            {% if movie.releaseDate != None %}
+                                {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                            {% else %}
+                                <p>NA</p>
+                            {% endif %}
+                        </small></p>
 
 
-        </div> 
-        <!--Restart the request to hold different, random upcoming movies-->
-        <button>Randomize</button>             
+                        <div class="btn-group" role="group" aria-label="Advanced movie options">
+                            <!--Click button and it goes to more info about the movie-->
+                            <form action="/movie" method="get" id="movie.id" >
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <button type="submit" class="btn btn-outline-primary">More info</button>
+                            </form>
+
+                            <!--Update Watchlist-->
+                            {% if movie.id in movies_in_watchlist %}
+                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                    <input type="hidden" name="action" id="action" value="remove">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
+                                </form>
+                            {% else %}
+                                <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                    <input type="hidden" name="action" id="action" value="add">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
+                                    <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
+                                </form>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            {% endfor %}
+            <!--Restart the request to hold different, random upcoming movies-->
+            <label for="randomize">Get Random Upcoming Movies:</label>
+            <button id="randomize">Randomize</button>             
+        </div>
     </div>
+    
 
     <!--Top 10 box office movies last weekend-->
 
@@ -37,81 +88,6 @@
 
     <!-- Change the shading of this container so it is slightly darker-->
     <div class="container">
-
-        <!--Show Upcoming Movies-->
-        <h2>Upcoming Movies 2023-2025</h2>
-        <table class="table">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Poster</th>
-                    <th scope="col">About</th>
-                    <th scope="col">Release Date (D/M/Y)</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for movie in upcoming %}
-                <tr>
-                    
-                    <td>
-                        {% if movie.primaryImage != None %}
-                        <figure>
-                            <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                            <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-                        </figure>
-                        {% else %}
-                        <p>Poster Unavailable</p>
-                        {% endif %}
-                    </td>
-                    <td>
-                        
-                        Title: {{ movie.titleText.text }} <br>
-                        Short ID: {{ movie.id }} <br>
-                        Long ID: {{ movie._id }}
-                        <!--Click button and it goes to more info about the movie-->
-                        <form action="/movie" method="get" >
-                            <select hidden name="movie_id">
-                                <option hidden id="movie_id" value="{{ movie.id }}" selected></option>
-                            </select>
-                            <!--TODO: Include a popover so when you hover over the button, it says "Get cool info about the movie like filming locations, goofs, soundtrack, and more ..."-->
-                            <button type="submit" class="btn btn-primary">
-                                More info
-                            </button>
-                        </form>
-                        <!--Only show if user logged in-->
-                        <!--TODO: Change to show button even if they're not locked in, but if not logged in, remove checkbox, add locked icon, and popover saying you must be logged in to access this feature -->
-                        {% if session["user_id"] %}
-                        <!--Checkbox to Update Watchlist-->
-                        <button class="container-fluid">
-                            <h2>Add to Watchlist:</h2>
-                            {% if movie.id in movies_in_watchlist %}
-                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <input type="hidden" name="action" id="action" value="remove">
-                                    <input class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
-                                </form>
-                            {% else %}
-                                <form name="addWatch" id="addWatch" action="/watchlist" method="post">
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <input type="hidden" name="action" id="action" value="add">
-                                    <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
-                                </form>
-                            {% endif %}
-                        </button>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if movie.releaseDate != None %}
-                            {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
-                        {% else %}
-                            <p>NA</p>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <hr>
         <hr>
         <!--Show Top 10 movies in the box office last weekend-->
         <h2>Top Movies Last Weekend</h2>
