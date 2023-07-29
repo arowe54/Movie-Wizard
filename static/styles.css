@@ -1,27 +1,32 @@
+/* Index */
+.index .container-fluid {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 /* Jumbotron */
-.jumbotron {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    margin-bottom: 0;
-    background-color: white;
-  }
+.index .jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: white;
+}
   
-.jumbotron p:last-child {
+.index .jumbotron p:last-child {
   margin-bottom: 0;
 }
 
-.jumbotron h1 {
+.index .jumbotron h1 {
   font-weight: 300;
 }
 
-.jumbotron .container {
+.index .jumbotron .container {
   max-width: 50rem;
 }
 
-/* Upcoming movies */
-#upcoming_movies {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+#upcoming, #top_box {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 
@@ -30,39 +35,34 @@
   background-color: white;
 }
 
-#card_group1 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 
 /* Colours */
 .blue {
-    color: blue;
+  color: blue;
 }
 
 .red {
-    color: red;
+  color: red;
 }
 
 .green {
-    color: green;
+  color: green;
 }
 
 .purple {
-    color: purple;
+  color: purple;
 }
 
 .blueviolet {
-    color:blueviolet;
+  color:blueviolet;
 }
 
 .orange {
-    color: orange;
+  color: orange;
 }
 
 .midnight {
-    color:midnightblue;
+  color:midnightblue;
 }
 
 /* Footer */

@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block main %}
+<div class="index">
+
     <div class="jumbotron" style="height: 400px">
         <div class="container">
             <h1 class="midnight display-1"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
@@ -24,7 +26,7 @@
         <!--Upcoming Movies-->
         <h2>Upcoming Movies</h2>
         <!--5 movies per row-->
-        <div class="row row-cols-sm-5 row-cols-2" id="card_group1">
+        <div class="row row-cols-sm-5 row-cols-2" id="upcoming">
             {% for movie in upcoming %}
             <div class="col">
                 <!--Make a card for the movie-->
@@ -84,10 +86,7 @@
     <!--Top 10 box office movies last weekend-->
     <div class="container-fluid">
         <h2>Top Box Office Movies Last Weekend</h2>
-        <p>Week: </p>
-        
-        <div class="row">
-
+        <div class="row row-cols-2 row-cols-sm-5" id="top_box">
             {% for movie in box_10 %}
             <div class="col">
                 <div class="card shadow-sm h-100">
@@ -138,9 +137,10 @@
                 </div>
             </div>
             {% endfor %}
-
         </div>
     </div> 
+
+</div>
 
 {% endblock %}
 <!--TODO: Run all html files through an html validator before submitting-->
