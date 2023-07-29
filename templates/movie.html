@@ -124,7 +124,7 @@
                 <div class="col">
                     <h4>Runtime</h4>
                     {% if movie.runtime != None %}
-                    <p>{{ movie.runtime.seconds }} seconds</p>
+                    <p>{{ movie.runtime.seconds|secToMin }} minutes</p>
                     {% else %}
                         NA
                     {% endif %}
@@ -207,8 +207,8 @@
                     Votes: {{ movie.node.ratingsSummary.voteCount }}
                 </li>
                 {% endif %}
-                {% if movie.runtime != None %}
-                <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds }} seconds</li>
+                {% if movie.node.runtime != None %}
+                <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds|secToMin }} minutes</li>
                 {% endif %}
             </ul>
 

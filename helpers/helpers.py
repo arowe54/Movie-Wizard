@@ -39,6 +39,8 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def secToMin(seconds):
+    return seconds / 60
 
 # ex. 1234.56 -> $1,234.56
 def usd(value):

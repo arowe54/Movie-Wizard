@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
-from helpers.helpers import apology, login_required, usd
+from helpers.helpers import apology, login_required, secToMin, usd
 from helpers.complete import get_all_info
 from helpers.queries import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
 
@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 # Custom filter (format values as US dollars)
 app.jinja_env.filters["usd"] = usd
+app.jinja_env.filters["secToMin"] = secToMin
 
 # Configure session to use the local filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
