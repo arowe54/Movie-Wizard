@@ -3,7 +3,7 @@
     padding-top: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 0;
-    background-color: #fff;
+    background-color: white;
   }
   
 .jumbotron p:last-child {
@@ -16,6 +16,23 @@
 
 .jumbotron .container {
   max-width: 50rem;
+}
+
+/* Upcoming movies */
+#upcoming_movies {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+
+/* Card */
+.card-footer {
+  background-color: white;
+}
+
+#card_group1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 

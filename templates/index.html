@@ -20,19 +20,20 @@
         </div>        
     </div>
 
-    <div class="container-fluid bg-light">
+    <div class="container-fluid bg-light" id="upcoming_movies">
         <!--Upcoming Movies-->
         <h2>Upcoming Movies</h2>
         <!--5 movies per row-->
-        <div class="row row-cols-sm-5 row-cols-2 card-group">
+        <div class="row row-cols-sm-5 row-cols-2" id="card_group1">
             {% for movie in upcoming %}
             <div class="col">
                 <!--Make a card for the movie-->
-                <div class="card">
+                <div class="card shadow-sm h-100 position-relative">
+                    <!--Width = 151 px Height = 230 px-->
                     {% if movie.primaryImage != None %}
-                        <img src="{{ movie.primaryImage.url }}" class="card-img-top" alt="{{ movie.primaryImage.caption.plainText }}">
+                        <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}" height="400px">
                     {% else %}
-                        <img src="../static/card-image.svg" class="card-img-top" alt="Bootstrap">
+                        <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.titleText.text }}</h5>
@@ -45,7 +46,9 @@
                             {% endif %}
                         </small></p>
 
-                    
+                    </div>
+                    <div class="card-footer">
+
                         <div class="btn-group" role="group" aria-label="Advanced movie options">
                             <!--Click button and it goes to more info about the movie-->
                             <form action="/movie" method="get" id="movie.id" >
@@ -73,12 +76,11 @@
                     </div>
                 </div>
             </div> 
-
-            {% endfor %}
-            <!--Restart the request to hold different, random upcoming movies-->
-            <label for="randomize">Get Random Upcoming Movies:</label>
-            <button id="randomize">Randomize</button>             
+            {% endfor %}             
         </div>
+        <!--Restart the request to hold different, random upcoming movies-->
+        <label for="randomize">Get Random Upcoming Movies:</label>
+        <button id="randomize">Randomize</button>
     </div>
     
 
