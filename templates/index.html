@@ -6,19 +6,19 @@
 
 {% block main %}
     <!--TODO: Restructure display into a more appealing format-->
-    <div class="jumbotron container-fluid" style="height: 400px">
-        <div class="position-relative">
-            <div class="center">
-                <h1 class="midnight display-1"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
-                <p>
-                    Have you ever not been able to find a movie?
-                    This website gives you the inspiration to find what you want to watch just from the click of a few buttons
-                </p>
+    <div class="jumbotron" style="height: 400px">
+        <div class="container">
+            <h1 class="midnight display-1"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
+            <p class="lead text-muted">
+                Have you ever not been able to find a movie to watch?
+                This website gives you the inspiration to find what you want to watch just from the click of a few buttons
+            </p>
+            <p>
                 <!--Goes to a page where you can submit a form (check a bunch of boxes), app makes a bunch of requests, finds and returns common movies from the request (ex. using if key in x and y and z and etc..)-->
                 <button class="btn btn-primary">Find a Movie</button>
                 <a href="/search"> <button class="btn btn-secondary">Get a Random Movie</button> </a>
-            </div>
-        </div>     
+            </p>
+        </div>        
     </div>
 
     <!--Change shading so it is slightly darker than the top container-->
