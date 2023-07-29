@@ -161,7 +161,7 @@
         {% for song in movie.soundtrack.edges %}
             <p>Title: {{ song.node.text }}</p>
             {% for comment in song.node.comments %}
-                <p>{{ comment.plaidHtml }}</p>
+                <p>{{ comment.plaidHtml|safe }}</p>
             {% endfor %}
         {% endfor %}
     </div>
