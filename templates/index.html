@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block main %}
-    <!--TODO: Restructure display into a more appealing format-->
     <div class="jumbotron" style="height: 400px">
         <div class="container">
             <h1 class="midnight display-1"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
@@ -21,20 +20,19 @@
         </div>        
     </div>
 
-    <!--Change shading so it is slightly darker than the top container-->
     <div class="container-fluid bg-light">
         <!--Upcoming Movies-->
         <h2>Upcoming Movies</h2>
-        <div class="row row-cols-sm-5 row-cols-2">
+        <!--5 movies per row-->
+        <div class="row row-cols-sm-5 row-cols-2 card-group">
             {% for movie in upcoming %}
-            <!--3 columns/movies per row?-->
             <div class="col">
                 <!--Make a card for the movie-->
                 <div class="card">
                     {% if movie.primaryImage != None %}
                         <img src="{{ movie.primaryImage.url }}" class="card-img-top" alt="{{ movie.primaryImage.caption.plainText }}">
                     {% else %}
-                        <i class="bi bi-file-image"></i>
+                        <img src="../static/card-image.svg" class="card-img-top" alt="Bootstrap">
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.titleText.text }}</h5>
@@ -47,7 +45,7 @@
                             {% endif %}
                         </small></p>
 
-
+                    
                         <div class="btn-group" role="group" aria-label="Advanced movie options">
                             <!--Click button and it goes to more info about the movie-->
                             <form action="/movie" method="get" id="movie.id" >
@@ -75,6 +73,7 @@
                     </div>
                 </div>
             </div> 
+
             {% endfor %}
             <!--Restart the request to hold different, random upcoming movies-->
             <label for="randomize">Get Random Upcoming Movies:</label>
