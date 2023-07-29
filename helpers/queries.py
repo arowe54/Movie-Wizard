@@ -65,16 +65,15 @@ def get_movies_by_list_ids(movies):
 def get_movies_by_genre(genre):
     """Get 10 movies in a certain genre"""
     start_time = time.time()
-    url = "https://moviesdatabase.p.rapidapi.com/titles"
+    url = "https://moviesdatabase.p.rapidapi.com/random"
 
-    querystring = {"genre": genre,"titleType":"movie"}
+    querystring = {"genre": genre,"titleType":"movie","list":"most_pop_movies"}
 
     headers = {
         "X-RapidAPI-Key": "515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e",
         "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com"
     }
 
-    # Get up to 50 pages
     # Query API
     try:
         response = requests.get(url, headers=headers, params=querystring)
