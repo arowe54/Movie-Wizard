@@ -9,6 +9,11 @@ Bootstrap Icons of interest:
     logo:
         bullseye (for lookup a movie?, index/logo)
         kanban/kanban-fill (logo)
+        hat-wizard (font awesome) <i class="fa-solid fa-hat-wizard"></i>
+        
+    Use icon when pressing a button to get a movie:   
+        wand-magic-sparkles <i class="fa-solid fa-wand-magic-sparkles"></i>
+
     palette/palette-fill (preferences header in profile)
     for preference, liked movies? :
         emoji-neutral/emoji-neutral-fill, emoji-heart-eyes/emoji-heart-eyes-fill, emoji-frown/emoji-frown-fill  
