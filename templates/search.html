@@ -23,14 +23,18 @@
     </div>
 
     <!--Asynchronous results of searchbar-->
-    <div class="container-fluid">
-        <div class="row row-cols-3" id="new_results">
-
-        </div> 
+    <div class="container-fluid" id="new_results">
+        
     </div>
 
     <!--TODO: Update Display of searched movies-->
     <!--Better if it is 1 per row-->
+    <div class="container-fluid">
+
+    </div>
+
+
+    <!--Original default-->
     <div class="container-fluid" id="first_results">
         <div class="row row-cols-3">
             {% for movie in movies %}
@@ -114,7 +118,7 @@
                 // Send request
                 $.ajax(settings).done(function (response) {
                     // Create an temporary div
-                    temp_div = $('<div id="temp_div"></div>');
+                    temp_div = $('<div class="row row-cols-3" id="temp_div"></div>');
 
                     var resp = response.results;
                     // Update the number of results
