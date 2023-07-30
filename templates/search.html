@@ -17,14 +17,14 @@
     </form>
     <hr>
 
+    <!--Number of results-->
     <div class="container d-flex">
         <p id="num_results">Results: {{ movies|length }}</p>
     </div>
 
+    <!--Asynchronous results of searchbar-->
     <div class="container-fluid">
         <div class="row row-cols-3" id="new_results">
-
-
 
         </div> 
     </div>
@@ -92,13 +92,11 @@
             // When the user types in anything to the search form (change from any key to a character)
             $('#search_form input[type="search"]').on( "keypress", function ( event ) {
 
-                // Collapse/hide the original results
+                // Temporarily erase default result
                 $('#first_results').hide();
-                
-                // Change results to nothing
                 $('#num_results').html("Results: ");
 
-                // Prepare and send a request for the new results
+                // Save the title
                 var title = $('#search_form input[type="search"]').val();
                 title = title + event.key;
 
@@ -113,7 +111,7 @@
                     'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
                 }
                 };
-
+                // Send request
                 $.ajax(settings).done(function (response) {
                     // Create an temporary div
                     temp_div = $('<div id="temp_div"></div>');
@@ -121,6 +119,7 @@
                     var resp = response.results;
                     // Update the number of results
                     $('#num_results').html("Results: " + resp.length);
+
                     // For each movie
                     for (let i = 0; i < resp.length; i++) {
                         // Create a card
@@ -203,18 +202,10 @@
                     }
                     // Change the html of the page to this temporary div
                     $('#new_results').html( temp_div );
-                });
-
-                /*
-                // If the form doesn't have a value
-                if (!$('#search_form input[type="search"]').val()) {
-                    $('#first_results').show();
-                }
-                // Only hides on the second key pressed
-                */
-                
+                    // Show results
+                    $('#new_results').show();
+                });                
             })
-
         })
     </script>
 
