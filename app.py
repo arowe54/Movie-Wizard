@@ -44,8 +44,8 @@ def index():
     """Home Page"""
     # If user clicked the get random upcoming movies button
     if request.method == "POST":
-        # Generate a random number from 0 to 10, exclusive
-        x = randint(0, 12)
+        # Generate a random number from 1 to 9
+        x = randint(1, 9)
         print(x)
         # Generate the upcoming movies with that page number
         home_movies = index_queries(x)
