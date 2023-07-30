@@ -67,8 +67,13 @@ def genres():
     """Get Movies in each genre"""
     # Get list of each genre
     genres = get_genres()
-    # Remove adult movies
+    # Filter genres
     genres.remove("Adult")
+    genres.remove("Game-Show")
+    genres.remove("News")
+    genres.remove("Reality-TV")
+    genres.remove("Short")
+    genres.remove("Talk-Show")
 
     # Get genre selected by the user
     genre = request.args.get("genre")
