@@ -5,50 +5,67 @@
 {% endblock %}
 
 {% block main %}
-<!--Show username-->
-<button>
-    <p>Username: {{ username }}</p>
-</button>
-<!--Show password-->
-<button>
-    <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ session["password"] }}</span></p>
-    <!--TODO: Change from click to show when clicked and held, also change button to icon -->
-    <button name="show_pwd" id="show_pwd">Show Password</button>
-</button>
+<div class="profile text-align-left">
 
-
-<div class="row">
-    <div class="col">
-        <!--Change username-->
-        <button type="text" name="update_username" id="update_username">Change Username</button>
-        <div id="update_username_form" class="container">
-            <p> Username: {{ username }} </p>
-            <form name="change_username" action="/update_user" method="post">
-                <p> New Username:
-                    <input type="text" name="new_username" id="new_username" autocomplete="off">
-                    <button type="submit">Submit</button>
-                </p>
-            </form>
+    <div class="container d-flex">
+        <div>
+            <h4>Credentials:</h4>
+        </div>
+    </div>
+    <div class="container d-flex">
+        <div>
+            <!--Show username-->
+            <button>
+                <p>Username: {{ username }}</p>
+            </button>
+            <!--Show password-->
+            <button>
+                <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ session["password"] }}</span></p>
+                <!--TODO: Change from click to show when clicked and held, also change button to icon -->
+                <button name="show_pwd" id="show_pwd">Show Password</button>
+            </button>
         </div>
     </div>
 
-    <div class="col">
-        <!--Change password-->
-        <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
-        <div id="update_pwd_form">
-            <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ session["password"] }}</span> </p>
-            <!--Make button show password-->
-            <button id="show_pwd2">Show password</button>
-            <form name="change_pwd" action="/update_user" method="post">
-                <p> New Password:
-                    <input type="password" name="new_pwd" id="new_pwd">
-                    <button type="submit">Submit</button>
-                </p>
-            </form>
+    <hr>
+
+    
+    <div class="row container">
+        <h4>Update Credentials:</h4>
+        <div class="col">
+            <!--Change username-->
+            <button type="text" name="update_username" id="update_username">Change Username</button>
+            <div id="update_username_form" class="container">
+                <p> Username: {{ username }} </p>
+                <form name="change_username" action="/update_user" method="post">
+                    <p> New Username:
+                        <input type="text" name="new_username" id="new_username" autocomplete="off">
+                        <button type="submit">Submit</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div class="col">
+            <!--Change password-->
+            <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
+            <div id="update_pwd_form">
+                <div class="d-flex justify-content-center">
+                    <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ session["password"] }}</span> </p>
+                    <!--Make button show password-->
+                    <button id="show_pwd2">Show password</button>
+                </div>
+                <form name="change_pwd" action="/update_user" method="post">
+                    <p> New Password:
+                        <input type="password" name="new_pwd" id="new_pwd">
+                        <button type="submit">Submit</button>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
+
 </div>
-
 
 <!--TODO: Add preferences (ex. isAdult == false, fav genre, idk)(maybe not bc of time)(do last)-->
 
