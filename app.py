@@ -6,6 +6,8 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from random import randint
+
 
 from helpers.helpers import apology, login_required, secToMin, usd
 from helpers.complete import get_all_info
@@ -36,11 +38,20 @@ def after_request(response):
     return response
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
     """Home Page"""
-    home_movies = index_queries()
+    # If user clicked the get random upcoming movies button
+    if request.method == "POST":
+        # Generate a random number from 0 to 10, exclusive
+        x = randint(0, 12)
+        print(x)
+        # Generate the upcoming movies with that page number
+        home_movies = index_queries(x)
+    else:
+        home_movies = index_queries(2)
+    
     try:
         user_id = session["user_id"]
         watchlist = get_watchlist(user_id)

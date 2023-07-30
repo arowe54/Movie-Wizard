@@ -96,7 +96,7 @@ def get_watchlist(id):
     return watchlist
 
 
-def index_queries():
+def index_queries(pg):
     # Searches for upcoming movies and top boxoffice movies last weekend asynchronously
     start_time = time.time()
     movies = {}
@@ -115,7 +115,7 @@ def index_queries():
             async with asyncio.TaskGroup() as group:
                 # Upcoming movies
                 url = "https://moviesdatabase.p.rapidapi.com/titles/x/upcoming"
-                querystring = {"titleType":"movie","endYear":"2025","startYear":"2023", "sort":"year.incr", "page": "2"}
+                querystring = {"titleType":"movie","endYear":"2026","startYear":"2023", "sort":"year.incr", "page": str(pg)}
                 group.create_task(fetch(session, url, querystring, "upcoming"))
 
                 # Top boxoffice movies last weekend

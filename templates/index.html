@@ -78,8 +78,10 @@
             {% endfor %}             
         </div>
         <!--Restart the request to hold different, random upcoming movies-->
-        <label for="randomize">Get Random Upcoming Movies:</label>
-        <button id="randomize">Randomize</button>
+        <form action="/" method="post">
+            <label for="randomize">Get Random Upcoming Movies:</label>
+            <button type="submit" id="randomize">Randomize</button>
+        </form>
     </div>
     
 
