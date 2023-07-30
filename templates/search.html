@@ -17,6 +17,10 @@
     </form>
     <hr>
 
+    <div class="container d-flex">
+        <p id="num_results">Results: {{ movies|length }}</p>
+    </div>
+
     <div class="container-fluid">
         <div class="row row-cols-3" id="new_results">
 
@@ -90,6 +94,10 @@
 
                 // Collapse/hide the original results
                 $('#first_results').hide();
+                
+                // Change results to nothing
+                $('#num_results').html("Results: ");
+
                 // Prepare and send a request for the new results
                 var title = $('#search_form input[type="search"]').val();
                 title = title + event.key;
@@ -110,7 +118,9 @@
                     // Create an temporary div
                     temp_div = $('<div id="temp_div"></div>');
 
-                    var resp = response.results
+                    var resp = response.results;
+                    // Update the number of results
+                    $('#num_results').html("Results: " + resp.length);
                     // For each movie
                     for (let i = 0; i < resp.length; i++) {
                         // Create a card
