@@ -7,7 +7,7 @@
 {% block main %}
     <!--Lookup a Movie-->
     <form class="d-flex" action="/search" method="get" autocomplete="on" id="search_form" role="search">
-        <input class="form-control me-2" type="search" id="search_title" name="title" placeholder="Search a Title" aria-label="Search">
+        <input class="form-control me-2" type="search" id="search_title" name="search_title" placeholder="Search a Title" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
     <!--Get Random movies-->
@@ -23,7 +23,7 @@
 
     <!--TODO: Update Display of searched movies-->
     <!--Better if it is 1 per row-->
-    <div class="container-fluid">
+    <div class="container-fluid" id="first_results">
         <div class="row row-cols-3">
             {% for movie in movies %}
             <div class="col">
@@ -77,52 +77,35 @@
     </div>
     
     <script>
-        // Function to get the results of this new search 
-        const data = null;
-        const ajax = new XMLHttpRequest();
-        ajax.withCredentials = true;
+        $('document').ready(function() {
 
-        // Do this once the request is sent
-        ajax.addEventListener('readystatechange', function () {
-            if (this.readyState == 4 && this.status == 200) {
+            // When the user types in a character to the search form
+            $('#search_form input[type="search"]').keydown(function(event) {
+                // Collapse/hide the original results
+                $('#first_results').hide();
+                // Prepare and send a request for the new results
+                title = $('#search_form').val();
+            
+                const settings = {
+                async: true,
+                crossDomain: true,
+                url: 'https://moviesdatabase.p.rapidapi.com/titles/search/title/' + String(title) + '?titleType=movie',
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e',
+                    'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+                }
+                };
 
-                // When the user types in a character to the search form
-                $('#search_form').keydown(function(event) {
-                    // Collapse/hide the original results
-                    $('#original_results').hide();
-                    // Prepare and send a request for the new results
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                    resp = JSON.parse(response);
+                    console.log("\n\n\n" + resp);
 
-                    // Prepare request
-                    // https://moviesdatabase.p.rapidapi.com/titles/search/title/Annihilation?titleType=movie
-                    title = $('#search_form').val();
-                    ajax.open('GET', "https://moviesdatabase.p.rapidapi.com/titles/search/title/" + String(title) + "?titleType=movie");
-                    ajax.setRequestHeader('X-RapidAPI-Key', '515955a8bbmsh7bacf3e7bb3ed33p1ef576jsna2431a83680e');
-                    ajax.setRequestHeader('X-RapidAPI-Host', 'moviesdatabase.p.rapidapi.com');
-                    // Send Request
-                    ajax.send(data);
-
-                    // Manipulate results
-                    console.log("\n\n");
-                    const resp = JSON.parse(this.response);
-                    const results = resp["results"];
-
-                    console.log(results);
-                })
-
-            }
-        });
-
-        
-
-        $(document).ready(function() {
-            // When user types a key in the search bar
-            $('#search_title').keydown(function() {
-                // Hide the original results
-                $('#original_results').hide();
-                // Get the new results of this search
+                });
             })
 
-            
         })
     </script>
+    
 {% endblock %}
