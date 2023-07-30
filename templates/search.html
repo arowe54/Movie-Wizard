@@ -17,8 +17,12 @@
     </form>
     <hr>
 
-    <div class="container" id="new_results">
-        
+    <div class="container-fluid">
+        <div class="row row-cols-3" id="new_results">
+
+
+
+        </div> 
     </div>
 
     <!--TODO: Update Display of searched movies-->
@@ -26,54 +30,56 @@
     <div class="container-fluid" id="first_results">
         <div class="row row-cols-3">
             {% for movie in movies %}
-            <div class="col">
-                <div class="card">
-                    {% if movie.primaryImage != None %}
-                        <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
-                    {% else %}
-                        <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
-                    {% endif %}
-    
-                    <div class="card-body">
-                        <h5 class="card-title">{{ movie.titleText.text }}</h5>
-                        <p class="card-text"><small class="text-body-secondary">
-                            {% if movie.releaseDate != None %}
-                                {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
-                            {% else %}
-                                <p>NA</p>
-                            {% endif %}
-                        </small></p>
-                    </div>
-    
-                    <div class="card-footer">
-                        <div class="btn-group" role="group" aria-label="Advanced movie options">
-                            <!--Click button and it goes to more info about the movie-->
-                            <form action="/movie" method="get" id="movie.id" >
+            <div class="col card">
+                {% if movie.primaryImage != None %}
+                    <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
+                {% else %}
+                    <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.titleText.text }}</h5>
+                    <p class="card-text"><small class="text-body-secondary">
+                        {% if movie.releaseDate != None %}
+                            {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                        {% else %}
+                            <p>NA</p>
+                        {% endif %}
+                    </small></p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="btn-group" role="group" aria-label="Advanced movie options">
+                        <!--Click button and it goes to more info about the movie-->
+                        <form action="/movie" method="get" id="movie.id" >
+                            <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                            <button type="submit" class="btn btn-outline-primary">More info</button>
+                        </form>
+
+                        <!--Update Watchlist-->
+                        {% if movie.id in movies_in_watchlist %}
+                            <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
                                 <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                <button type="submit" class="btn btn-outline-primary">More info</button>
+                                <input type="hidden" name="action" id="action" value="remove">
+                                <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
                             </form>
-    
-                            <!--Update Watchlist-->
-                            {% if movie.id in movies_in_watchlist %}
-                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <input type="hidden" name="action" id="action" value="remove">
-                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
-                                </form>
-                            {% else %}
-                                <form name="addWatch" id="addWatch" action="/watchlist" method="post">
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <input type="hidden" name="action" id="action" value="add">
-                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
-                                    <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
-                                </form>
-                            {% endif %}   
-                        </div>
+                        {% else %}
+                            <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="add">
+                                <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
+                                <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
+                            </form>
+                        {% endif %}   
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+    </div>
+
+    <div id="watchlist_movies" hidden>
+        {{ movies_in_watchlist}}
     </div>
     
     <script>
@@ -81,14 +87,12 @@
 
             // When the user types in anything to the search form (change from any key to a character)
             $('#search_form input[type="search"]').on( "keypress", function ( event ) {
-                var key_pressed = event.key;
 
                 // Collapse/hide the original results
                 $('#first_results').hide();
                 // Prepare and send a request for the new results
                 var title = $('#search_form input[type="search"]').val();
-                title = title + key_pressed;
-                console.log(title);
+                title = title + event.key;
 
                 // Prepare Ajax request
                 const settings = {
@@ -103,16 +107,92 @@
                 };
 
                 $.ajax(settings).done(function (response) {
-                    console.log(response);
-                    // response prints valid JSON, geting a value or converting to JSON returns [object Object]
-                    // TODO: Convert response to json or find a way to access response["results"]
-                    var resp = response.results
-                    for (let i = 0; i < resp.length; i++) {
-                        console.log("\n" + resp[i].id);
-                    }
+                    // Create an temporary div
+                    temp_div = $('<div id="temp_div"></div>');
 
-                    // Display the new results
-                    $('#new_results').html(resp[0].id);
+                    var resp = response.results
+                    // For each movie
+                    for (let i = 0; i < resp.length; i++) {
+                        // Create a card
+
+                        let movie = resp[i];
+
+                        // Create card image
+                        if (resp[i].primaryImage) {
+                            card_img = '<img src="' + movie.primaryImage.url + '" class="card-img-top w-100" alt="' + movie.primaryImage.caption.plainText + '">';
+                        }
+                        else {
+                            card_img = '<img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">';
+                        } 
+
+                        // card title
+                        let card_title = '<h5 class="card-title">' + movie.titleText.text + '</h5>';
+
+                        // runtime
+                        let date = 'NA';
+                        if (movie.releaseDate) {
+                            date = movie.releaseDate.day + '/' + movie.releaseDate.month + '/' + movie.releaseDate.year;
+                        }
+                        let card_text = `
+                                <p class="card-text"><small class="text-body-secondary">
+                                    ` + date + `
+                                </small></p>`;
+
+                        // more_info button
+                        let more_info_form = `
+                            <form action="/movie" method="get" id="movie.id" >
+                                <input type="hidden" name="movie_id" value="` + movie.id + `">
+                                <button type="submit" class="btn btn-outline-primary">More info</button>
+                            </form>
+                        `;
+
+                        // Get movies in watchlist
+                        let watchlist = $('#watchlist_movies').html();
+                        let id = movie.id;
+                        let update_watch_form = '';
+                        // Get the correct watchlist form
+                        if (watchlist.includes(id)) {
+                            update_watch_form = `
+                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value=` + String(id) + `">
+                                    <input type="hidden" name="action" id="action" value="remove">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
+                                </form>
+                            `;
+                        }
+                        else {
+                            update_watch_form = `
+                                <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value="` + String(id) + `">
+                                    <input type="hidden" name="action" id="action" value="add">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
+                                </form>
+                            `;
+                        }
+
+                        // Format the card to append later
+                        let card = `
+                        <div class="col card">
+                            ` + card_img + `
+                            <div class="card-body"> 
+                                ` + card_title + card_text + `
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="btn-group" role="group" aria-label="Advanced movie options">
+                                    <!--Click button and it goes to more info about the movie-->
+                                    ` + more_info_form + `
+                                    <!--Update Watchlist-->
+                                    ` + update_watch_form + `
+                                </div>
+                            </div>
+                        </div>`;
+
+                        // Append card to the temporary div
+                        temp_div.append(card);
+                    }
+                    // Change the html of the page to this temporary div
+                    $('#new_results').html( temp_div );
                 });
 
                 /*
