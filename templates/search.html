@@ -82,7 +82,6 @@
             // When the user types in anything to the search form (change from any key to a character)
             $('#search_form input[type="search"]').on( "keypress", function ( event ) {
                 var key_pressed = event.key;
-                console.log(key_pressed);
 
                 // Collapse/hide the original results
                 $('#first_results').hide();
@@ -107,10 +106,13 @@
                     console.log(response);
                     // response prints valid JSON, geting a value or converting to JSON returns [object Object]
                     // TODO: Convert response to json or find a way to access response["results"]
-                    var results = response;
-                    console.log("\n\n\n" + results);
+                    var resp = response.results
+                    for (let i = 0; i < resp.length; i++) {
+                        console.log("\n" + resp[i].id);
+                    }
 
-
+                    // Display the new results
+                    $('#new_results').html(resp[0].id);
                 });
 
                 /*
