@@ -274,12 +274,30 @@ def watchlist():
         return redirect(request.referrer)
     else:
         watchlist = get_watchlist(user_id)
-        print(watchlist)
-        print(len(watchlist))
 
-        # TODO: Split watchlist into 1 list per page
+        # Split the watchlist into lists/pages with 9 movies per page
+        pages = []
+        pg = []
+        pg_num = 0
+        j = 0
+        for id in watchlist:
+            pg.append(id)
+            j += 1
+            # If there is 9 ids in the current page, or you have reached the last element
+            if len(pg) == 9 or j == len(watchlist):
+                # Append to pages
+                pages.append(pg)
+                # Increment pg number by 1
+                pg_num += 1
+                # Empty the list that is usually appended to
+                pg = []
+        # TODO: Iterate through each page, get the watchlist, and save
+
+        num_pages = len(pages)
+        print(num_pages)
+        print(pages)
 
         # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
         movies = get_movies_by_list_ids(watchlist)
 
-        return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist)
+        return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist, num_pages=num_pages, pages = pages)
