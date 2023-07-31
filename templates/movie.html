@@ -8,22 +8,24 @@
 
 <div class="container-fluid" >
     <div class="row">
-        <!--One column for poster/title-->
+        <!--Column for poster and title-->
         <div class="col">
             <h2>{{ movie.titleText.text }}</h2>
             {% if movie.primaryImage != None %}
-                    <figure>
-                        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-                    </figure>
-                    {% else %}
-                    <p>Poster Unavailable</p>
+            <figure>
+                <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
+                <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
+            </figure>
+            {% else %}
+            <figure>
+                <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
+            </figure>
             {% endif %}
         </div>
-        <!--Info on the right-->
+        <!--Column for more information-->
         <div class="col">
-            <!-- Rows inside this column-->
             <div class="row">
+                <!--Genres-->
                 <div class="col">
                     <h4>Genres: <i class="bi bi-palette-fill"></i></h4>
                     <p>
@@ -32,9 +34,9 @@
                         {% endfor %}
                     </p>
                 </div>
+                <!--Watchlist (if user logged in)-->
                 {% if session["user_id"] %}
                 <div class="col">
-                    <!--Checkbox to Update Watchlist-->
                     <button class="container-fluid">
                         <h2>Watchlist?</h2>
                         {% if movie.id in movies_in_watchlist %}
@@ -56,6 +58,7 @@
                 <hr>
             </div>
             <div class="row">
+                <!--Awards-->
                 <div class="col">
                     <h4>Awards <i class="bi bi-award-fill"></i></h4>
                     <p>Nominations: {{ movie.nominations.total }}</p>
@@ -64,6 +67,7 @@
                     <p>Wins: {{ movie.prestigiousAwardSummary.wins }}</p>
                     <p>Nominations: {{ movie.prestigiousAwardSummary.nominations }}</p>
                 </div>
+                <!--Revenue and Budget-->
                 <div class="col">
                     <h4>Revenue and Budget <i class="bi bi-robot"></i></h4>
                     <p>Production Budget: 
@@ -97,6 +101,7 @@
                 </div>
             </div>
             <hr>
+            <!--Plot-->
             <div class="row">
                 <h4>Plot <i class="bi bi-rocket-takeoff"></i></h4>
                 <p>
@@ -109,6 +114,7 @@
             </div>
             <hr>
             <div class="row">
+                <!--Ratings-->
                 <div class="col">
                     <h4>Ratings <i class="bi bi-file-earmark-bar-graph-fill"></i></h4>
                     {% if movie.meterRanking != None %}
@@ -125,6 +131,7 @@
                         Unavailable
                     {% endif %}
                 </div>
+                <!--Runtime-->
                 <div class="col">
                     <h4>Runtime <i class="bi bi-stopwatch"></i></h4>
                     {% if movie.runtime != None %}
@@ -133,10 +140,12 @@
                         NA
                     {% endif %}
                 </div>
+                <!--ID-->
                 <div class="col">
                     <h4>Movie ID: </h4>
                     <p>{{ movie.id }}</p>
                 </div>
+                <!--Release Date-->
                 <div class="col">
                     <h4>Release Date: </h4>
                     <h5>
@@ -151,6 +160,7 @@
         </div>
     </div>
     <hr>
+    <!--Filming Locations-->
     <div class="row">
         <h4>Filming Locations <i class="bi bi-map-fill"></i></h4>
         <h6>Total: {{ movie.filmingLocations.total }}</h6>
@@ -160,6 +170,7 @@
         {% endfor %}
     </div>
     <hr>
+    <!--Soundtrack-->
     <div class="row">
         <h4>Soundtrack <i class="bi bi-music-note-list"></i></h4>
         {% for song in movie.soundtrack.edges %}
@@ -171,12 +182,14 @@
     </div>
     <hr>
     <div class="row">
+        <!--Countries-->
         <div class="col">
             <h4>Countries of Origin <i class="bi bi-globe2"></i></h4>
             {% for country in movie.countriesOfOrigin.countries %}
                 <p>{{ country.text }}</p>
             {% endfor %}
         </div>
+        <!--Languages-->
         <div class="col">
             <h4>Spoken Languages <i class="bi bi-translate"></i></h4>
             {% for lang in movie.spokenLanguages.spokenLanguages %}
@@ -187,34 +200,39 @@
     <hr>
 </div>
 
-<!--TODO: Create a morelikethis.html that extends movie.html (and possibly other files) to save space-->
+
+<!--Similar Movies-->
 <h3>More like this</h3>
 {% if movie.moreLikeThisTitles != None %}
-    <!--Create a card for each movie-->
     <div class="card-deck d-inline-flex">
+        <!--Create a card for each movie-->
         {% for movie in movie.moreLikeThisTitles.edges %}
         <div class="card container-fluid">
-
+            <!--Poster-->
             {% if movie.primaryImage != None %}
-                <img class="card-img-top" src="{{ movie.node.primaryImage.url }}" alt="Movie Poster">
+            <img class="card-img-top" src="{{ movie.node.primaryImage.url }}" alt="Movie Poster">
+            {% else %}
+            <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
             {% endif %}
 
+            <!--Title and Release Date-->
             <div class="card-body">
                 <h5 class="card-title">{{ movie.node.titleText.text }}</h5>
-            </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Release Year: {{ movie.node.releaseYear.year }}</li>
 
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Release Year: {{ movie.node.releaseYear.year }}</li>
-                {% if movie.node.ratingsSummary != None %}
-                <li class="list-group-item">
-                    Rating: {{ movie.node.ratingsSummary.aggregateRating }}/10, 
-                    Votes: {{ movie.node.ratingsSummary.voteCount }}
-                </li>
-                {% endif %}
-                {% if movie.node.runtime != None %}
-                <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds|secToMin }} minutes</li>
-                {% endif %}
-            </ul>
+                    {% if movie.node.ratingsSummary != None %}
+                    <li class="list-group-item">
+                        Rating: {{ movie.node.ratingsSummary.aggregateRating }}/10, 
+                        Votes: {{ movie.node.ratingsSummary.voteCount }}
+                    </li>
+                    {% endif %}
+
+                    {% if movie.node.runtime != None %}
+                    <li class="list-group-item">Runtime: {{ movie.node.runtime.seconds|secToMin }} minutes</li>
+                    {% endif %}
+                </ul>
+            </div>
 
             <div class="card-footer">
                 <!--Click button and it goes to more info about the movie-->
@@ -225,29 +243,11 @@
                     <button type="submit" class="btn btn-primary">More info</button>
                 </form>
             </div>
-
         </div>     
         {% endfor %}
     </div>
 {% else %}
     Not available
 {% endif %}
-
-
-
-
-<!--
-{% for key in movie %}
-    <p>{{ key }} : 
-        {% if movie[key] != None and movie[key] is mapping %}
-            {% for subkey in movie[key] %}
-                <p>{{ subkey }} : {{ movie[key][subkey] }}</p>
-            {% endfor %}
-        {% else %}
-            {{ movie[key] }}
-        {% endif %}
-    </p><br><br>
-{% endfor %}
--->
 
 {% endblock %}

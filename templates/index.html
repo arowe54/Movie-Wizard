@@ -30,14 +30,15 @@
             <div class="col">
                 <!--Make a card for the movie-->
                 <div class="card shadow-sm h-100">
+                    <!--Poster-->
                     {% if movie.primaryImage != None %}
                         <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}" height="400px">
                     {% else %}
                         <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
                     {% endif %}
+                    <!--Title and Release Date-->
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.titleText.text }}</h5>
-
                         <p class="card-text"><small class="text-body-secondary">
                             {% if movie.releaseDate != None %}
                                 {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
@@ -45,7 +46,6 @@
                                 <p>NA</p>
                             {% endif %}
                         </small></p>
-
                     </div>
                     <div class="card-footer">
                         <div class="btn-group" role="group" aria-label="Advanced movie options">
@@ -67,7 +67,6 @@
                                     <input type="hidden" name="movie_id" value="{{ movie.id }}">
                                     <input type="hidden" name="action" id="action" value="add">
                                     <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
-                                    <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
                                 </form>
                             {% endif %}   
                         </div>
@@ -91,15 +90,16 @@
             {% for movie in box_10 %}
             <div class="col">
                 <div class="card shadow-sm h-100">
+                    <!--Poster-->
                     {% if movie.primaryImage != None %}
                         <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}" height="400px">
                     {% else %}
                         <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
                     {% endif %}
 
+                    <!--Title and Release Date-->
                     <div class="card-body">
                         <h5 class="card-title">{{ movie.titleText.text }}</h5>
-
                         <p class="card-text"><small class="text-body-secondary">
                             {% if movie.releaseDate != None %}
                                 {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
@@ -107,8 +107,8 @@
                                 <p>Release date unavailable</p>
                             {% endif %}
                         </small></p>
-
                     </div>
+
                     <div class="card-footer">
                         <div class="btn-group" role="group" aria-label="Advanced movie options">
                             <!--Click button and it goes to more info about the movie-->
@@ -129,19 +129,15 @@
                                     <input type="hidden" name="movie_id" value="{{ movie.id }}">
                                     <input type="hidden" name="action" id="action" value="add">
                                     <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
-                                    <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
                                 </form>
                             {% endif %}   
                         </div>
                     </div>
-
                 </div>
             </div>
             {% endfor %}
         </div>
     </div> 
-
 </div>
 
 {% endblock %}
-<!--TODO: Run all html files through an html validator before submitting-->
