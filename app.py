@@ -167,8 +167,9 @@ def profile():
         new_hash = generate_password_hash(new_password)
         # Update hash to new password hash
         db.execute("UPDATE users SET hash = ? WHERE id = ?;", new_hash, id)
-    else:
-        password = session["password"]
+    
+    # Save password
+    password = session["password"]
 
     return render_template("profile.html", username=username, pwd=password)
 
