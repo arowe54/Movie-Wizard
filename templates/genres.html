@@ -22,76 +22,62 @@
 </form>
 
 <!--Movies from genre selected using Jinja-->
-<div class="container-fluid">
-    <h2>{{ genre_selected }}</h2>
-    <table class="table">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">Poster</th>
-                <th scope="col">About</th>
-                <th scope="col">Release Date (D/M/Y)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if movies != None %}
-            {% for movie in movies %}
-            <tr>
-                
-                <td>
-                    {% if movie.primaryImage != None %}
-                    <figure>
-                        <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                        <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-                    </figure>
-                    {% else %}
-                    <p>Poster Unavailable</p>
-                    {% endif %}
-                </td>
-                <td>
-                    Title: {{ movie.titleText.text }} <br>
-                    Short ID: {{ movie.id }} <br>
-                    Long ID: {{ movie._id }}
-                    <!--Click button and it goes to more info about the movie-->
-                    <form action="/movie" method="get" id="movie.id" >
-                        <select hidden name="movie_id" onclick="this.form.submit()">
-                            <option hidden value="{{ movie.id }}" selected></option>
-                        </select>
-                        <button type="submit">More info</button>
-                    </form>
-                    {% if session["user_id"] %}
-                    <!--Checkbox to Update Watchlist-->
-                    <button class="container-fluid">
-                        <h2>Add to Watchlist</h2>
-                        {% if movie.id in movies_in_watchlist %}
-                            <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                <input type="hidden" name="action" id="action" value="remove">
-                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()" checked>  
-                            </form>
-                        {% else %}
-                            <form name="addWatch" id="addWatch" action="/watchlist" method="post">
-                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                <input type="hidden" name="action" id="action" value="add">
-                                <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
-                            </form>
-                        {% endif %}
-                    </button>
-                    {% endif %}
-                </td>
-                <td>
+<!--5 columns per row-->
+<!--5 movies per row-->
+<div class="row row-cols-sm-5 row-cols-2" id="upcoming">
+    {% if movies != None %}
+    {% for movie in movies %}
+    <div class="col">
+        <!--Make a card for the movie-->
+        <div class="card shadow-sm h-100">
+            {% if movie.primaryImage != None %}
+                <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}" height="400px">
+            {% else %}
+                <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap" height="400px">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.titleText.text }}</h5>
+
+                <p class="card-text"><small class="text-body-secondary">
                     {% if movie.releaseDate != None %}
                         {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
                     {% else %}
                         <p>NA</p>
                     {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-        </tbody>
-    </table>
-    <button type="submit" class="btn btn-primary" id="refresh">Get More Movies</button>
+                </small></p>
+
+            </div>
+            <div class="card-footer">
+                <div class="btn-group" role="group" aria-label="Advanced movie options">
+                    <!--Click button and it goes to more info about the movie-->
+                    <form action="/movie" method="get" id="movie.id" >
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button type="submit" class="btn btn-outline-primary">More info</button>
+                    </form>
+
+                    <!--Update Watchlist-->
+                    {% if movie.id in movies_in_watchlist %}
+                        <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                            <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                            <input type="hidden" name="action" id="action" value="remove">
+                            <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
+                        </form>
+                    {% else %}
+                        <form name="addWatch" id="addWatch" action="/watchlist" method="post">
+                            <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                            <input type="hidden" name="action" id="action" value="add">
+                            <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()" {{"disabled" if not session["user_id"] }}>Add to Watchlist</button>
+                            <!--TODO: Add a popover saying "You must be logged in to Add to Watchlist"-->
+                        </form>
+                    {% endif %}   
+                </div>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}      
+    {% endif %}       
 </div>
+<button type="submit" class="btn btn-primary" id="refresh">Get More Movies</button>
 
 <script>
     $('#refresh').click(function() {
