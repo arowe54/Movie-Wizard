@@ -274,6 +274,11 @@ def watchlist():
         return redirect(request.referrer)
     else:
         watchlist = get_watchlist(user_id)
+        print(watchlist)
+        print(len(watchlist))
+
+        # TODO: Split watchlist into 1 list per page
+
         # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
         movies = get_movies_by_list_ids(watchlist)
 
