@@ -13,11 +13,27 @@
 <!--If there is more than one page-->
 {% if num_pages > 1 %}
 <!--TODO: Convert watchlist to Carousel of cards, 9 cards per carousel? (3x3 grid)-->
-<div id="watchlist_carousel" class="carousel slide">
+<div id="watchlist_carousel" class="carousel slide container-fluid">
     <!--Toggle pages-->
-    {% for i in range(num_pages) %}
-        <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}></button>
-    {% endfor %}
+    <nav aria-label="Movie pages navigation top">
+        <ul class="pagination justify-content-center">
+            <!--Prev button-->
+            <li class="page-item">
+                <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev">Prev</button>
+            </li>
+            <!--Pages-->
+            {% for i in range(num_pages) %}
+            <li class="page-item">
+                <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" class="active" {% endif %}>Page: {{ i + 1 }}</button>
+            </li>
+            {% endfor %}
+
+            <!--Next button-->
+            <li class="page-item">
+                <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next">Next</button>
+            </li>
+        </ul>
+    </nav>
 
     <!--Display movies in each page-->
     <div class="carousel-inner">
@@ -25,7 +41,7 @@
         <div {% if pg == pages[0] %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}>
             <!--TODO: Create a grid (class = row row-cols-3)-->
             <div class="container-fluid">
-                <div class="row row-cols-3">
+                <div class="row row-cols-1 row-cols-sm-3">
 
                     {% for movie in pg %}
                     <!--TODO: Create a card for the movie-->
@@ -83,6 +99,15 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
+
+    <!--Toggle pages again-->
+    <nav aria-label="Movie pages navigation bottom">
+        <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev" aria-label="Previous">Prev</button>
+        {% for i in range(num_pages) %}
+            <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}>Page: {{ i + 1 }}</button>
+        {% endfor %}
+        <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next" aria-label="Next">Next</button>
+    </nav>
 </div>
 
 {% else %}
