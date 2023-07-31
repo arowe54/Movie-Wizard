@@ -29,7 +29,6 @@
                 <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" class="active" {% endif %}>Page: {{ i + 1 }}</button>
             </li>
             {% endfor %}
-
             <!--Next button-->
             <li class="page-item">
                 <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next">
@@ -96,15 +95,26 @@
 
     <!--Toggle pages again-->
     <nav aria-label="Movie pages navigation bottom">
-        <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev" aria-label="Previous">
-            <i class="bi bi-chevron-double-left"></i>
-        </button>
-        {% for i in range(num_pages) %}
-            <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}>Page: {{ i + 1 }}</button>
-        {% endfor %}
-        <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next" aria-label="Next">
-            <i class="bi bi-chevron-double-right"></i>
-        </button>
+        <ul class="pagination justify-content-center">
+            <!--Prev button-->
+            <li class="page-item">
+                <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+            </li>
+            <!--Pages-->
+            {% for i in range(num_pages) %}
+            <li class="page-item">
+                <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" class="active" {% endif %}>Page: {{ i + 1 }}</button>
+            </li>
+            {% endfor %}
+            <!--Next button-->
+            <li class="page-item">
+                <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next">
+                    <i class="bi bi-chevron-double-right"></i>
+                </button>
+            </li>
+        </ul>
     </nav>
 </div>
 

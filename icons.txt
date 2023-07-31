@@ -6,14 +6,7 @@ Bootstrap Icons of interest:
         pin/pin-fill, pin-angle/pin-angle-fill
         stack/stack-overflow (for header)
         ticket/ticket-fill, ticket-perforated/ticket-perforated-fill
-    logo:
-        bullseye (for lookup a movie?, index/logo)
-        kanban/kanban-fill (logo)
-        hat-wizard (font awesome) <i class="fa-solid fa-hat-wizard"></i>
         
-    Use icon when pressing a button to get a movie:   
-        wand-magic-sparkles <i class="fa-solid fa-wand-magic-sparkles"></i>
-
     palette/palette-fill (preferences header in profile)
     for preference, liked movies? :
         emoji-neutral/emoji-neutral-fill, emoji-heart-eyes/emoji-heart-eyes-fill, emoji-frown/emoji-frown-fill  
@@ -22,8 +15,10 @@ Bootstrap Icons of interest:
         patch-check/patch-check-fill
         sticky/sticky-fill/stickies/stickies-fill (for header)
     (could probably update skin colour so they can choose fill/not filled emojis)
+    
     for personal info:
         person-vcard/person-vcard-fill
+    
     for watched movies:
         eye/eye-fill (watched?) or  (blacklist/don't want to see)
         hourglass-top, hourglass-bottom, hourglass-split (maybe not)
@@ -42,7 +37,6 @@ Bootstrap Icons of interest:
         file-lock/file-lock-fill (also file-lock2 and fill)
         house-lock/house-lock-fill
 
-    file-image/file-image-fill/images (show instead of image NA)
     soundtrack:
         file-music/file-music-fill
         music-note/music-note-beamed/music-note-list, music-player/music-player-fill
@@ -52,12 +46,15 @@ Bootstrap Icons of interest:
         filter-circle/filter-circle-fill
         fonts (maybe user can change the fonts of the site in preferences, ex. all bold, bionic reading API, all italic, etc.., just for fun)
         wrench-adjustable/wrench-adjustable-circle/wrench-adjustable-circle-fill
+    
     gem (favourite movie)
     globe/globe-2, globe-americas/globe-asia-australia/globe-central-south-asia/globe-europe-africa, map/map-fill(for filmingLocations, spokenLanguages)
     translate (for spokenLanguages)
     graph-down/graph-down-arrow, graph-up/graph-up-arrow (for rating change)
     people/people-fill (cast)
+
     person/person-circle (profile icon)
+
     quote (quotes from movie)
 
     runtime:
@@ -65,14 +62,12 @@ Bootstrap Icons of interest:
         stopwatch/stopwatch-fill
         watch
 
-    toggle showPassword:
-        toggle-off, toggle-on
-        toggle2-off, toggle2-on
-
-
     might be useful later:
         rocket
         robot
+
+
+
 
 
 Usage:
