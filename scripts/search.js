@@ -1,14 +1,14 @@
 <script>
     $('document').ready(function () {
 
-        // When the user types in anything to the search form (change from any key to a character)
+        // When the user types in anything valid to the search form
         $('#search_form input[type="search"]').on( "keypress", function ( event ) {
 
             // Temporarily erase default result
             $('#first_results').hide();
             $('#num_results').html("Results: ");
 
-            // Save the title
+            // Save the title from the searchbar
             var title = $('#search_form input[type="search"]').val();
             title = title + event.key;
 
@@ -25,17 +25,16 @@
             };
             // Send request
             $.ajax(settings).done(function (response) {
-                // Create an temporary div
-                temp_div = $('<div class="row row-cols-3" id="temp_div"></div>');
-
+                // Save response
                 var resp = response.results;
                 // Update the number of results
                 $('#num_results').html("Results: " + resp.length);
 
-                // For each movie
-                for (let i = 0; i < resp.length; i++) {
-                    // Create a card
+                // Create a temporary div
+                temp_div = $('<div class="row row-cols-3" id="temp_div"></div>');
 
+                // Iterate through each movie from the results
+                for (let i = 0; i < resp.length; i++) {
                     let movie = resp[i];
 
                     // Create card image
@@ -46,10 +45,10 @@
                         card_img = '<img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">';
                     } 
 
-                    // card title
+                    // Card title
                     let card_title = '<h5 class="card-title">' + movie.titleText.text + '</h5>';
 
-                    // runtime
+                    // Runtime
                     let date = 'NA';
                     if (movie.releaseDate) {
                         date = movie.releaseDate.day + '/' + movie.releaseDate.month + '/' + movie.releaseDate.year;
@@ -59,7 +58,7 @@
                                 ` + date + `
                             </small></p>`;
 
-                    // more_info button
+                    // More Info button
                     let more_info_form = `
                         <form action="/movie" method="get" id="movie.id" >
                             <input type="hidden" name="movie_id" value="` + movie.id + `">
@@ -91,7 +90,7 @@
                         `;
                     }
 
-                    // Format the card to append later
+                    // Format the Card
                     let card = `
                     <div class="col card">
                         ` + card_img + `
@@ -112,7 +111,7 @@
                     // Append card to the temporary div
                     temp_div.append(card);
                 }
-                // Change the html of the page to this temporary div
+                // Change the html of the page to the temporary div
                 $('#new_results').html( temp_div );
                 // Show results
                 $('#new_results').show();

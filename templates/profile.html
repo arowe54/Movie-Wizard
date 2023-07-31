@@ -6,23 +6,20 @@
 
 {% block main %}
 <div class="profile text-align-left">
-
-    
-
+    <!--Credentials-->
     <div class="row container">
         <div class="container d-flex">
             <h4><i class="bi bi-person-vcard"></i> Credentials:</h4>
         </div>
-
+        <!--Show Username-->
         <div class="col">
-            <!--Show username-->
             <button>
                 <p>Username: {{ username }}</p>
             </button>
         </div>
         
+        <!--Show password-->
         <div class="col">
-            <!--Show password-->
             <p>Password: <span style="-webkit-text-security: disc" id="original_pwd">{{ pwd }}</span></p>
             <button id="show_pwd">Show Password: <i class="bi bi-toggle-off"></i></button>
         </div>
@@ -30,11 +27,11 @@
 
     <hr>
 
-    
+    <!--Update username/password-->
     <div class="row container">
         <h4 class="d-flex"><i class="bi bi-wrench-adjustable"></i> Update Credentials:</h4>
+        <!--Change username-->
         <div class="col">
-            <!--Change username-->
             <button type="text" name="update_username" id="update_username">Change Username</button>
             <div id="update_username_form" class="container">
                 <p> Username: {{ username }} </p>
@@ -47,15 +44,17 @@
             </div>
         </div>
 
+        <!--Change password-->
         <div class="col">
-            <!--Change password-->
             <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
             <div id="update_pwd_form">
+                <!--Current Password-->
                 <div class="d-flex justify-content-center">
                     <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ pwd }}</span> </p>
                     <!--Make button show password-->
                     <button id="show_pwd2">Show password: <i class="bi bi-toggle-off"></i></button>
                 </div>
+                <!--New Password-->
                 <form name="change_pwd" action="/update_user" method="post">
                     <p> New Password:
                         <input type="password" name="new_pwd" id="new_pwd">
@@ -89,9 +88,7 @@
             }
         }
 
-        // Can also toggle password using "collapse" class in Bootstrap
-
-        // Run showPassword on the two buttons
+        // Show/hide password when either 'show password' button is clicked
         $('#show_pwd').click(function() {
             togglePassword('#original_pwd');
         })
@@ -105,12 +102,13 @@
 
         // When user clicks update username
         $('#update_username').click(function() {
+            // Show the 'change username' form
             $("#update_username_form").toggle()
         })
 
         // When user clicks update password
         $('#update_pwd').click(function() {
-            // Append a form just below the change username button
+            // Show the 'change password' form
             $('#update_pwd_form').toggle()
         })
     })

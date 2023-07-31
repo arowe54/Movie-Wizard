@@ -1,22 +1,26 @@
-// Maybe copy each script in each html file to their own js files for references and just don't link to them (bc not possible)
 $(document).ready(function() {
-    // Function doesn't work, but jquery below does?
     // Show password when user clicks show password button
     function togglePassword(id) {
         style = $(id).attr('style');
         if (style == '-webkit-text-security: disc') {
             // Show password
-            $(id).attr('style', '-webkit-text-security: none')
+            $(id).attr('style', '-webkit-text-security: none');
+            // Show on icon
+            text = 'Hide Password: <i class="bi bi-toggle-on"></i>';
+            $(id).parent().next().html(text);
         }
         else {
             // Encrypt password
-            $(id).attr('style', '-webkit-text-security: disc')
+            $(id).attr('style', '-webkit-text-security: disc');
+            // Show off icon
+            text = 'Show Password: <i class="bi bi-toggle-off"></i>';
+            $(id).parent().next().html(text);
         }
     }
 
     // Run showPassword on the two buttons
     $('#show_pwd').click(function() {
-        togglePassword('#original_pwd')
+        togglePassword('#original_pwd');
     })
     $('#show_pwd2').click(function() {
         togglePassword('#original_pwd2')

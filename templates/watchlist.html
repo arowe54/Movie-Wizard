@@ -9,12 +9,10 @@
     <h1>Movies to Watch</h1>
 </div>
 
-
-<!--If there is more than one page-->
-{% if num_pages > 1 %}
-<!--TODO: Convert watchlist to Carousel of cards, 9 cards per carousel? (3x3 grid)-->
 <div id="watchlist_carousel" class="carousel slide container-fluid">
-    <!--Toggle pages-->
+    <!--If there is more than one page-->
+    {% if num_pages > 1 %}
+    <!-- Add Page Navigation-->
     <nav aria-label="Movie pages navigation top">
         <ul class="pagination justify-content-center">
             <!--Prev button-->
@@ -37,60 +35,58 @@
             </li>
         </ul>
     </nav>
+    {% endif %}
 
     <!--Display movies in each page-->
     <div class="carousel-inner">
         {% for pg in pages %}
         <div {% if pg == pages[0] %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}>
-            <!--TODO: Create a grid (class = row row-cols-3)-->
-            <div class="container-fluid">
-                <div class="row row-cols-1 row-cols-sm-3">
-
-                    {% for movie in pg %}
-                    <!--TODO: Create a card for the movie-->
-                    <div class="col card">
-                        <!--Poster-->
-                        {% if movie.primaryImage != None %}
-                            <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
-                        {% else %}
-                            <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
-                        {% endif %}
-                        
-                        <!--Title and Release Date-->
-                        <div class="card-body">
-                            <h5 class="card-title">{{ movie.titleText.text }}</h5>
-                            <p class="card-text"><small class="text-body-secondary">
-                                {% if movie.releaseDate != None %}
-                                    {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
-                                {% else %}
-                                    <p>NA</p>
-                                {% endif %}
-                            </small></p>
-                        </div>
-        
-                        <div class="card-footer">
-                            <div class="btn-group" role="group" aria-label="Advanced movie options">
-                                <!--Click button and it goes to more info about the movie-->
-                                <form action="/movie" method="get" id="movie.id" >
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <button type="submit" class="btn btn-outline-primary">More info</button>
-                                </form>
-        
-                                <!--Remove from Watchlist-->
-                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                                    <input type="hidden" name="action" id="action" value="remove">
-                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
-                                </form>   
-                            </div>
+            <!--Create a 3x3 grid-->
+            <div class="row row-cols-1 row-cols-sm-3 container-fluid">
+                <!--Iterate through each movie in the page-->
+                {% for movie in pg %}
+                <!--Create a card for the movie-->
+                <div class="col card">
+                    <!--Poster-->
+                    {% if movie.primaryImage != None %}
+                        <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
+                    {% else %}
+                        <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
+                    {% endif %}
+                    
+                    <!--Title and Release Date-->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.titleText.text }}</h5>
+                        <p class="card-text"><small class="text-body-secondary">
+                            {% if movie.releaseDate != None %}
+                                {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                            {% else %}
+                                <p>NA</p>
+                            {% endif %}
+                        </small></p>
+                    </div>
+    
+                    <div class="card-footer">
+                        <div class="btn-group" role="group" aria-label="Advanced movie options">
+                            <!--More Info button-->
+                            <form action="/movie" method="get" id="movie.id" >
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <button type="submit" class="btn btn-outline-primary">More info</button>
+                            </form>
+    
+                            <!--Remove from Watchlist-->
+                            <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                <input type="hidden" name="action" id="action" value="remove">
+                                <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
+                            </form>   
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
             </div>
         </div>
         {% endfor %}
-        </div>
     </div>
 
     <!--Toggle pages again-->
@@ -117,73 +113,5 @@
         </ul>
     </nav>
 </div>
-
-{% else %}
-<!--If there is only one page-->
-
-<table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th scope="col">Poster</th>
-            <th scope="col">About</th>
-            <th scope="col">Release Date (D/M/Y)</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        {% if movies != None %}
-        {% for movie in movies %}
-        <tr>
-            
-            <td>
-                {% if movie.primaryImage != None %}
-                <figure>
-                    <img src="{{ movie.primaryImage.url }}" alt="{{ movie.primaryImage.caption.plainText }}" class="img-fluid">
-                    <figcaption>{{ movie.primaryImage.caption.plainText }}</figcaption>
-                </figure>
-                {% else %}
-                <p>Poster Unavailable</p>
-                {% endif %}
-            </td>
-            <td>
-                Title: {{ movie.titleText.text }} <br>
-                Short ID: {{ movie.id }}  <br>
-                Long ID: {{ movie._id }}
-                <!--Click button and it goes to more info about the movie-->
-                <form action="/movie" method="get" >
-                    <select hidden name="movie_id" onchange="this.form.submit()">
-                        <option hidden value="{{ movie.id }}" selected></option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">More info</button>
-                </form>
-
-                <!--Checkbox to remove from watchlist-->
-                <button class="container-fluid">
-                    <h5>Remove from Watchlist:</h5>
-                    <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
-                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
-                        <input type="hidden" name="action" id="action" value="remove">
-                        <input class="form-check-input" type="checkbox" onclick="this.form.submit()">
-                    </form>
-                </button>
-                
-            
-            </td>
-            <td>
-                {% if movie.releaseDate != None %}
-                    {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
-                {% else %}
-                    <p>NA</p>
-                {% endif %}
-            </td>
-            <!--Maybe make a feature with javascript and ajax where the movie is in a short form list in a table, and when they click the movie, it expands to include photo and other info-->
-            <!--Or could use ajax and js in movie.html where a person clicks a button for spoilers and it reveals a dropdown of synopsis, crazy credits, goofs, etc...-->
-        </tr>
-        {% endfor %}
-        {% endif %}
-    </tbody>
-</table>
-
-{% endif %}
 
 {% endblock %}
