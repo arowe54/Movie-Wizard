@@ -35,7 +35,7 @@
             <button type="text" name="update_username" id="update_username">Change Username</button>
             <div id="update_username_form" class="container">
                 <p> Username: {{ username }} </p>
-                <form name="change_username" action="/update_user" method="post">
+                <form name="change_username" action="/profile" method="post">
                     <p> New Username:
                         <input type="text" name="new_username" id="new_username" autocomplete="off">
                         <button type="submit">Submit</button>
@@ -55,7 +55,7 @@
                     <button id="show_pwd2">Show password: <i class="bi bi-toggle-off"></i></button>
                 </div>
                 <!--New Password-->
-                <form name="change_pwd" action="/update_user" method="post">
+                <form name="change_pwd" action="/profile" method="post">
                     <p> New Password:
                         <input type="password" name="new_pwd" id="new_pwd">
                         <button type="submit">Submit</button>

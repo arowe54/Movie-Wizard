@@ -1,7 +1,7 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -15,7 +15,7 @@ from helpers.queries import get_genres, get_movies_by_list_ids, get_movies_by_ge
 # Configure application
 app = Flask(__name__)
 
-# Custom filter (format values as US dollars)
+# Custom filters
 app.jinja_env.filters["usd"] = usd
 app.jinja_env.filters["secToMin"] = secToMin
 
@@ -41,15 +41,16 @@ def after_request(response):
 @login_required
 def index():
     """Home Page"""
-    # If user clicked the get random upcoming movies button
+    # Generate homepage movies
     if request.method == "POST":
-        # Generate a random number from 1 to 9
+        # If user wants random upcoming movies
         x = randint(1, 9)
-        # Generate the upcoming movies with that page number
+        # Go to a random page from upcoming movies
         home_movies = index_queries(x)
     else:
         home_movies = index_queries(2)
     
+    # Get watchlist and user id if user logged in
     try:
         user_id = session["user_id"]
         watchlist = get_watchlist(user_id)
@@ -66,12 +67,7 @@ def genres():
     # Get list of each genre
     genres = get_genres()
     # Filter genres
-    genres.remove("Adult")
-    genres.remove("Game-Show")
-    genres.remove("News")
-    genres.remove("Reality-TV")
-    genres.remove("Short")
-    genres.remove("Talk-Show")
+    genres = [genre for genre in genres if genre not in ("Adult", "Game-Show", "News", "Reality-TV", "Short", "Talk-Show")]
 
     # Get genre selected by the user
     genre = request.args.get("genre")
@@ -86,15 +82,14 @@ def genres():
     except (KeyError):
         watchlist = None
     
-    # Send to genres.html
     return render_template("genres.html", genres=genres, movies=movies_in_genre, genre_selected=genre, watchlist=watchlist)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-    # Forget any user_id
+    # Forget any prev user_id
     session.clear()
-    # User reached route via POST (as by submitting a form via POST)
+
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
@@ -113,12 +108,9 @@ def login():
 
         # Remember user info
         session["user_id"] = rows[0]["id"]
-        session["username"] = username
         session["password"] = password
         # Redirect user to home page
         return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
 
@@ -144,32 +136,57 @@ def movie():
 
     return render_template("movie.html", movie=movie, movies_in_watchlist=watchlist)
 
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     """Get profile information"""
-    rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
-    username = rows[0]["username"]
 
-    password = session["password"]
+    # If user is updating their credentials
+    id = session["user_id"]
+    # If the user is changing their username
+    if request.form.get("new_username"):
+        new_username = request.form.get("new_username")
+        # Check if username already exists
+        rows = db.execute("SELECT * FROM users WHERE username = ?;", new_username)
+        if len(rows) > 0:
+            return apology("ERROR: Username already exists")
+
+        # Update saved username to new username
+        db.execute("UPDATE users SET username = ? WHERE id = ?;", str(new_username), id)
+        username = new_username
+    else:
+        # Save current username
+        user = db.execute("SELECT username FROM users WHERE id = ?;", id)
+        username = user[0]["username"]
+
+    # If the user is changing their password
+    if request.form.get("new_pwd"):
+        # Save new password
+        new_password = request.form.get("new_pwd")
+        session["password"] = new_password
+        new_hash = generate_password_hash(new_password)
+        # Update hash to new password hash
+        db.execute("UPDATE users SET hash = ? WHERE id = ?;", new_hash, id)
+    else:
+        password = session["password"]
 
     return render_template("profile.html", username=username, pwd=password)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
     if request.method == "POST":
-        # Check if username is blank
+        # Ensure user entered a username
         if not request.form.get("username"):
             return apology("Please Enter a Username and Password")
-        # Save username
         username = request.form.get("username")
         # Check if username already exists
         rows = db.execute("SELECT * FROM users WHERE username = ?;", username)
         if len(rows) > 0:
             return apology("Username already exists")
 
-        # Check if user didn't input a password
+        # Ensure user entered a password
         if not request.form.get("password") or not request.form.get("confirmation"):
             return apology("Please enter a password in both password fields")
         # Check if passwords do not match
@@ -186,8 +203,8 @@ def register():
         rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
         session["user_id"] = rows[0]["id"]
         session["password"] = password
-        return redirect("/")
 
+        return redirect("/")
     else:
         return render_template("register.html")
 
@@ -201,14 +218,14 @@ def search():
         # Lookup movie from title
         title = request.args.get("title")
         movies = lookup(title)
-
-    # If user searched for a random movie
     else:
         movies = random_movies()    
     
+    # If the movie is not in the database
     if not movies:
         return apology("That exact movie title cannot be found in the database")
     
+    # Get watchlist and user id
     try:
         user_id = session["user_id"]
         watchlist = get_watchlist(user_id)
@@ -216,46 +233,14 @@ def search():
         user_id = None
         watchlist = None
     
-    # Display result
     return render_template("search.html", movies=movies, movies_in_watchlist=watchlist, id=user_id)
-
-@app.route("/update_user", methods=["POST"])
-def update_credentials():
-    id = session["user_id"]
-
-
-    if request.form.get("new_username"):
-        # Save new username
-        new_username = request.form.get("new_username")
-
-        # Check if username already exists
-        rows = db.execute("SELECT * FROM users WHERE username = ?;", new_username)
-        if len(rows) > 0:
-            return apology("ERROR: Username already exists")
-
-        # Update saved username to new username
-        db.execute("UPDATE users SET username = ? WHERE id = ?;", str(new_username), id)
-        username = new_username
-    else:
-        user = db.execute("SELECT username FROM users WHERE id = ?", id)
-        username = user[0]["username"]
-
-    if request.form.get("new_pwd"):
-        # Save new password
-        new_password = request.form.get("new_pwd")
-        session["password"] = new_password
-        new_hash = generate_password_hash(new_password)
-        # Update hash to new password hash
-        db.execute("UPDATE users SET hash = ? WHERE id = ?;", new_hash, id)
-    
-    # Redirect to profile route (to get username and password)
-    return redirect("/profile")
 
 
 @app.route("/watchlist", methods=["GET", "POST"])
 @login_required
 def watchlist():
     user_id = session["user_id"]
+    # If user is updating their watchlist
     if request.method == "POST":
         movie_id = request.form.get("movie_id")
         action = request.form.get("action")
@@ -269,8 +254,9 @@ def watchlist():
             # Remove movie id from watchlist
             db.execute("DELETE FROM watchlist WHERE user_id = ? AND movie_id = ?;", user_id, movie_id)
 
-        # Return back to the page you submitted the form
+        # Return to the page you submitted the form
         return redirect(request.referrer)
+    # If user wants to access their watchlist
     else:
         watchlist = get_watchlist(user_id)
 
@@ -278,25 +264,23 @@ def watchlist():
         pages_of_ids = []
         pg = []
         pg_num = 0
-        j = 0
+        i = 0
         for id in watchlist:
             pg.append(id)
             j += 1
-            # If there is 9 ids in the current page, or you have reached the last element
-            if len(pg) == 9 or j == len(watchlist):
-                # Append to pages
+            # Save the page when there is 9 movies or the last movie is being checked
+            if len(pg) == 9 or i == len(watchlist):
                 pages_of_ids.append(pg)
-                # Increment pg number by 1
                 pg_num += 1
-                # Empty the list that is usually appended to
                 pg = []
         
+        # Get the number of pages
         num_pages = len(pages_of_ids)
 
         movies = []
         # Iterate through each page of movie ids
         for page in pages_of_ids:
-            # Get a page of movies based on those ids, and append them to a new list of movies
+            # Get a page of movies based on these ids, and append them to a new list of movies
             movies.append(get_movies_by_list_ids(page))
 
         return render_template("watchlist.html", movies_in_watchlist=watchlist, num_pages=num_pages, pages=movies)
