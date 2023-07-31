@@ -41,7 +41,6 @@ Bootstrap Icons of interest:
     
     gem (favourite movie)
     globe-americas/globe-asia-australia/globe-central-south-asia/globe-europe-africa (for filmingLocations, spokenLanguages)
-    graph-down/graph-down-arrow, graph-up/graph-up-arrow (for rating change)
     people/people-fill (cast)
     quote (quotes from movie)
 

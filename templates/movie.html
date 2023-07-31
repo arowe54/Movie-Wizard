@@ -25,7 +25,7 @@
             <!-- Rows inside this column-->
             <div class="row">
                 <div class="col">
-                    <h4>Genres: </h4>
+                    <h4>Genres: <i class="bi bi-palette-fill"></i></h4>
                     <p>
                         {% for genre in movie.genres.genres %}
                             {{ genre["text"] }},
@@ -58,7 +58,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h4>Awards</h4>
+                    <h4>Awards <i class="bi bi-award-fill"></i></h4>
                     <p>Nominations: {{ movie.nominations.total }}</p>
                     <p>Wins: {{ movie.wins.total }}</p>
                     <h6>Oscars:</h6>
@@ -66,7 +66,7 @@
                     <p>Nominations: {{ movie.prestigiousAwardSummary.nominations }}</p>
                 </div>
                 <div class="col">
-                    <h4>Revenue and Budget</h4>
+                    <h4>Revenue and Budget <i class="bi bi-robot"></i></h4>
                     <p>Production Budget: 
                         {% if movie.productionBudget != None %}
                             {{ movie.productionBudget.budget.amount | usd }}
@@ -99,7 +99,7 @@
             </div>
             <hr>
             <div class="row">
-                <h4>Plot</h4>
+                <h4>Plot <i class="bi bi-rocket-takeoff"></i></h4>
                 <p>
                     {% if movie.plot != None %}
                         {{ movie.plot.plotText.plainText }}
@@ -111,11 +111,16 @@
             <hr>
             <div class="row">
                 <div class="col">
-                    <h4>Ratings</h4>
+                    <h4>Ratings <i class="bi bi-file-earmark-bar-graph-fill"></i></h4>
                     {% if movie.meterRanking != None %}
                         <p>Meter Ranking: {{ movie.meterRanking.currentRank }}</p>
                         <p>
                             Change: {{ movie.meterRanking.rankChange.changeDirection }} {{ movie.meterRanking.rankChange.difference }}
+                            {% if movie.meterRanking.rankChange.changeDirection == "DOWN" %}
+                            <i class="bi bi-graph-down-arrow"></i>
+                            {% elif movie.meterRanking.rankChange.changeDirection == "UP" %}
+                            <i class="bi bi-graph-up-arrow"></i>
+                            {% endif %}
                         </p>
                     {% else %}
                         Unavailable
