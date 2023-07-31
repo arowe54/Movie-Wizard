@@ -122,7 +122,7 @@
                     {% endif %}
                 </div>
                 <div class="col">
-                    <h4>Runtime</h4>
+                    <h4>Runtime <i class="bi bi-stopwatch"></i></h4>
                     {% if movie.runtime != None %}
                     <p>{{ movie.runtime.seconds|secToMin }} minutes</p>
                     {% else %}
@@ -148,7 +148,7 @@
     </div>
     <hr>
     <div class="row">
-        <h4>Filming Locations</h4>
+        <h4>Filming Locations <i class="bi bi-map-fill"></i></h4>
         <h6>Total: {{ movie.filmingLocations.total }}</h6>
         <h6>Known Locations: </h6>
         {% for location in movie.filmingLocations.edges %}
@@ -157,7 +157,7 @@
     </div>
     <hr>
     <div class="row">
-        <h4>Soundtrack</h4>
+        <h4>Soundtrack <i class="bi bi-music-note-list"></i></h4>
         {% for song in movie.soundtrack.edges %}
             <p>Title: {{ song.node.text }}</p>
             {% for comment in song.node.comments %}
@@ -168,13 +168,13 @@
     <hr>
     <div class="row">
         <div class="col">
-            <h4>Countries of Origin</h4>
+            <h4>Countries of Origin <i class="bi bi-globe2"></i></h4>
             {% for country in movie.countriesOfOrigin.countries %}
                 <p>{{ country.text }}</p>
             {% endfor %}
         </div>
         <div class="col">
-            <h4>Spoken Languages</h4>
+            <h4>Spoken Languages <i class="bi bi-translate"></i></h4>
             {% for lang in movie.spokenLanguages.spokenLanguages %}
                 <p>{{ lang.text }}</p>
             {% endfor %}
