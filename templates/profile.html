@@ -7,18 +7,22 @@
 {% block main %}
 <div class="profile text-align-left">
 
-    <div class="container d-flex">
-        <div>
-            <h4>Credentials:</h4>
+    
+
+    <div class="row container">
+        <div class="container d-flex">
+            <h4><i class="bi bi-person-vcard"></i> Credentials:</h4>
         </div>
-    </div>
-    <div class="container d-flex justify-content-around">
-        <!--Show username-->
-        <button>
-            <p>Username: {{ username }}</p>
-        </button>
-        <!--Show password-->
-        <div class="d-flex">
+
+        <div class="col">
+            <!--Show username-->
+            <button>
+                <p>Username: {{ username }}</p>
+            </button>
+        </div>
+        
+        <div class="col">
+            <!--Show password-->
             <p>Password: <span style="-webkit-text-security: disc" id="original_pwd">{{ pwd }}</span></p>
             <button id="show_pwd">Show Password: <i class="bi bi-toggle-off"></i></button>
         </div>
@@ -28,7 +32,7 @@
 
     
     <div class="row container">
-        <h4>Update Credentials:</h4>
+        <h4 class="d-flex"><i class="bi bi-wrench-adjustable"></i> Update Credentials:</h4>
         <div class="col">
             <!--Change username-->
             <button type="text" name="update_username" id="update_username">Change Username</button>

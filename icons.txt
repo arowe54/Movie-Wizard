@@ -8,6 +8,7 @@ Bootstrap Icons of interest:
         ticket/ticket-fill, ticket-perforated/ticket-perforated-fill
         
     palette/palette-fill (preferences header in profile)
+    
     for preference, liked movies? :
         emoji-neutral/emoji-neutral-fill, emoji-heart-eyes/emoji-heart-eyes-fill, emoji-frown/emoji-frown-fill  
         hand-thumbs-up/hand-thumbs-up-fill, hand-thumbs-down, hand-thumbs-down-fill
@@ -15,10 +16,7 @@ Bootstrap Icons of interest:
         patch-check/patch-check-fill
         sticky/sticky-fill/stickies/stickies-fill (for header)
     (could probably update skin colour so they can choose fill/not filled emojis)
-    
-    for personal info:
-        person-vcard/person-vcard-fill
-    
+        
     for watched movies:
         eye/eye-fill (watched?) or  (blacklist/don't want to see)
         hourglass-top, hourglass-bottom, hourglass-split (maybe not)
@@ -45,16 +43,12 @@ Bootstrap Icons of interest:
     preferences, website:
         filter-circle/filter-circle-fill
         fonts (maybe user can change the fonts of the site in preferences, ex. all bold, bionic reading API, all italic, etc.., just for fun)
-        wrench-adjustable/wrench-adjustable-circle/wrench-adjustable-circle-fill
     
     gem (favourite movie)
     globe/globe-2, globe-americas/globe-asia-australia/globe-central-south-asia/globe-europe-africa, map/map-fill(for filmingLocations, spokenLanguages)
     translate (for spokenLanguages)
     graph-down/graph-down-arrow, graph-up/graph-up-arrow (for rating change)
     people/people-fill (cast)
-
-    person/person-circle (profile icon)
-
     quote (quotes from movie)
 
     runtime:
