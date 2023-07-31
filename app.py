@@ -8,7 +8,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from random import randint
 
-
 from helpers.helpers import apology, login_required, secToMin, usd
 from helpers.complete import get_all_info
 from helpers.queries import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
@@ -46,11 +45,10 @@ def index():
     if request.method == "POST":
         # Generate a random number from 1 to 9
         x = randint(1, 9)
-        print(x)
         # Generate the upcoming movies with that page number
         home_movies = index_queries(x)
     else:
-        home_movies = index_queries(2)
+        home_movies = index_queries(1)
     
     try:
         user_id = session["user_id"]
@@ -224,7 +222,7 @@ def search():
 @app.route("/update_user", methods=["POST"])
 def update_credentials():
     id = session["user_id"]
-    
+
 
     if request.form.get("new_username"):
         # Save new username
@@ -252,7 +250,8 @@ def update_credentials():
     
     # Redirect to profile route (to get username and password)
     return redirect("/profile")
-    
+
+
 @app.route("/watchlist", methods=["GET", "POST"])
 @login_required
 def watchlist():
@@ -276,7 +275,7 @@ def watchlist():
         watchlist = get_watchlist(user_id)
 
         # Split the watchlist into lists/pages with 9 movies per page
-        pages = []
+        pages_of_ids = []
         pg = []
         pg_num = 0
         j = 0
@@ -286,18 +285,18 @@ def watchlist():
             # If there is 9 ids in the current page, or you have reached the last element
             if len(pg) == 9 or j == len(watchlist):
                 # Append to pages
-                pages.append(pg)
+                pages_of_ids.append(pg)
                 # Increment pg number by 1
                 pg_num += 1
                 # Empty the list that is usually appended to
                 pg = []
-        # TODO: Iterate through each page, get the watchlist, and save
+        
+        num_pages = len(pages_of_ids)
 
-        num_pages = len(pages)
-        print(num_pages)
-        print(pages)
+        movies = []
+        # Iterate through each page of movie ids
+        for page in pages_of_ids:
+            # Get a page of movies based on those ids, and append them to a new list of movies
+            movies.append(get_movies_by_list_ids(page))
 
-        # Get all movies with this list of ids (max 10 currently, can add pages, and so more movies later on)
-        movies = get_movies_by_list_ids(watchlist)
-
-        return render_template("watchlist.html", movies=movies, movies_in_watchlist=watchlist, num_pages=num_pages, pages = pages)
+        return render_template("watchlist.html", movies_in_watchlist=watchlist, num_pages=num_pages, pages=movies)

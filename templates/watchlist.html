@@ -17,8 +17,9 @@
     <!--Indicators are like mini pagination buttons-->
     <div class="carousel-indicators">
         {% for i in range(num_pages) %}
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}></button>
+            <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}></button>
         {% endfor %}
+          </nav>
       </div>
     <div class="carousel-inner">
         {% for pg in pages %}
