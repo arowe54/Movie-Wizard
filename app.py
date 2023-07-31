@@ -48,7 +48,7 @@ def index():
         # Generate the upcoming movies with that page number
         home_movies = index_queries(x)
     else:
-        home_movies = index_queries(1)
+        home_movies = index_queries(2)
     
     try:
         user_id = session["user_id"]
