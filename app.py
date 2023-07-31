@@ -152,7 +152,10 @@ def profile():
     """Get profile information"""
     rows = db.execute("SELECT * FROM users WHERE id = ?;", session["user_id"])
     username = rows[0]["username"]
-    return render_template("profile.html", username=username)
+
+    password = session["password"]
+
+    return render_template("profile.html", username=username, pwd=password)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -221,21 +224,34 @@ def search():
 @app.route("/update_user", methods=["POST"])
 def update_credentials():
     id = session["user_id"]
+    
+
     if request.form.get("new_username"):
         # Save new username
         new_username = request.form.get("new_username")
+
+        # Check if username already exists
+        rows = db.execute("SELECT * FROM users WHERE username = ?;", new_username)
+        if len(rows) > 0:
+            return apology("ERROR: Username already exists")
+
         # Update saved username to new username
         db.execute("UPDATE users SET username = ? WHERE id = ?;", str(new_username), id)
-    if request.form.get("new_password"):
+        username = new_username
+    else:
+        user = db.execute("SELECT username FROM users WHERE id = ?", id)
+        username = user[0]["username"]
+
+    if request.form.get("new_pwd"):
         # Save new password
-        new_password = request.form.get("new_password")
+        new_password = request.form.get("new_pwd")
         session["password"] = new_password
         new_hash = generate_password_hash(new_password)
         # Update hash to new password hash
         db.execute("UPDATE users SET hash = ? WHERE id = ?;", new_hash, id)
     
-    # Redirect back to the sender page
-    return redirect(request.referrer)
+    # Redirect to profile route (to get username and password)
+    return redirect("/profile")
     
 @app.route("/watchlist", methods=["GET", "POST"])
 @login_required

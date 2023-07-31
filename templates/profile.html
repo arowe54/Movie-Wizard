@@ -20,7 +20,7 @@
             </button>
             <!--Show password-->
             <button>
-                <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ session["password"] }}</span></p>
+                <p>Password: <span style="-webkit-text-security: disc" name="original_pwd" id="original_pwd">{{ pwd }}</span></p>
                 <!--TODO: Change from click to show when clicked and held, also change button to icon -->
                 <button name="show_pwd" id="show_pwd">Show Password</button>
             </button>
@@ -51,7 +51,7 @@
             <button type="text" name="update_pwd" id="update_pwd">Change Password</button>
             <div id="update_pwd_form">
                 <div class="d-flex justify-content-center">
-                    <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ session["password"] }}</span> </p>
+                    <p> Current Password: <span style="-webkit-text-security: disc" id="original_pwd2">{{ pwd }}</span> </p>
                     <!--Make button show password-->
                     <button id="show_pwd2">Show password</button>
                 </div>
