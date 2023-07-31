@@ -19,7 +19,9 @@
         <ul class="pagination justify-content-center">
             <!--Prev button-->
             <li class="page-item">
-                <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev">Prev</button>
+                <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
             </li>
             <!--Pages-->
             {% for i in range(num_pages) %}
@@ -30,7 +32,9 @@
 
             <!--Next button-->
             <li class="page-item">
-                <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next">Next</button>
+                <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next">
+                    <i class="bi bi-chevron-double-right"></i>
+                </button>
             </li>
         </ul>
     </nav>
@@ -90,23 +94,17 @@
         </div>
     </div>
 
-    <!--Left and right buttons to go through carousel-->
-    <button class="carousel-control-prev" type="button" data-bs-target="#watchlist_carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#watchlist_carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-
     <!--Toggle pages again-->
     <nav aria-label="Movie pages navigation bottom">
-        <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev" aria-label="Previous">Prev</button>
+        <button  type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="prev" aria-label="Previous">
+            <i class="bi bi-chevron-double-left"></i>
+        </button>
         {% for i in range(num_pages) %}
             <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}>Page: {{ i + 1 }}</button>
         {% endfor %}
-        <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next" aria-label="Next">Next</button>
+        <button type="button" data-bs-target="#watchlist_carousel" class="active" data-bs-slide="next" aria-label="Next">
+            <i class="bi bi-chevron-double-right"></i>
+        </button>
     </nav>
 </div>
 
