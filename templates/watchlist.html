@@ -14,34 +14,72 @@
 {% if num_pages > 1 %}
 <!--TODO: Convert watchlist to Carousel of cards, 9 cards per carousel? (3x3 grid)-->
 <div id="watchlist_carousel" class="carousel slide">
-    <!--Indicators are like mini pagination buttons-->
-    <div class="carousel-indicators">
-        {% for i in range(num_pages) %}
-            <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}></button>
-        {% endfor %}
-          </nav>
-      </div>
+    <!--Toggle pages-->
+    {% for i in range(num_pages) %}
+        <button type="button" data-bs-target="#watchlist_carousel" data-bs-slide-to="{{ i }}" class="active"  aria-label="Slide {{ i + 1 }}" {% if i == 0 %} aria-current="true" {% endif %}></button>
+    {% endfor %}
+
+    <!--Display movies in each page-->
     <div class="carousel-inner">
         {% for pg in pages %}
         <div {% if pg == pages[0] %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}>
             <!--TODO: Create a grid (class = row row-cols-3)-->
-            {% for movie in pg %}
+            <div class="container-fluid">
+                <div class="row row-cols-3">
 
-            <p>{{ movie }}</p>
-            <!--TODO: Create a card for the movie-->
-
-            {% endfor %}
+                    {% for movie in pg %}
+                    <!--TODO: Create a card for the movie-->
+                    <div class="col card">
+                        <!--Poster-->
+                        {% if movie.primaryImage != None %}
+                            <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
+                        {% else %}
+                            <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
+                        {% endif %}
+                        
+                        <!--Title and Release Date-->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.titleText.text }}</h5>
+                            <p class="card-text"><small class="text-body-secondary">
+                                {% if movie.releaseDate != None %}
+                                    {{ movie.releaseDate.day }} / {{ movie.releaseDate.month }} / {{ movie.releaseDate.year }}
+                                {% else %}
+                                    <p>NA</p>
+                                {% endif %}
+                            </small></p>
+                        </div>
+        
+                        <div class="card-footer">
+                            <div class="btn-group" role="group" aria-label="Advanced movie options">
+                                <!--Click button and it goes to more info about the movie-->
+                                <form action="/movie" method="get" id="movie.id" >
+                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                    <button type="submit" class="btn btn-outline-primary">More info</button>
+                                </form>
+        
+                                <!--Remove from Watchlist-->
+                                <form name="removeWatch" id="removeWatch" action="/watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                    <input type="hidden" name="action" id="action" value="remove">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="this.form.submit()">Remove from Watchlist</button>  
+                                </form>   
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         {% endfor %}
         </div>
     </div>
 
     <!--Left and right buttons to go through carousel-->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#watchlist_carousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#watchlist_carousel" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
