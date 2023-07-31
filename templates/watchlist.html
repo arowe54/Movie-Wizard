@@ -23,9 +23,11 @@
     <div class="carousel-inner">
         {% for pg in pages %}
         <div {% if pg == pages[0] %} class="carousel-item active" {% else %} class="carousel-item" {% endif %}>
+            <!--TODO: Create a grid (class = row row-cols-3)-->
             {% for movie in pg %}
 
             <p>{{ movie }}</p>
+            <!--TODO: Create a card for the movie-->
 
             {% endfor %}
         </div>
