@@ -3,13 +3,13 @@
 #### Description:
 Welcome to Web Wizard
 
-Have you every had trouble finding and picking the right movie? Web Wizard is just the right website for you.
+<p class="lead">Have you every had trouble finding and picking the right movie? Web Wizard is just the right website for you.
 
 This website uses Javascript, Python, and SQL to help users find and save movies of interest to them.
-You can lookup movies by title, filter by genre, save movies you want to watch, and get random movies.
+You can lookup movies by title, filter by genre, save movies you want to watch, and get random movies.</p>
 
 At first I looked towards the CS50 Finance problem set as inspiration to use a free online API to get data and display it through my project.
-I decided to use <a href="https://rapidapi.com/SAdrian/api/moviesdatabase/">MoviesDatabase</a> by Adriano Massimo on RapidAPI, which he says has access to complete and updated data of over 9 million titleswith useful information about each movie. Plus, it is updated weekly.
+I decided to use <a href="https://rapidapi.com/SAdrian/api/moviesdatabase/">MoviesDatabase</a> by Adriano Massimo on RapidAPI, which he says has access to complete and updated data of over 9 million titleswith useful information about each movie. The site also shows how to run each request in multiple languages (ex. python, javascript) and in multiple ways (ex. for js: jQuery vs Fetch). Plus, it is updated weekly.
 To access the API, I created an account on RapidAPI and linked to my github account.
 
 Name:
@@ -19,35 +19,62 @@ It is called Web Wizard because the website speed and access to such a large var
 To create a backbone of my project, I copied my CS50 Finance submission into a separate folder. This is because it uses a lot of similar features, while still adding new ones.
 
 
+Database Schema Diagram
+
+layout.html:
+
+At first I created layout.html, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site.
+
 Login/Register:
 
-The login and register pages were copied from my CS50 Finance assignment, and I later changed both slightly based on the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootsrap website.
+The login and register pages were copied from my CS50 Finance assignment, and I later changed both slightly based on the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootsrap website. When the user registers, the program checks to see if the username has already been taken, and if it is not, then their user info is saved into the 'users' table in sqlite3. When the user logs in, they submit a form to /login, and the route in app.py checks if their username exists, and whether their password hash is correct.
+If the user does not pass validation, an error message is displayed saying what they did wrong.
+When the user registers and/or logs in, their password is saved into a session variable after validation.
 
 
 Index:
 
 The first thing I decided to do was get and show the upcoming movies and top box office movies from last weekend on the home page of the site.
-This was done by x and y.
+This was done by creating a function for get_upcoming() and a function for get_top_box()*.
+get_upcoming() used a request with the url: titles/x/upcoming and parameters for the titleType (always movie), starting in 2023 and ending in 2026, and sorts by year increasing. 
+get_top_box() used a standard request for /titles and selects titles from the list: "top_boxoffice_last_weekend_10".
+
+<small>*Note: these 2 functions were later combined into 1 function with 2 requests (index_queries(x)) using asyncio and aiohttp (see Asyncio section)</small>
+
+At first, I displayed the results in a table for each request, with each table having a column for the poster, a column for the ids and title, and a column for the release date.
+I then used <a href="https://getbootstrap.com/docs/5.3/components/card/#grid-cards">Grid Cards</a> from Bootstrap with the row-cols-sm-5 class to display 2 rows of 5 movies (10 results) on my Dell laptop, with each movie displayed in a <a href="https://getbootstrap.com/docs/5.3/components/card/#content-types">Card</a>.
+
+Responsive Design:
+The grid of movies changes to show 5 rows with 2 columns of movies in each row when the webpage is minimized to a smaller viewport (row-cols-2).
+
+One of the movies in the upcoming movies was explicit, and so I decided to go to the next page of the results of upcoming movies by adding a "page": "2" parameter to the querystring for get_upcoming(). Sometimes a user might not like the results that they see, and so I implemented a "randomize" button that randomizes the upcoming movies that the user sees. It does this by using the random python module to generate a random int from 1 to 9, inclusive (because this request only shows 9 pages), and then going to that page number of the results for upcoming movies (ex. pg 5).
+
 After reviewing other examples on Bootstrap, including <a href="https://getbootstrap.com/docs/5.3/examples/album/#">Album</a>, I decided to create a Jumbotron feature for the top of index.html with a button to get a movie.
 
 One initial challenge was putting if-else jinja statements in parts of each html file when a different request was made because some features were not in all movies (ex. primaryImage, plot), while others were (ex. id, title), and there was a grey area of features where it was not entirely for certain that it always had the feature (ex. runtime, spokenLanguages, etc...), and so I had to be very redundant.
 
 Lookup:
-  Table:
-  
-  Ajax:
+
+At first, I created a /search route and a lookup(title) function that sends a request to an API for a specific movie based on its title and then displays the results using Jinja, which is similar to the lookup feature in CS50 Finance.
+
+The results were displayed in a grid of cards similar to index, except with 3 per row so the user can see the poster better, while also being able to see a large proportion of the results without having to scroll down.
+I experimented using horizontal cards with one movie per row, but found that it either looked too small when it was 1 per row, or when it was too large, the sizing ratio of poster-to-movie-info was too large.
+
 
 Genres:
 
 I noticed through the testing section of RapidApi for MoviesDatabase that you can filter movies by genre, as well as get a list of genres, each in their own request.
 I completed this feature by creating a request for the list of genres and displaying a dropdown full of genres via jinja. After testing, some genres (ex. News, Game-Show, etc...) were removed because they didn't show results.
 
+
 movie.html:
 
 As a final major feature, I implemented movie.html, which gets all the info about a certain movie based on its id. 
+To find all the possible info on the movie (<a href="https://rapidapi.com/SAdrian/api/moviesdatabase/details">up to 58 keys</a>), I had to create an empty dictionary, send multiple requests to the same url with different values for the "info" parameter (ex."base_info", "revenue_and_budget", "awards", "filmingLocations", etc...), iterate through the result of each request and save the key-value pair to the saved dictionary, and display those results through Jinja.
+
 One problem I found was that in soundtrack, it would print the html of the comments to the screen (including anchor tags and divs) instead of the what was actually inside of the html. To fix this, I googled how to render html into a website as html and not as text, and found that I needed to filter the jinja using safe.
 
-I noticed another feature on the RapidApi site where you can find similar movies using an "info": "moreLikeThis" querystring parameter, and decided to include that feature into the movie.html page. I learned how to create a card group from the Bootstrap website.
+To implement the 'moreLikeThis' feature, I learned how to create a <a href="https://getbootstrap.com/docs/5.3/components/card/#card-groups">card group</a> from the Bootstrap website.
 
 Asyncio:
 
@@ -73,9 +100,12 @@ I noticed that as you go further back in time, the movies and plots get weirder 
 I also noticed that a benefit of this website is you can get a much better view of the poster and plot on a laptop screen, as compared to a TV wih Netflix.
 Some cool movie posters include <a href="http://127.0.0.1:5000/movie?movie_id=tt2798920">'Annihilation'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120177">'Spawn'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0253556">'Reign of Fire'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120669">'Fear and Loathing in Las Vegas'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0993840">'Army of the Dead'</a>, and <a href="http://127.0.0.1:5000/movie?movie_id=tt9601220">'Blackbear'</a>.
 
+**Note: links in watchlist section can only be accessed if the flask server for app.py is running ('flask run').
+
 To create the watchlist feature, I constructed a table for and watchlist and included it in the database schema design. The watchlist table includes a primary key for the user id and a primary key for the movie id, since each user can only have a specific movie id once in their watchlist. I then added 'Iron Man' to the database, and later 'Annihilation.' 
 I then created a basic watchlist.html file, a navbar in layout.html, and a route to go to watchlist, with methods 'GET' (for seeing watchlist) and 'POST' (for updating watchlist). 
 I created a function called get_watchlist() which uses a sql query to get a list of all of the movies in the user's watchlist by their movie_id. I then created a get_movies_by_list_ids(movies) function which utilizes the title/x/titles-by-ids request from MoviesDatabase to get information about a set of movies by their movie ids. Jinja was used to display the poster, id, release date, and title of the movie in a temporary table.
+
 
 Ajax search.html:
 
@@ -92,6 +122,11 @@ As I continued testing and debugging, I noticed I was not able to view the movie
 I thought this was a great time to implement a fusion of a Bootstrap carousel and card grid. I looked at the Bootstrap documentation for a carousel, and included the grid I created for search.html inside of the carousel-inner div.
 One challenge I noted here was implementing the carousel indicators. The indicators would originally go inside the grid, and so after playing around with pagination and navbars, I removed the carousel indicators (which could only be placed once), and replaced them with page navigation on both the top and and bottom. As I was testing the responsiveness of the design by minimizing the screen size, I noticed that I was not able to use the navbar on the top because of the left and right arrows, and since the carousel arrows were only placed on the top row anyways, I decided to remove them. I also noticed that the pages in the carousel only go from left-to-right, one page at a time (which is typical for a carousel/slideshow), which was originally an unintended feature, but I kept it because it looks better anyways (the prev/left button still works).
 
+
+Profile:
+
+After this, I decided to add profile.html and a /profile route where the user can access their username and password, as well as change each.
+The user accesses their username through a sqlite3 query and jinja. By accessing a session variable.
 
 Icons:
 
