@@ -16,10 +16,13 @@ Name:
 
 It is called Web Wizard because the website speed and access to such a large variety of movies, as well as the ability for me to find movies that I wanted to watch, made it feel like it was magic. Also, the screen is typically filled with posters that make the screen very colourful, and it looks like the result of a wizard doing a lot of magic. Also, I was filtering the genres in genres.html, I found that the best movies are the ones in myster, horror, adventure, and fantasy, which all can be associated with Wizards.
 
-To create a backbone of my project, I copied my CS50 Finance submission into a separate folder. This is because it uses a lot of similar features, while still adding new ones.
+To create the backbone of my project, I copied my CS50 Finance submission into a separate folder. This is because it uses a lot of similar features (ex. sessions, after_request, usd, etc...), while still adding new ones.
 
 
 Database Schema Diagram
+
+At first, I created a diagram to visualize how the user data would be collected and manipulated in sqlite3.
+I created a table for users, which includes a primary key for the 'id' of the user, their 'username', and the hash of their password.
 
 layout.html:
 
@@ -27,7 +30,7 @@ At first I created layout.html, which holds the main navbar that you see at the 
 
 Login/Register:
 
-The login and register pages were copied from my CS50 Finance assignment, and I later changed both slightly based on the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootsrap website. When the user registers, the program checks to see if the username has already been taken, and if it is not, then their user info is saved into the 'users' table in sqlite3. When the user logs in, they submit a form to /login, and the route in app.py checks if their username exists, and whether their password hash is correct.
+The login and register pages were copied from my CS50 Finance assignment, and I later changed both slightly based on the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootstrap website. When the user registers, the program checks to see if the username has already been taken, and if it is not, then their password is hashed using a generate_password_hash(password) function, and their user info is saved into the 'users' table in sqlite3. When the user logs in, they submit a form to /login, and the route in app.py checks if their username exists, and hashes their password to see whether their password hash is correct.
 If the user does not pass validation, an error message is displayed saying what they did wrong.
 When the user registers and/or logs in, their password is saved into a session variable after validation.
 
@@ -126,7 +129,9 @@ One challenge I noted here was implementing the carousel indicators. The indicat
 Profile:
 
 After this, I decided to add profile.html and a /profile route where the user can access their username and password, as well as change each.
-The user accesses their username through a sqlite3 query and jinja. By accessing a session variable.
+The user accesses their username through a sqlite3 query and jinja. The user accesses their passsord by accessing a session variable.
+At first, each of the passwords are hidden by using a style="-webkit-text-security: disc" in a span tag.
+profile.html uses jQuery functions so that when a person clicks the 'show password' button, it passes the id of that button through a function that checks its style, and changes 'disc' to 'none' in order to show the password, and 'none' to 'disc' to hide the password.
 
 Icons:
 
