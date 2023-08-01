@@ -4,3 +4,4 @@ Flask-Session
 requests
 asyncio
 aiohttp
+python 3.11
