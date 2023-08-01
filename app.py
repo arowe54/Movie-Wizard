@@ -268,7 +268,7 @@ def watchlist():
         i = 0
         for id in watchlist:
             pg.append(id)
-            j += 1
+            i += 1
             # Save the page when there is 9 movies or the last movie is being checked
             if len(pg) == 9 or i == len(watchlist):
                 pages_of_ids.append(pg)
