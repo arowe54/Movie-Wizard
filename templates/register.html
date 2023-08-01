@@ -8,19 +8,22 @@
 <form action="/register" method="post">
     <!--Username-->
     <div class="mb-3">
-        <label for="username">Username: </label>
+        <label for="username" class="form-label">Username: </label>
         <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
     </div>
 
     <!--Password-->
     <div class="mb-3">
-        <label for="password1">Password: </label>
+        <label for="password1" class="form-label">Password: </label>
         <input class="form-control mx-auto w-auto" id="password1" name="password" placeholder="Password" type="password">
     </div>
     <!--Reenter password-->
     <div class="mb-3">
-        <label for="password2">Re-enter Password: </label>
-        <input class="form-control mx-auto w-auto" id="password2" name="confirmation" placeholder="Confirm Password" type="password">
+        <label for="password2" class="form-label">Re-enter Password: </label>
+        <input class="form-control mx-auto w-auto" id="password2" name="confirmation" placeholder="Confirm Password" type="password" aria-describedby="passwordHelpBlock">
+        <div id="passwordHelpBlock" class="form-text">
+            Please make password 8-20 characters long, contain letters and numbers, and no spaces, special characters, or emoji.
+        </div>
     </div>
     <!--Submit-->
     <button class="btn btn-primary" type="submit">Register</button>

@@ -5,15 +5,25 @@
 {% endblock %}
 
 {% block main %}
+<div class="form-signin w-100 m-auto">
+
     <form action="/login" method="post">
-        <div class="mb-3">
-            <label for="username">Username: </label>
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        <h1 class="midnight display-1 mb-4"><i class="fa-solid fa-hat-wizard" alt="wizard hat"></i>Movie Wizard</h1>
+        <div class="row">
+            <div class="col">
+                <label for="username" class="form-label">Username: </label> 
+                <input class="form-control mx-auto w-auto" id="username" type="text" placeholder="Username">  
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="password">Password: </label>
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        <div class="row mb-2">
+            <div class="col">
+                <label for="password" class="form-label">Password: </label>
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            </div>  
         </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
+        <button class="btn btn-primary py-2" type="submit">Log In</button>
     </form>
+
+</div>
+    
 {% endblock %}

@@ -18,7 +18,7 @@ $(document).ready(function() {
         }
     }
 
-    // Run showPassword on the two buttons
+    // Show/hide password when either 'show password' button is clicked
     $('#show_pwd').click(function() {
         togglePassword('#original_pwd');
     })
@@ -32,12 +32,13 @@ $(document).ready(function() {
 
     // When user clicks update username
     $('#update_username').click(function() {
+        // Show the 'change username' form
         $("#update_username_form").toggle()
     })
 
     // When user clicks update password
     $('#update_pwd').click(function() {
-        // Append a form just below the change username button
+        // Show the 'change password' form
         $('#update_pwd_form').toggle()
     })
 })
