@@ -14,7 +14,7 @@ To access the API, I created an account on RapidAPI and linked to my github acco
 
 Name:
 
-It is called Web Wizard because the name sounds cool and the ability of the website to get a large selection of movies seemingly out of nowhere and pick a movie out for me quickly made it feel like magic.  Also, I was filtering the genres in genres.html, I found that the best movies are the ones in myster, horror, adventure, and fantasy, which all can be associated with Wizards.
+It is called Web Wizard because the name sounds cool and the ability of the website to get a large selection of movies seemingly out of nowhere and pick a movie out for me quickly makes it feel like magic.  Also, as I was filtering the genres in genres.html, I found that the best movies are the ones in mystery, horror, adventure, and fantasy, which all can be associated with Wizards.
 
 To create the backbone of my project, I copied my CS50 Finance submission into a separate folder. This is because it uses a lot of similar features (ex. sessions, after_request, usd, etc...), while still adding new ones.
 
@@ -27,7 +27,7 @@ The 'watchlist' table contains a column of the user_id, and a column for the mov
 
 layout.html:
 
-At first I created layout.html, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site.
+At first I created layout.html, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site. When the user minimizes the screen, the top navbar collapses, and the user can press the button on the top right to un-collapse it.
 
 Login/Register:
 
@@ -52,7 +52,7 @@ Sometimes a user might not like the results that they see, and so I implemented 
 After reviewing the  <a href="https://getbootstrap.com/docs/5.3/examples/album/#">Album</a> example on Bootstrap, I decided to create a Jumbotron in index.html to hold the Logo, a lead paragraph, and a button to get a movie.
 One challenge was being very redundant with jinja if-else statements because some features were not in all movies (ex. primaryImage, plot), while others were (ex. id, title).
 
-At first, I displayed the results in a table for each request, with each table having a column for the poster, a column for the ids and title, and a column for the release date.
+At first, I displayed the results in a table for each request, with each table having a column for the poster, a column for the ids and title, and a column for the release date. The ids were only for testing purposes, and were later removed.
 I then used <a href="https://getbootstrap.com/docs/5.3/components/card/#grid-cards">Grid Cards</a> from Bootstrap with the row-cols-sm-5 class to display 2 rows of 5 movies (10 results) on my Dell laptop, with each movie displayed in a <a href="https://getbootstrap.com/docs/5.3/components/card/#content-types">Card</a>.
 
 Responsive Design:
@@ -69,7 +69,7 @@ When the user uses a small screen, it displays only one movie per row.
 
 Ajax search.html:
 
-After this, I decided to use ajax and jQueryto update the search responses as the user types each key into the search bar of that page. This was becasue it is a cool feature and becasue it can get annoying when you enter a title and it shows no movie found. I also added a feature where it outputs the number of results to the top of the page.
+After this, I decided to use ajax and jQuery to update the search responses as the user types each key into the search bar of that page. This was becasue it is a cool feature and becasue it can get annoying when you enter a title and it shows no movie found. I also added a feature where it outputs the number of results to the top of the page.
 The page is separated into 'new_results' and 'original_results' divs. 
 When the user presses a key into the search bar, the program uses jQuery to hide the 'original_results' (random movies), gets a request for the movie from the title via ajax, and displays the results in a grid of cards (3 per row). 
 In Ajax, in order to show the result of the request, an empty div is created and the response's 'results' value is saved. Then it loops over each movie in the result, converts it to a card using template literals, and appends the card to the div. 
@@ -81,19 +81,20 @@ One challenge faced was that every time a user pressed a key, it would save the 
 Genres:
 
 When visiting the /genres route in app.py, it completes a request for the list of genres using get_genres() and uses jinja to display all of them in a dropdown in genres.html. After testing, some genres (ex. News, Game-Show, etc...) were removed because they didn't show results.
-When the user selects a genre from the dropdown (ex. Action), it sends a form via GET to the /genres route, then it sends a request for titles filtered by that genre using a get_movies_by_genre(genre) function, and displays those results to the screen in a 5x2 grid (like index.html). 
-At first get_movies_by_genre(genre) sent a request to the /titles ur with a filter on the genre, but I found that it showed the same movies each time, and they were all from the late 1800's, so I changed the request to filter genres in the /x/random url, and also implemented a 'get more movies' button which sends the request again.
+When the user selects a genre from the dropdown, it sends a form via GET to the /genres route, which sends a request for titles filtered by that genre using a get_movies_by_genre(genre) function, and displays those results to the screen in a 5x2 grid (like index.html). 
+get_movies_by_genre(genre) sends a request to the url /x/random with a query parameter for the genre of the movies. The movies are random each time because I found that when it uses the /titles url which is not random, it gets the same movies from the late 1800s each time, and it is better for the user to have more variety.
+This is also why I implemented a 'get more movies' button where the user sends the request again to get more random movies in that genre. I find this is suprisingly effective and I have actually found a lot of movies that I would like to watch through the random buttons.
 
 
 movie.html:
 
 movie.html gets all the info about a certain movie based on its id. 
-When the user clicks a 'more info' button 
-To find all the possible info on the movie (<a href="https://rapidapi.com/SAdrian/api/moviesdatabase/details">up to 58 keys</a>), I had to create an empty dictionary, send multiple requests to the same url with different values for the "info" parameter (ex."base_info", "revenue_and_budget", "awards", "filmingLocations", etc...), iterate through the result of each request and save the key-value pair to the saved dictionary, and display those results through Jinja.
+All cards include a 'more info' button in the footer, that, when clicked, goes to a /movie route through GET, which calls a get_all_info(movie) function that returns all available information about the movie in a dictionary. 
+To find all the possible info on the movie (<a href="https://rapidapi.com/SAdrian/api/moviesdatabase/details">up to 58 keys</a>), I had to create an empty dictionary, send multiple requests to the same url with different values for the "info" parameter (ex."base_info", "revenue_and_budget", "awards", "filmingLocations", etc...), iterate through the result of each request and save each key-value pair to the saved dictionary. Jinja then displays those results to the screen in movie.html.
+On the bottom of movie.html, I implemented the 'moreLikeThis' feature, which displays similar movies in a <a href="https://getbootstrap.com/docs/5.3/components/card/#card-groups">card group</a>, which I learned from the Bootstrap website.
 
-One problem I found was that in soundtrack, it would print the html of the comments to the screen (including anchor tags and divs) instead of the what was actually inside of the html. To fix this, I googled how to render html into a website as html and not as text, and found that I needed to filter the jinja using safe.
+One problem I found was that in soundtrack, it would print the html of the comments to the screen (including anchor tags and divs) instead of the what was actually inside of the html. To fix this, I used the 'safe' jinja filter.
 
-To implement the 'moreLikeThis' feature, I learned how to create a <a href="https://getbootstrap.com/docs/5.3/components/card/#card-groups">card group</a> from the Bootstrap website.
 
 Asyncio:
 
