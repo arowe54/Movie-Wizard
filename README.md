@@ -22,12 +22,14 @@ To create the backbone of my project, I copied my CS50 Finance submission into a
 Database Schema Diagram
 
 At first, I created a diagram to visualize how the user data would be collected and manipulated in sqlite3.
-I created a table for users, which includes a primary key for the 'id' of the user, their 'username', and the hash of their password.
+I created a table for users, which includes a primary key for the 'id' of the user that autoincrements, their 'username', and the hash of their password.
 The 'watchlist' table contains a column of the user_id, and a column for the movie_id of the movie in their watchlist. Both are primary keys, since each user can only have one movie with the same movie_id. The user_id is a foreign key that references the id column of the user table.
+I used this as a basis to create the movies.db
 
 layout.html:
 
 At first I created layout.html, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site. When the user minimizes the screen, the top navbar collapses, and the user can press the button on the top right to un-collapse it.
+
 
 Login/Register:
 
@@ -98,53 +100,59 @@ One problem I found was that in soundtrack, it would print the html of the comme
 
 Asyncio:
 
-It was at this point that I realized that the website was taking way too long to load. The get_all_info(id) function had to work with so many requests, and it was also taking too long to load my homepage. In order to add and test more features (which would requre booting up the site each time), I decided now would be a good time to reduce the latency of the site. With a little bit of research of Stack Overflow, I discovered that instead of loading requests synchronously, I could do use asyncio and aiohttp to complete several requests at the same time. I installed both features on pip and imported them to my document for use. Before I started working on improving the latency, I timed the current speed of loading index.html and movie.html by importing time, recording start_time = time.time() in the beginning of each function, and printing time.time() - start_time at the end for each.
-I referred to the <a href="https://docs.aiohttp.org/en/stable/client_quickstart.html">AIOHTTP docs</a> to get each request using 'async with' syntax, and found that this improved the wait time from 12-15 seconds, to 8-9 seconds. Wait-time was still long, and so I looked deeper into shortening it.
-I found <a href="https://pawelmhm.github.io/asyncio/python/aiohttp/2016/04/22/asyncio-aiohttp.html">another website</a> where the user used a TaskGroup and fetch() to do up to 10 000 requests asynchronously in the same amount of time it was taking my website to do around 10 or so requests in the same amount of time, and after looking at the AIOHTTP docs <a href="https://docs.aiohttp.org/en/stable/http_request_lifecycle.html">again</a>, I improved the loading time for movie.html from 8-9 seconds to 0.76 seconds (almost instant). 
-Since all requests are asynchronous, it would not make sense to reduce wait times to lower than 0.7 on the other links (which mostly took around 0.7 s anyways).
-In index.html, since it is typically the first screen to load when the user has already logged in, it normally has longer wait times than the others, and so I created another TaskGroup to fetch the results of both the 'upcoming movies' and 'top box office movies last weekend' request asynchronously. This reduced the wait time from 1.5 seconds to 0.7 seconds, as expected.
+It was at this point that I realized that the website was taking way too long to load. This was because of the get_all_info(id) and home page functions had to recieve multiple requests for the page to finish loading. In order to add and test more features (which would requre booting up the site each time), I had to reduce the latency of the site by loading each request asynchronously. I discovered through Stack Overflow I could use asyncio and aiohttp to complete several requests at the same time. I installed both features with pip and imported them.
+Before I started working on improving the latency, I timed the current speed of loading index.html and movie.html. I temporarily recorded each time in an 'extra.txt' file by importing time, recording start_time = time.time() in the beginning of each route, and printing time.time() - start_time at the end.
+I referred to the <a href="https://docs.aiohttp.org/en/stable/client_quickstart.html">AIOHTTP docs</a> to get each request using 'async with' syntax, and found that this improved the wait time from 12-15 seconds, to 8-9 seconds, which was still too long.
+I found <a href="https://pawelmhm.github.io/asyncio/python/aiohttp/2016/04/22/asyncio-aiohttp.html">another website</a> where the user used a TaskGroup and fetch() to do up to 10 000 requests asynchronously in the same amount of time it was taking my website to do around 10 or so requests in the same amount of time. After looking at the AIOHTTP docs <a href="https://docs.aiohttp.org/en/stable/http_request_lifecycle.html">again</a>, I implemented a TaskGroup using fetch() and improved the loading time for movie.html from 8-9 seconds to 0.76 seconds <b>(almost instant)</b>. 
+Since all requests are asynchronous, it would not make sense to reduce wait times to lower than 0.7 on the other links (which mostly took around a second anyways).
+In index.html, it took longer to load because it used two requests, and it was also typically the first screen to load. I created another TaskGroup to fetch the results of both the 'upcoming movies' and 'top box office movies last weekend' request asynchronously, which reduced the wait time from 1.5 seconds to 0.7 seconds, as expected.
 
-After converting my code to from sync to async (which takes up a lot more code space), I split my program files into more files and directories, including a 'complete.py' for getting the info for movie.html, 'queries.py' for the other python functions, and 'helpers.py' for the most functions that don't include requests/queries.
-I learned from a Stack Overflow post to create a blank __init__.py file to import those functions.
+File Structure:
 
-After implementing all details to movie.html, I added buttons on each movie card so the user can access more info about the movie by submitting a form to the movie route.
-I want users to be able to search for specific movies from the search bar, so I made method of the form to get to this site 'GET'.
+At this point my helpers.py function was very long, so I moved it into a helpers folder (with a blank __init__.py file), and split helpers.py into complete.py (for 'get_all_info(movie)' in movie.html), requests.py (for the functions containing requests), and helpers.py (for the functions that don't include requests; ex. secToMin(seconds) and usd).
+I should note that I included all JavaScript from each html file into a 'scripts' folder, but none of it has worked after importing it into each html file and deleting the pre-existing js in that file, so I have kept each js inside the scripts and just kept the scripts folder for reference.
 
 
 Watchlist:
 
-Surprisingly, as I was testing and debugging this website, I found movies that I wanted to watch later (which I honestly was not actually expecting). 
-As I was testing and debugging my website, I noticed a lot of interesting and colourful movie posters that I wanted to save to look at later (ex. look at watchlist screenshot). 
-I also found the plots of some of these movies very interesting, too (ex. look at movie screenshots).
-I noticed that as you go further back in time, the movies and plots get weirder and weirder. Lots of movies in the 80s and 90s escape the 'isAdult == false' filter and I can't do anything about it. Also, many movies have posters, titles, and plots that you simply cannot make up: nazis invading earth from the moon (<a href="http://127.0.0.1:5000/movie?movie_id=tt1034314">'Iron Sky'</a>), vaccines killing 5 billion people on earth (<a href="http://127.0.0.1:5000/movie?movie_id=tt23810972">'Died Suddenly'</a>), a movie starring Ronald Reagan prosecuting KKK members (<a href="http://127.0.0.1:5000/movie?movie_id=tt0044075">Storm Warning</a>), and straight up satire (<a href="http://127.0.0.1:5000/movie?movie_id=tt12981810">'Finding Jesus'</a>, instead of 'Finding Nemo').
-I also noticed that a benefit of this website is you can get a much better view of the poster and plot on a laptop screen, as compared to a TV wih Netflix.
+Surprisingly, as I was testing and debugging this website, I found movies that I wanted to watch later (which I honestly was not expecting). 
+As I tested and debugged my website, I noticed a lot of interesting and colourful movie posters that I wanted to save to look at later. 
+I also found the plots of some of these movies very interesting, too.
+I noticed that as you go further back in time, the movies and plots get weirder and weirder. Lots of movies in the 80s and 90s escape the 'isAdult == false' filter and I can't do anything about it. 
+Also, many movies have posters, titles, and plots that you simply cannot make up: nazis invading earth from the moon (<a href="http://127.0.0.1:5000/movie?movie_id=tt1034314">'Iron Sky'</a>), vaccines killing 5 billion people on earth (<a href="http://127.0.0.1:5000/movie?movie_id=tt23810972">'Died Suddenly'</a>), a movie starring Ronald Reagan prosecuting KKK members (<a href="http://127.0.0.1:5000/movie?movie_id=tt0044075">Storm Warning</a>), and straight up satire (<a href="http://127.0.0.1:5000/movie?movie_id=tt12981810">'Finding Jesus'</a>, instead of 'Finding Nemo').
+I also noticed a benefit of this website is you can get a much better view of the poster and plot on a laptop screen, as compared to a TV wih Netflix.
 Some cool movie posters include <a href="http://127.0.0.1:5000/movie?movie_id=tt2798920">'Annihilation'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120177">'Spawn'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0253556">'Reign of Fire'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120669">'Fear and Loathing in Las Vegas'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0993840">'Army of the Dead'</a>, and <a href="http://127.0.0.1:5000/movie?movie_id=tt9601220">'Blackbear'</a>.
 
-**Note: links in watchlist section can only be accessed if the flask server for app.py is running ('flask run').
+**Note: Movie links can only be accessed through the flask server.
 
-To create the watchlist feature, I constructed a table for and watchlist and included it in the database schema design. The watchlist table includes a primary key for the user id and a primary key for the movie id, since each user can only have a specific movie id once in their watchlist. I then added 'Iron Man' to the database, and later 'Annihilation.' 
-I then created a basic watchlist.html file, a navbar in layout.html, and a route to go to watchlist, with methods 'GET' (for seeing watchlist) and 'POST' (for updating watchlist). 
-I created a function called get_watchlist() which uses a sql query to get a list of all of the movies in the user's watchlist by their movie_id. I then created a get_movies_by_list_ids(movies) function which utilizes the title/x/titles-by-ids request from MoviesDatabase to get information about a set of movies by their movie ids. Jinja was used to display the poster, id, release date, and title of the movie in a temporary table.
+I then created a watchlist.html file, a navbar in layout.html, and a route to go to watchlist, with methods 'GET' (for seeing watchlist) and 'POST' (for updating watchlist). 
+I then added 'Iron Man' to the database, and later 'Annihilation', for testing.
+I created a function called get_watchlist() in requests.py which uses a sql query to get a list of all of the movies in the user's watchlist by their movie_id. I then created a get_movies_by_list_ids(movies) function which utilizes the title/x/titles-by-ids request from MoviesDatabase to get information about a set of movies by their movie ids. Jinja was used to display the poster, id, release date, and title of the movie in a temporary table.
 
-I then created a feature where the user can update their watchlist.
-First, I added a get_watchlist() function which queries the movies in the user's watchlist using sqlite.
-I then added an 'add to watchlist' checkbox in movie.html, which shows a checkbox that is checked if the movie is in the watchlist, and unchecked if the movie is not. It does this by checking to see if the current movie id is in the list of movie ids in the watchlist.
-I added this feature to index, genres, lookup, and watchlist.
+I then created a checkbox form where the user can update their watchlist.
+I used the get_watchlist() function and a jinja loop to check if the current movie id is not in the list of movie ids in the watchlist.
+If the movie is not in the watchlist, it adds an empty check box. When the user clicks the box, the 'onchange' attribute submits a from with the movie id to POST in the /watchlist route, and a sqlite3 query inserts the movie id into the watchlist corresponding to that user's id.
+Return redirect(request.referrer) returns the user back to the page where they updated the movie to the watchlist, where the checkbox is automatically checked.
+The website automatically checks the box each time the movie is in the watchlist, and when the user unchecks the checkbox, it submits another form via POST to the /watchlist route that deletes the row in watchlist with the movie id and user id. This means that whenever a movie is in the watchlist, it is checked, and when it is not, it is unchecked.
+
+The checkbox is used in movies.html, but in index.html, genres.html, and search.html, the button switches from 'Add to Watchlist' to 'Remove from Watchlist' instead, because it is more aesthetically pleasing. Also, in watchlist.html, only a 'remove from watchlist' button is used.
 
 
 Pagination:
 
 As I continued testing and debugging, I noticed I was not able to view the movies in my watchlist when it had 26 movies in it (possibly fewer earlier).
-I thought this was a great time to implement a fusion of a Bootstrap carousel and card grid. I looked at the Bootstrap documentation for a carousel, and included the grid I created for search.html inside of the carousel-inner div.
-One challenge I noted here was implementing the carousel indicators. The indicators would originally go inside the grid, and so after playing around with pagination and navbars, I removed the carousel indicators (which could only be placed once), and replaced them with page navigation on both the top and and bottom. As I was testing the responsiveness of the design by minimizing the screen size, I noticed that I was not able to use the navbar on the top because of the left and right arrows, and since the carousel arrows were only placed on the top row anyways, I decided to remove them. I also noticed that the pages in the carousel only go from left-to-right, one page at a time (which is typical for a carousel/slideshow), which was originally an unintended feature, but I kept it because it looks better anyways (the prev/left button still works).
+I thought this was a great time to implement a fusion of a Bootstrap carousel and card grid to show several pages of the watchlist. I looked at the Bootstrap documentation for a carousel, and included the grid I created for search.html inside of the carousel-inner div.
+One challenge I noted here was implementing the carousel indicators. The indicators would originally go inside the grid, and so after playing around with pagination and navbars, I removed the carousel indicators (which could only be placed once), and replaced them with page navigation buttons on both the top and bottom. I removed the typical left and right slide show arrows from the carousel because I was not able to uncollapse the navbar when the screen was minimized, and because the arrows were only in the first row of movies, which did not look good.
+The page navigation buttons only go from left to right, one page at a time (which is typical for a slide show), but the left/prev button still works.
 
 
 Profile:
 
-After this, I decided to add profile.html and a /profile route where the user can access their username and password, as well as change each.
-The user accesses their username through a sqlite3 query and jinja. The user accesses their passsord by accessing a session variable.
+After this, I decided to add profile.html and a /profile route where the user can access and change their username and password.
+The user accesses their username through a sqlite3 query and displays it through jinja. The user accesses their passsord by accessing a session variable, which is passed as a jinja variable.
 At first, each of the passwords are hidden by using a style="-webkit-text-security: disc" in a span tag.
 profile.html uses jQuery functions so that when a person clicks the 'show password' button, it passes the id of that button through a function that checks its style, and changes 'disc' to 'none' in order to show the password, and 'none' to 'disc' to hide the password.
+The username can change their username or password by clicking the 'change username' or 'change password' buttons, which toggle a div for each form. When the user submits the new username or password, it passes it through POST in the /profile route and validates it the same way that register.html does. Then, it returns profile.html.
 
 Icons:
 

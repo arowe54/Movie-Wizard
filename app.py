@@ -10,7 +10,7 @@ from random import randint
 
 from helpers.helpers import apology, login_required, secToMin, usd
 from helpers.complete import get_all_info
-from helpers.queries import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
+from helpers.requests import get_genres, get_movies_by_list_ids, get_movies_by_genre, get_watchlist, lookup, random_movies, index_queries
 
 # Configure application
 app = Flask(__name__)
