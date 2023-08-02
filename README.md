@@ -131,6 +131,7 @@ The checkbox is used in movies.html, but in index.html, genres.html, and search.
 Pagination:
 
 As I continued testing and debugging, I noticed I was not able to view the movies in my watchlist when it had 26 movies in it (possibly fewer earlier).
+
 I thought this was a great time to implement a fusion of a Bootstrap carousel and card grid to show several pages of the watchlist. I looked at the Bootstrap documentation for a carousel, and included the grid I created for search.html inside of the carousel-inner div.
 One challenge I noted here was implementing the carousel indicators. The indicators would originally go inside the grid, and so after playing around with pagination and navbars, I removed the carousel indicators (which could only be placed once), and replaced them with page navigation buttons on both the top and bottom. I removed the typical left and right slide show arrows from the carousel because I was not able to uncollapse the navbar when the screen was minimized, and because the arrows were only in the first row of movies, which did not look good.
 The page navigation buttons only go from left to right, one page at a time (which is typical for a slide show), but the left/prev button still works.
@@ -144,11 +145,10 @@ At first, each of the passwords are hidden by using a style="-webkit-text-securi
 profile.html uses jQuery functions so that when a person clicks the 'show password' button, it passes the id of that button through a function that checks its style, and changes 'disc' to 'none' in order to show the password, and 'none' to 'disc' to hide the password.
 The username can change their username or password by clicking the 'change username' or 'change password' buttons, which toggle a div for each form. When the user submits the new username or password, it passes it through POST in the /profile route and validates it the same way that register.html does. Then, it returns profile.html.
 
+
 Icons:
 
 Lastly, I inserted <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> to my project to give a personal touch. 
-
-A list of Icons:
 
 'Magic theme':
 - hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo
@@ -174,7 +174,7 @@ profile.html:
 - person icon in the 'Profile' nav item
 
 Sign off:
-For now this project is good, but in the future, after submitting, I plan to implement more features, including more username/password validation, user preferences, and combining queries so users can filter by multiple 'info' key values into one result.
+In the future, after submitting, I plan to implement more features, including more username/password validation, user preferences, and combining queries so users can filter by multiple 'info' key values into one result.
 
 I finally want to end this README by saying none of this would be possible without the MoviesDatabase api from Adriano Massimo on RapidAPI (which I presume takes data from IMDB but it is not stated), as well as the many Stack Overflow posts which helped me through debugging and the learning curve of adding new features, as well as the Harvard CS50x Online Introduction to Computer Science teaching staff.
 
