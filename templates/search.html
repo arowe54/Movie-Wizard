@@ -34,9 +34,9 @@
         <div class="col card">
             <!--Poster-->
             {% if movie.primaryImage != None %}
-                <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" alt="{{ movie.primaryImage.caption.plainText }}">  
+                <img src="{{ movie.primaryImage.url }}" class="card-img-top w-100" height="1080px" alt="{{ movie.primaryImage.caption.plainText }}">  
             {% else %}
-                <img src="../static/card-image.svg" class="card-img-top w-100" alt="Bootstrap">
+                <img src="../static/card-image.svg" class="card-img-top w-100" height="1080px" alt="Bootstrap">
             {% endif %}
 
             <!--Title and Release Date-->

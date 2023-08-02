@@ -1,9 +1,9 @@
 # CS50X Web Wizard
 #### VIDEO DEMO: <url>
 #### Description:
-Welcome to Web Wizard
+Welcome to Movie Wizard
 
-<p class="lead">Have you every had trouble finding and picking the right movie? Web Wizard is just the right website for you.
+<p class="lead">Have you every had trouble finding and picking the right movie? Movie Wizard is just the right website for you.
 
 This website uses Javascript, Python, and SQL to help users find and save movies of interest to them.
 You can lookup movies by title, filter by genre, save movies you want to watch, and get random movies.</p>
@@ -17,7 +17,7 @@ To access the API, I created an account on RapidAPI and linked to my github acco
 
 Name:
 
-It is called Web Wizard because the name sounds cool and the ability of the website to get a large selection of movies seemingly out of nowhere and pick a movie out for me quickly makes it feel like magic.  Also, as I was filtering the genres in genres.html, I found that the best movies are the ones in mystery, horror, adventure, and fantasy, which all can be associated with Wizards.
+It is called Movie Wizard because the name sounds cool and the ability of the website to get a large selection of movies seemingly out of nowhere and pick a movie out for me quickly makes it feel like magic.  Also, as I was filtering the genres in genres.html, I found that the best movies are the ones in mystery, horror, adventure, and fantasy, which all can be associated with Wizards.
 
 To create the backbone of my project, I copied my CS50 Finance submission into a separate folder. This is because it uses a lot of similar features (ex. sessions, after_request, usd, etc...), while still adding new ones.
 
