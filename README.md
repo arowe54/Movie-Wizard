@@ -159,11 +159,11 @@ Icons:
 Lastly, I inserted <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> to my project to give a personal touch. 
 A list of Icons:
 'Magic theme':
-    <i class="fa-solid fa-hat-wizard"></i> hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo;
-    <i class="fa-solid fa-wand-magic-sparkles"></i> wand-magic-sparkles in 'Find Movie' button;
+- hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo;
+- wand-magic-sparkles in 'Find Movie' button;
 
 'movie.html':
-    
+
 
 
 
