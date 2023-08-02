@@ -109,21 +109,11 @@ In index.html, it took longer to load because it used two requests, and it was a
 
 File Structure:
 
-At this point my helpers.py function was very long, so I moved it into a helpers folder (with a blank __init__.py file), and split helpers.py into complete.py (for 'get_all_info(movie)' in movie.html), requests.py (for the functions containing requests), and helpers.py (for the functions that don't include requests; ex. secToMin(seconds) and usd).
-I should note that I included all JavaScript from each html file into a 'scripts' folder, but none of it has worked after importing it into each html file and deleting the pre-existing js in that file, so I have kept each js inside the scripts and just kept the scripts folder for reference.
+At this point my helpers.py function was very long, so I moved it into a helpers folder (with a blank __init__.py file), and split helpers.py into complete.py (for 'get_all_info(movie)' in movie.html), requests.py (for the functions containing requests), and helpers.py (for the functions that don't include requests (ex. secToMin(seconds) and usd).
+All JavaScript scripts from genres, profile, and search have been copied to the 'scripts' folder, but they do not work when importing to each html file, so I have decided to keep them there only for reference.
 
 
 Watchlist:
-
-Surprisingly, as I was testing and debugging this website, I found movies that I wanted to watch later (which I honestly was not expecting). 
-As I tested and debugged my website, I noticed a lot of interesting and colourful movie posters that I wanted to save to look at later. 
-I also found the plots of some of these movies very interesting, too.
-I noticed that as you go further back in time, the movies and plots get weirder and weirder. Lots of movies in the 80s and 90s escape the 'isAdult == false' filter and I can't do anything about it. 
-Also, many movies have posters, titles, and plots that you simply cannot make up: nazis invading earth from the moon (<a href="http://127.0.0.1:5000/movie?movie_id=tt1034314">'Iron Sky'</a>), vaccines killing 5 billion people on earth (<a href="http://127.0.0.1:5000/movie?movie_id=tt23810972">'Died Suddenly'</a>), a movie starring Ronald Reagan prosecuting KKK members (<a href="http://127.0.0.1:5000/movie?movie_id=tt0044075">Storm Warning</a>), and straight up satire (<a href="http://127.0.0.1:5000/movie?movie_id=tt12981810">'Finding Jesus'</a>, instead of 'Finding Nemo').
-I also noticed a benefit of this website is you can get a much better view of the poster and plot on a laptop screen, as compared to a TV wih Netflix.
-Some cool movie posters include <a href="http://127.0.0.1:5000/movie?movie_id=tt2798920">'Annihilation'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120177">'Spawn'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0253556">'Reign of Fire'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120669">'Fear and Loathing in Las Vegas'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0993840">'Army of the Dead'</a>, and <a href="http://127.0.0.1:5000/movie?movie_id=tt9601220">'Blackbear'</a>.
-
-**Note: Movie links can only be accessed through the flask server.
 
 I then created a watchlist.html file, a navbar in layout.html, and a route to go to watchlist, with methods 'GET' (for seeing watchlist) and 'POST' (for updating watchlist). 
 I then added 'Iron Man' to the database, and later 'Annihilation', for testing.
@@ -157,26 +147,34 @@ The username can change their username or password by clicking the 'change usern
 Icons:
 
 Lastly, I inserted <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> to my project to give a personal touch. 
+
 A list of Icons:
+
 'Magic theme':
-- hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo;
-- wand-magic-sparkles in 'Find Movie' button;
+- hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo
+- wand-magic-sparkles in 'Find Movie' button
 
-'movie.html':
+movie.html:
+- map-fill, a map for filming locations
+- award-fill, a medal for movie awards
+- globe2, a globe for countries of origin
+- translate, a translate symbol for 'Spoken Languages'
+- stopwatch, a stopwatch for runtime
+- music-note-list for soundtrack
+- palette-fill for genres, because selecting from the list of genres is like dipping your paintbrush in a palette
+- rocket-takeoff for plot, because when you first start watching a movie, it is like you are lifting off into space to go to another world.
+- robot in 'Revenue and Budget' section because of the large numbers and the robot looks like it is doing calculations
+- graph-down-arrow and graph-up-arrow for ratings
+- card-image for when the poster is unavailable (used in all cards)(downloaded as an img)
 
-
-
-
-In movie.html, I added a map for filming locations, a medal for movie awards, a globe for countries of origin, a translate symbol for 'Languages Spoken', a stopwatch for runtime, and a music-note-list icon for soundtrack. I included a palette for the genres because when selecting from the list of genres, it is like using a paintbrush to select from a selection of paints on the palette. I included a rocket for the plot of the movie because it symbolizes adventure, and when you first start watching a movie, it is like you are lifting off into space to go to another world. I included a robot in the 'Revenue and Budget' section because this section typically has a large amount of numbers and dollar signs, and the robot looks like it is calculating something, just like how the finances department of a movie production team would do. I also found graph icons with arrows indicating directions, and so in the 'Ratings' section, I included graph-down-arrow when the movie rating is going down, and graph-up-arrow when the rating is going up.
-I included a bootstrap icon that looks like a drivers' license (called person-vcard) in the 'Credentials' section of profile.html because a drivers' license holds a lot of personal information about a person, and so it can be associated with the user's username and password. I included a wrench in the 'Update Credentials' section because it is a tool used to modify things and the user is modifying their username or password. I found a toggle icon that looks like a switch, and so I inserted it into a button in profile.html and included JavaScript so when the user clicks 'Show Password', the switch toggles between off and on.    
-I included a person icon beside the 'Profile' nav item in the top navbar, too.
-To deal with the problem of movies not having a poster, I found a card-image Bootstrap icon, and unlike the other icons, I decided to implement it as a photo, which required I download it to my personal computer.
-
-Finally, I reviewed and cleaned up all comments and spacing in each file. I found that js code that worked inside of script tags did not work in seperate js files, so I just copied each script tag from the files that used js (genres, profile, search) into new js files in their own scripts folder for reference. In the future, when I figure out how to fix that bug, I will.
-
+profile.html:
+- person-vcard in 'Credentials' section, because it looks like a drivers license, and a drivers license holds a lot of personal info
+- wrench-adjustable in 'Update Credentials' section, because wrenches are used to modify equipment (similar to changing a username/password)
+- toggle-off and toggle-on, for showing/hiding the user's password
+- person icon in the 'Profile' nav item
 
 Sign off:
-For now this project is good, but in the future, after submitting, I plan to implement more features, including username/password validation, user preferences, and combining queries so users can filter by multiple 'info' key values in one result.
+For now this project is good, but in the future, after submitting, I plan to implement more features, including more username/password validation, user preferences, and combining queries so users can filter by multiple 'info' key values into one result.
 
-I finally want to end this README by saying none of this would be possible without the MoviesDatabase api from Adriano Massimo on RapidAPI (which I presume takes data from IMDB but it is not stated), as well as the many Stack Overflow posts which helped me through debugging and adding new features, as well as the Harvard CS50x Online Introduction to Computer Science teaching staff.
+I finally want to end this README by saying none of this would be possible without the MoviesDatabase api from Adriano Massimo on RapidAPI (which I presume takes data from IMDB but it is not stated), as well as the many Stack Overflow posts which helped me through debugging and the learning curve of adding new features, as well as the Harvard CS50x Online Introduction to Computer Science teaching staff.
 

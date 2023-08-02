@@ -1,0 +1,10 @@
+
+Surprisingly, as I was testing and debugging this website, I found movies that I wanted to watch later (which I honestly was not expecting). 
+As I tested and debugged my website, I noticed a lot of interesting and colourful movie posters that I wanted to save to look at later. 
+I also found the plots of some of these movies very interesting, too.
+I noticed that as you go further back in time, the movies and plots get weirder and weirder. Lots of movies in the 80s and 90s escape the 'isAdult == false' filter and I can't do anything about it. 
+Also, many movies have posters, titles, and plots that you simply cannot make up: nazis invading earth from the moon (<a href="http://127.0.0.1:5000/movie?movie_id=tt1034314">'Iron Sky'</a>), vaccines killing 5 billion people on earth (<a href="http://127.0.0.1:5000/movie?movie_id=tt23810972">'Died Suddenly'</a>), a movie starring Ronald Reagan prosecuting KKK members (<a href="http://127.0.0.1:5000/movie?movie_id=tt0044075">Storm Warning</a>), and straight up satire (<a href="http://127.0.0.1:5000/movie?movie_id=tt12981810">'Finding Jesus'</a>, instead of 'Finding Nemo').
+I also noticed a benefit of this website is you can get a much better view of the poster and plot on a laptop screen, as compared to a TV wih Netflix.
+Some cool movie posters include <a href="http://127.0.0.1:5000/movie?movie_id=tt2798920">'Annihilation'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120177">'Spawn'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0253556">'Reign of Fire'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0120669">'Fear and Loathing in Las Vegas'</a>, <a href="http://127.0.0.1:5000/movie?movie_id=tt0993840">'Army of the Dead'</a>, and <a href="http://127.0.0.1:5000/movie?movie_id=tt9601220">'Blackbear'</a>.
+
+**Note: Movie links can only be accessed through the flask server.
