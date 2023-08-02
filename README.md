@@ -157,7 +157,16 @@ The username can change their username or password by clicking the 'change usern
 Icons:
 
 Lastly, I inserted <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> to my project to give a personal touch. 
-To keep the 'magic' theme, I included a wizard hat for the logo, which was actually from 'Font-Awesome' fonts (suggested as an alternative to Bootstrap Icons on their site) as well as a magic wand for finding a movie (Bootstrap Icon). 
+A list of Icons:
+'Magic theme':
+    <i class="fa-solid fa-hat-wizard"></i> hat-wizard (class="fa-solid fa-hat-wizard") from <a href="https://fontawesome.com/">'font-awesome'</a> fonts in logo;
+    <i class="fa-solid fa-wand-magic-sparkles"></i> wand-magic-sparkles in 'Find Movie' button;
+
+'movie.html':
+    
+
+
+
 In movie.html, I added a map for filming locations, a medal for movie awards, a globe for countries of origin, a translate symbol for 'Languages Spoken', a stopwatch for runtime, and a music-note-list icon for soundtrack. I included a palette for the genres because when selecting from the list of genres, it is like using a paintbrush to select from a selection of paints on the palette. I included a rocket for the plot of the movie because it symbolizes adventure, and when you first start watching a movie, it is like you are lifting off into space to go to another world. I included a robot in the 'Revenue and Budget' section because this section typically has a large amount of numbers and dollar signs, and the robot looks like it is calculating something, just like how the finances department of a movie production team would do. I also found graph icons with arrows indicating directions, and so in the 'Ratings' section, I included graph-down-arrow when the movie rating is going down, and graph-up-arrow when the rating is going up.
 I included a bootstrap icon that looks like a drivers' license (called person-vcard) in the 'Credentials' section of profile.html because a drivers' license holds a lot of personal information about a person, and so it can be associated with the user's username and password. I included a wrench in the 'Update Credentials' section because it is a tool used to modify things and the user is modifying their username or password. I found a toggle icon that looks like a switch, and so I inserted it into a button in profile.html and included JavaScript so when the user clicks 'Show Password', the switch toggles between off and on.    
 I included a person icon beside the 'Profile' nav item in the top navbar, too.
