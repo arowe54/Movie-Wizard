@@ -32,12 +32,12 @@ All tables are placed in the movies.db file.
 
 layout.html:
 
-At first I created layout.html, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site. When the user minimizes the screen, the top navbar collapses, and the user can press the button on the top right to un-collapse it.
+At first I created `layout.html`, which holds the main navbar that you see at the top of each website, with a nav-brand logo, a search bar, and a nav-item for each page to navigate to within the site. When the user minimizes the screen, the top navbar collapses, and the user can press the button on the top right to un-collapse it.
 
 
 Login/Register:
 
-I based my design for the login (login.html) and register (register.html) pages on the CS50 Finance assignment and the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootstrap website. 
+I based my design for the login (`login.html`) and register (`register.html`) pages on the CS50 Finance assignment and the <a href="https://getbootstrap.com/docs/5.3/examples/sign-in/">Sign-in</a> example from the Bootstrap website. 
 When the user registers, it sends a form to /register in app.py. It checks to see if the username has already been taken, and if it is not, then their password is hashed using a generate_password_hash(password) function, and their user info is saved into the 'users' table in sqlite3. 
 When the user logs in, they submit a form to /login in app.py. It checks if their username exists, and hashes their password to see whether their password hash is correct.
 
