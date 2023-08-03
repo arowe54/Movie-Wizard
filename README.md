@@ -1,5 +1,5 @@
 # CS50X Web Wizard
-#### VIDEO DEMO: <url>
+#### VIDEO DEMO: https://youtu.be/9cXNRzNFBAU
 #### Description:
 Welcome to Movie Wizard
 
