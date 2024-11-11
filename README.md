@@ -1,4 +1,4 @@
-# CS50X Web Wizard
+# Movie Wizard
 #### VIDEO DEMO: https://youtu.be/9cXNRzNFBAU
 #### Description:
 Welcome to Movie Wizard
@@ -8,7 +8,7 @@ Welcome to Movie Wizard
 This website uses Javascript, Ajax, Python (Flask, asyncio/aiohttp), HTML, CSS, Jinja, and SQL to help users find and save movies of interest to them.
 You can lookup movies by title, filter by genre, save movies you want to watch, and get random movies.</p>
 
-This website is inspired by the CS50 Finance problem set and the <a href="https://rapidapi.com/SAdrian/api/moviesdatabase/">MoviesDatabase</a> by Adriano Massimo on RapidAPI, which, provides complete and updated data for over 9 million titles ( movies, series and episodes) and 11 million actors / crew and cast members.
+This website is inspired by the CS 50 Finance problem set and the <a href="https://rapidapi.com/SAdrian/api/moviesdatabase/">MoviesDatabase</a> by Adriano Massimo on RapidAPI, which, provides complete and updated data for over 9 million titles ( movies, series and episodes) and 11 million actors / crew and cast members.
 
 Name:
 
